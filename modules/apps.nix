@@ -50,17 +50,21 @@
     ];
 
     # `brew install`
-    # brews = [
-    #   "jq"
-    #   "gh"
-    # ];
+    brews = [
+    ];
 
     # `brew install --cask`
     casks = [
-      "visual-studio-code"
-      "aws-vault"
+      # Let's make macOS better
       "iterm2"
       "stats"
+
+      # Let's work
+      "visual-studio-code"
+      "aws-vault"
+
+      # Let's try to survive the day
+      "spotify"
     ];
   };
 }
