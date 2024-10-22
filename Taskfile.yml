@@ -1,0 +1,19 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  HOSTNAME: Truman
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+  rebuild:
+    desc: Apply the Flake
+    cmds:
+      - darwin-rebuild switch --flake .#{{ .HOSTNAME }}
+
+  # sudo -i nix-env --uninstall nix

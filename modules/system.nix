@@ -56,10 +56,10 @@
       # # customize settings that not supported by nix-darwin directly
       # # Incomplete list of macOS `defaults` commands :
       # #   https://github.com/yannbertrand/macos-defaults
-      # NSGlobalDomain = {
+      NSGlobalDomain = {
       #   # `defaults read NSGlobalDomain "xxx"`
       #   "com.apple.swipescrolldirection" = true;  # enable natural scrolling(default to true)
-      #   "com.apple.sound.beep.feedback" = 0;  # disable beep sound when pressing volume up/down key
+        "com.apple.sound.beep.feedback" = 1 ;  # enable beep sound when pressing volume up/down key
       #   AppleInterfaceStyle = "Dark";  # dark mode
       #   AppleKeyboardUIMode = 3;  # Mode 3 enables full keyboard control.
       #   ApplePressAndHoldEnabled = true;  # enable press and hold
@@ -78,7 +78,7 @@
       #   NSAutomaticSpellingCorrectionEnabled = false;  # disable auto spelling correction(自动拼写检查)
       #   NSNavPanelExpandedStateForSaveMode = true;  # expand save panel by default(保存文件时的路径选择/文件名输入页)
       #   NSNavPanelExpandedStateForSaveMode2 = true;
-      # };
+      };
 
       # Customize settings that not supported by nix-darwin directly
       # see the source code of this project to get more undocumented options:

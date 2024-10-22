@@ -1,6 +1,5 @@
 {
   lib,
-  username,
   useremail,
   ...
 }: {
@@ -16,17 +15,16 @@
     enable = true;
     lfs.enable = true;
 
-    # TODO replace with your own name & email
-    userName = username;
+    userName = "Marco Bulgarini";
     userEmail = useremail;
 
-    includes = [
-      {
-        # use diffrent email & name for work
-        path = "~/work/.gitconfig";
-        condition = "gitdir:~/work/";
-      }
-    ];
+    # includes = [
+    #   {
+    #     # use diffrent email & name for work
+    #     path = "~/Repositories/.gitconfig";
+    #     condition = "gitdir:~/Repositories/";
+    #   }
+    # ];
 
     extraConfig = {
       init.defaultBranch = "main";
@@ -51,16 +49,16 @@
       br = "branch";
       co = "checkout";
       st = "status";
-      ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate";
-      ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat";
-      cm = "commit -m";
-      ca = "commit -am";
-      dc = "diff --cached";
-      amend = "commit --amend -m";
+      # ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate";
+      # ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat";
+      # cm = "commit -m";
+      # ca = "commit -am";
+      # dc = "diff --cached";
+      # amend = "commit --amend -m";
 
-      # aliases for submodule
-      update = "submodule update --init --recursive";
-      foreach = "submodule foreach";
+      # # aliases for submodule
+      # update = "submodule update --init --recursive";
+      # foreach = "submodule foreach";
     };
   };
 }

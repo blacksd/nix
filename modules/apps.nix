@@ -14,12 +14,9 @@
   environment.systemPackages = with pkgs; [
     vim
     git
-    go-task
-    jq 
-    jnv      # jq with dynamic filtering
-    gh       # GitHub CLI tool
+    devbox
   ];
-  environment.variables.EDITOR = "code --wait";
+  environment.variables.EDITOR = "vim";
 
   # NOTE: To make this work, homebrew need to be installed manually, see https://brew.sh
   # 
@@ -58,10 +55,10 @@
       # Let's make macOS better
       "iterm2"
       "stats"
+      "shottr"
 
       # Let's work
       "visual-studio-code"
-      "aws-vault"
 
       # Let's try to survive the day
       "spotify"

@@ -68,16 +68,17 @@
         ./modules/nix-core.nix
         ./modules/apps.nix
         ./modules/system.nix
-        # ./modules/host-users.nix
+        ./modules/host-users.nix
 
         # home manager
-        # home-manager.darwinModules.home-manager
-        # {
-        #   home-manager.useGlobalPkgs = true;
-        #   home-manager.useUserPackages = true;
-        #   home-manager.extraSpecialArgs = specialArgs;
-        #   home-manager.users.${username} = import ./home;
-        # }
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.backupFileExtension = "home-manager-backup";
+          home-manager.users.${username} = import ./home;
+        }
       ];
     };
 
