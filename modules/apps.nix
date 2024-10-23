@@ -56,6 +56,7 @@
       "iterm2"
       "stats"
       "shottr"
+      "tmpdisk"
 
       # Let's work
       "visual-studio-code"

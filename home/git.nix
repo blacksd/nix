@@ -32,10 +32,10 @@
       pull.rebase = true;
     };
 
-    # signing = {
-    #   key = "xxx";
-    #   signByDefault = true;
-    # };
+    signing = {
+      key = useremail;
+      signByDefault = true;
+    };
 
     delta = {
       enable = true;

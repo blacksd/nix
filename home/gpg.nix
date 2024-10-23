@@ -1,5 +1,6 @@
 {
   pkgs,
+  useremail,
   ...
 }: {
   programs.gpg = {
@@ -10,10 +11,11 @@
       cert-digest-algo = "SHA512";
       default-preference-list = "SHA512";
       keyserver = "keyserver.ubuntu.com";
+      default-key = useremail;
     };
   };
-  services.gpg-agent = {
-    enable = true;
-    pinentryPackage = pkgs.pinentry_mac;
-  };
+  # services.gpg-agent = {
+  #   enable = true;
+  #   pinentryPackage = pkgs.pinentry_mac;
+  # };
 }

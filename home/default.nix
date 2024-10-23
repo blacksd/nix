@@ -6,7 +6,7 @@
     ./shell.nix
     ./core.nix
     ./git.nix
-    # ./gpg.nix
+    ./gpg.nix
     # ./starship.nix
   ];
 

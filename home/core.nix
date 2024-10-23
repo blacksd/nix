@@ -29,9 +29,9 @@
     # caddy
     gnupg
     pinentry_mac
+    yubikey-manager
 
     # productivity
-    # glow # markdown previewer in terminal
     go-task
     gh
     awscli2
