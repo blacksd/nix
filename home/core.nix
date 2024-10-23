@@ -37,6 +37,7 @@
     awscli2
     aws-vault
     pre-commit
+    kubectl
   ];
 
   programs = {
