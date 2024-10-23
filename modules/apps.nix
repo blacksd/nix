@@ -60,6 +60,7 @@
 
       # Let's work
       "visual-studio-code"
+      "logseq"
 
       # Let's try to survive the day
       "spotify"
