@@ -1,14 +1,24 @@
 {pkgs,lib,...}: {
   
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
     zsh
     zsh-powerlevel10k
     meslo-lgs-nf
     oh-my-zsh
     direnv
+    (pkgs.nerdfonts.override {  
+      fonts = [
+        # symbols icon only
+        "NerdFontsSymbolsOnly"
+        # Characters
+        "FiraCode"
+        "JetBrainsMono"
+        "Iosevka"
+      ];
+    })
   ];
-
-  fonts.fontconfig.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -64,7 +74,7 @@
   home.shellAliases = {
     k = "kubectl";
 
-  #   urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
-  #   urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
+    urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
+    urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
   };
 }
