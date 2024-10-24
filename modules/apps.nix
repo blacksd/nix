@@ -63,6 +63,7 @@
       # Let's work
       "visual-studio-code"
       "logseq"
+      "discord"
 
       # Let's try to survive the day
       "spotify"
