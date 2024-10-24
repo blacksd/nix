@@ -53,7 +53,7 @@
       # ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat";
       # cm = "commit -m";
       # ca = "commit -am";
-      # dc = "diff --cached";
+      dc = "diff --cached";
       # amend = "commit --amend -m";
       oops = "commit --amend --no-edit";
       daje = "git push --force-with-lease";

@@ -33,6 +33,7 @@
 
     # productivity
     go-task
+    _1password
   ];
 
   programs = {

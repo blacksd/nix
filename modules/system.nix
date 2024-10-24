@@ -175,6 +175,9 @@
   # Fonts
   fonts = {
     packages = with pkgs; [
+      # fonts for Powerline10k
+      meslo-lgs-nf
+
       # icon fonts
       material-design-icons
       font-awesome

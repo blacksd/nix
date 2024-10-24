@@ -1,10 +1,10 @@
 {pkgs,lib,...}: {
-  
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
     zsh
     zsh-powerlevel10k
+    # fonts for Powerline10k
     meslo-lgs-nf
     oh-my-zsh
     direnv
@@ -68,7 +68,7 @@
   };
 
   programs.direnv = {
-      enable = true;
+    enable = true;
   };
 
   home.shellAliases = {
