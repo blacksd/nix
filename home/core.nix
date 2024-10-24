@@ -27,6 +27,7 @@
     gawk
     # zstd
     # caddy
+    sops
     gnupg
     pinentry_mac
     yubikey-manager

@@ -30,7 +30,7 @@
     #   source ${./p10k.zsh}
     # '';
     initExtra = ''
-      export PATH="$PATH:$HOME/.local/bin:$HOME/go/bin"
+      export PATH="$PATH:$HOME/.krew:$HOME/.local/bin:$HOME/go/bin"
     '';
     
     oh-my-zsh = {
