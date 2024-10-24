@@ -33,6 +33,7 @@
 
     # productivity
     go-task
+    docker-client
     _1password
   ];
 

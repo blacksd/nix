@@ -49,6 +49,7 @@
 
     # `brew install`
     brews = [
+      "colima"
     ];
 
     # `brew install --cask`
