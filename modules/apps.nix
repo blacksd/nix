@@ -40,6 +40,7 @@
       # Xcode = 497799835;
       Magnet = 441258766;
       AppleConfigurator = 1037126344;
+      Irvue = 1039633667;
     };
 
     taps = [
@@ -57,6 +58,7 @@
       "stats"
       "shottr"
       "tmpdisk"
+      "daisydisk"
 
       # Let's work
       "visual-studio-code"
