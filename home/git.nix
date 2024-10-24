@@ -55,6 +55,8 @@
       # ca = "commit -am";
       # dc = "diff --cached";
       # amend = "commit --amend -m";
+      oops = "commit --amend --no-edit";
+      daje = "git push --force-with-lease";
 
       # # aliases for submodule
       # update = "submodule update --init --recursive";

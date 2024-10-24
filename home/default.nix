@@ -7,6 +7,7 @@
     ./core.nix
     ./git.nix
     ./gpg.nix
+    ./cloud-tools.nix
     # ./starship.nix
   ];
 

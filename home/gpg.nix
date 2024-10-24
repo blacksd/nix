@@ -14,6 +14,7 @@
       default-key = useremail;
     };
   };
+  # FIXME: it's working without it. Why?!
   # services.gpg-agent = {
   #   enable = true;
   #   pinentryPackage = pkgs.pinentry_mac;
