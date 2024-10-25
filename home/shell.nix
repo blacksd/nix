@@ -1,4 +1,8 @@
-{pkgs,lib,...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
@@ -8,7 +12,7 @@
     meslo-lgs-nf
     oh-my-zsh
     direnv
-    (pkgs.nerdfonts.override {  
+    (pkgs.nerdfonts.override {
       fonts = [
         # symbols icon only
         "NerdFontsSymbolsOnly"
@@ -32,13 +36,13 @@
     initExtra = ''
       export PATH="$PATH:$HOME/.krew:$HOME/.local/bin:$HOME/go/bin"
     '';
-    
+
     oh-my-zsh = {
       enable = true;
-      plugins = [ 
-        "git" 
-        "sudo" 
-        "docker" 
+      plugins = [
+        "git"
+        "sudo"
+        "docker"
         "kubectl"
         "fzf"
       ];
@@ -50,7 +54,7 @@
       size = 256000;
     };
 
-    # This is another neat way to do it 
+    # This is another neat way to do it
     # https://github.com/NixOS/nixpkgs/issues/154696#issuecomment-1238433989
     plugins = [
       {
@@ -69,6 +73,8 @@
 
   programs.direnv = {
     enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
   };
 
   home.shellAliases = {

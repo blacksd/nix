@@ -37,7 +37,6 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
-
   };
 
   # The `outputs` function will return all the build results of the flake.

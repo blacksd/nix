@@ -25,12 +25,13 @@
     gnused
     gnutar
     gawk
-    # zstd
-    # caddy
     sops
     gnupg
     pinentry_mac
     yubikey-manager
+
+    # nix
+    alejandra
 
     # productivity
     go-task

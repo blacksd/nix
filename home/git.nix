@@ -11,6 +11,17 @@
     rm -f ~/.gitconfig
   '';
 
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "ssh";
+      aliases = {
+        prw = "pr view --web";
+      };
+    };
+  };
+    
+
   programs.git = {
     enable = true;
     lfs.enable = true;
