@@ -18,5 +18,6 @@
     kubectl
     krew
     trivy
+    argocd
   ];
 }
