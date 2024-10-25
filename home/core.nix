@@ -37,15 +37,16 @@
     go-task
     docker-client
     _1password
+    neovim
   ];
 
   programs = {
     # modern vim
-    # neovim = {
-    #   enable = true;
-    #   defaultEditor = true;
-    #   vimAlias = true;
-    # };
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      vimAlias = true;
+    };
 
     # A modern replacement for ‘ls’
     # useful in bash/zsh prompt, not in nushell.

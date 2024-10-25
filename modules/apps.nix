@@ -11,11 +11,11 @@
   # But on macOS, it's less stable than homebrew.
   #
   environment.systemPackages = with pkgs; [
-    vim
+    # vim
     git
     devbox
   ];
-  environment.variables.EDITOR = "vim";
+  # environment.variables.EDITOR = "vim";
 
   # NOTE: To make this work, homebrew need to be installed manually, see https://brew.sh
   #
