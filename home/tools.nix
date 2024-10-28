@@ -1,5 +1,11 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    # TODO: it may make sense to migrate a subset of this to a devbox (global or local) config
+
+    # Utils
+    jq # A lightweight and flexible command-line JSON processor
+    yq-go # yaml processer https://github.com/mikefarah/yq
+
     # General Tools
     gh
     pre-commit

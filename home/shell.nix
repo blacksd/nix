@@ -35,6 +35,7 @@
     # '';
     initExtra = ''
       export PATH="$PATH:$HOME/.krew:$HOME/.local/bin:$HOME/go/bin"
+      eval "$(devbox global shellenv)"
     '';
 
     oh-my-zsh = {

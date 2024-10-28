@@ -11,11 +11,8 @@
   # But on macOS, it's less stable than homebrew.
   #
   environment.systemPackages = with pkgs; [
-    # vim
-    git
     devbox
   ];
-  # environment.variables.EDITOR = "vim";
 
   # NOTE: To make this work, homebrew need to be installed manually, see https://brew.sh
   #
@@ -36,7 +33,7 @@
     # otherwise Apple Store will refuse to install them.
     # For details, see https://github.com/mas-cli/mas
     masApps = {
-      # Xcode = 497799835;
+      # Xcode = 497799835; # NOTE: removed due to old version
       Magnet = 441258766;
       AppleConfigurator = 1037126344;
       Irvue = 1039633667;
@@ -64,6 +61,7 @@
       "visual-studio-code"
       "logseq"
       "discord"
+      "elgato-stream-deck"
 
       # Let's try to survive the day
       "spotify"
