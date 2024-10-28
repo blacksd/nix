@@ -3,6 +3,10 @@
   useremail,
   ...
 }: {
+  home.packages = with pkgs; [
+    gnupg
+    pinentry_mac
+  ];
   programs.gpg = {
     enable = true;
     # Based on https://alexcabal.com/creating-the-perfect-gpg-keypair

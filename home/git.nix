@@ -20,7 +20,6 @@
       };
     };
   };
-    
 
   programs.git = {
     enable = true;

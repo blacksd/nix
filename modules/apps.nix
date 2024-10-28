@@ -55,7 +55,7 @@
     casks = [
       # Let's make macOS better
       "iterm2"
-      "stats"
+      "stats" # TODO: export/import settings
       "shottr"
       "tmpdisk"
       "daisydisk"

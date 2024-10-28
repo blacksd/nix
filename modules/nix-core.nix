@@ -29,4 +29,14 @@
   nix.settings = {
     auto-optimise-store = false;
   };
+  nix.optimise = {
+    automatic = true;
+    interval = [
+      {
+        Hour = 8;
+        Minute = 00;
+        Weekday = 7;
+      }
+    ];
+  };
 }

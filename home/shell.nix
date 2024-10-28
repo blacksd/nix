@@ -40,7 +40,9 @@
     oh-my-zsh = {
       enable = true;
       plugins = [
+        "macos"
         "git"
+        "direnv"
         "sudo"
         "docker"
         "kubectl"

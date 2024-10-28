@@ -12,8 +12,31 @@ tasks:
     silent: true
 
   rebuild:
-    desc: Apply the Flake
+    desc: Apply the flake
     cmds:
       - darwin-rebuild switch --flake .#{{ .HOSTNAME }}
 
-  # sudo -i nix-env --uninstall nix
+  update:
+    desc: Run flake update (specify an argument after '--' for updating a single package)
+    cmds:
+      - nix flake update {{ .CLI_ARGS }}
+
+  gc:
+    desc: Garbage collect
+    cmds:
+      # garbage collect all unused nix store entries(system-wide)
+      - sudo nix-collect-garbage --delete-older-than 7d
+      # garbage collect all unused nix store entries(for the user - home-manager)
+      # https://github.com/NixOS/nix/issues/8508
+      - nix-collect-garbage --delete-older-than 7d
+
+  fmt:
+    desc: Format all nix files
+    cmds:
+      - nix fmt
+
+  repl:
+    desc: Run a REPL shell for the flake
+    cmds:
+      - nix repl -f flake:nixpkgs
+# sudo -i nix-env --uninstall nix
