@@ -48,6 +48,7 @@
         "docker"
         "kubectl"
         "fzf"
+        "aws"
       ];
     };
 
