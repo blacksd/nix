@@ -28,14 +28,15 @@
     enable = true;
     enableCompletion = true;
 
-    # initExtraBeforeCompInit = ''
-    #   # powerline10k
-    #   source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-    #   source ${./p10k.zsh}
-    # '';
     initExtra = ''
       export PATH="$PATH:$HOME/.krew:$HOME/.local/bin:$HOME/go/bin"
+
+      # Devbox globals setup
       eval "$(devbox global shellenv)"
+
+      ## Include some useful helper functions
+      # Visual Studio Code
+      source ${./shell-functions/vscode.zsh}
     '';
 
     oh-my-zsh = {
