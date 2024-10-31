@@ -24,6 +24,8 @@
     yubikey-manager
     go-task
     docker-client
+
+    # Security
     _1password
   ];
 

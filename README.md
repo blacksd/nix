@@ -57,4 +57,3 @@ Related files:
 - [rich-demo/scripts/darwin_set_proxy.py](/rich-demo/scripts/darwin_set_proxy.py)
 - [rich-demo/Justfile](/rich-demo/Justfile)
 - [rich-demo - homebrew's mirror settings](/rich-demo/modules/homebrew-mirror.nix)
-
