@@ -16,7 +16,8 @@
     settings = {
       git_protocol = "ssh";
       aliases = {
-        prw = "pr view --web";
+        prvw = "pr view --web";
+        rvw = "repo view --web";
       };
     };
   };
