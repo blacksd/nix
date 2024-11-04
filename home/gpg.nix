@@ -19,6 +19,7 @@
     };
   };
   # FIXME: it's working without it. Why?!
+  # Also, there's a bug https://github.com/nix-community/home-manager/issues/3864
   # services.gpg-agent = {
   #   enable = true;
   #   pinentryPackage = pkgs.pinentry_mac;

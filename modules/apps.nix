@@ -41,11 +41,13 @@
 
     taps = [
       "homebrew/services"
+      "hivemq/mqtt-cli"
     ];
 
     # `brew install`
     brews = [
       "colima"
+      "mqtt-cli"
     ];
 
     # `brew install --cask`
@@ -64,6 +66,7 @@
       "elgato-stream-deck"
 
       # Let's try to survive the day
+      # "background-music" # TODO: needs Rosetta
       "spotify"
     ];
   };

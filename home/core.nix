@@ -14,6 +14,7 @@
     tree
     gnused
     gnutar
+    gnugrep
     gawk
 
     # nix
@@ -35,6 +36,10 @@
       enable = true;
       defaultEditor = true;
       vimAlias = true;
+    };
+
+    java = {
+      enable = true;
     };
   };
 }
