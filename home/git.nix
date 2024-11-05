@@ -1,6 +1,7 @@
 {
   lib,
   useremail,
+  pkgs,
   ...
 }: {
   # `programs.git` will generate the config file: ~/.config/git/config
@@ -20,6 +21,12 @@
         rvw = "repo view --web";
       };
     };
+    extensions = with pkgs; [
+      gh-s
+      gh-f
+      gh-poi
+      # TODO: add a package for matt-bartel/gh-clone-org or rm3l/gh-org-repo-sync
+    ];
   };
 
   programs.git = {
