@@ -12,3 +12,8 @@ repos:
     rev: v8.21.2
     hooks:
       - id: gitleaks
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+  #       args: ["--severity=warning"]  # Optionally only show errors and warnings

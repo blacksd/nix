@@ -20,6 +20,7 @@
 
     # AWS
     awscli2
+    eksctl
     aws-vault
 
     # Google Cloud w/GKE auth
@@ -33,5 +34,6 @@
     krew
     trivy
     argocd
+    k9s
   ];
 }

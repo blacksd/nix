@@ -9,13 +9,14 @@
     # utils
     netcat
     ripgrep # recursively searches directories for a regex pattern
-    jnv # jq with dynamic filtering
     fzf # A command-line fuzzy finder
     tree
     gnused
     gnutar
     gnugrep
     gawk
+    jnv # jq with dynamic filtering
+    jc # json converter
 
     # nix
     alejandra
@@ -25,6 +26,7 @@
     yubikey-manager
     go-task
     docker-client
+    shellcheck
 
     # Security
     _1password
