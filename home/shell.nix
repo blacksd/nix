@@ -37,6 +37,7 @@
       ## Include some useful helper functions
       # Visual Studio Code
       source ${./shell-functions/vscode.zsh}
+      source ${./shell-functions/aws.zsh}
     '';
 
     oh-my-zsh = {
