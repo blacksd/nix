@@ -20,16 +20,6 @@
 
     # nix
     alejandra
-
-    # productivity
-    sops
-    yubikey-manager
-    go-task
-    docker-client
-    shellcheck
-
-    # Security
-    _1password
   ];
 
   programs = {

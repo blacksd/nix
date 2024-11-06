@@ -58,12 +58,13 @@
       "shottr"
       "tmpdisk"
       "daisydisk"
+      "elgato-stream-deck"
 
       # Let's work
       "visual-studio-code"
       "logseq"
       "discord"
-      "elgato-stream-deck"
+      "lens"
 
       # Let's try to survive the day
       # "background-music" # TODO: needs Rosetta
