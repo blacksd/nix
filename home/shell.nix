@@ -29,7 +29,7 @@
     enableCompletion = true;
 
     initExtra = ''
-      export PATH="$PATH:$HOME/.krew:$HOME/.local/bin:$HOME/go/bin"
+      export PATH="$HOME/.krew/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
 
       # Devbox globals setup
       eval "$(devbox global shellenv)"
@@ -86,7 +86,12 @@
   home.shellAliases = {
     k = "kubectl";
 
+    cdrepo = "cd $HOME/Repositories";
+    cdgitroot = "cd `git root`";
+
     urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
     urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
+
+    hmqc_repo = "pushd \"$(find $HOME/Repositories -type d -maxdepth 1 -exec basename {} \\; | sort | fzf)\"";
   };
 }
