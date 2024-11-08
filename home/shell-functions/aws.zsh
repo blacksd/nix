@@ -16,8 +16,8 @@ function _aws_eks_refresh_kubeconfig {
     echo "!! Error: AWS_PROFILE is not set. Exiting."
     return
   fi
-  if [ -z "${AWS_REGION}" ]; then
-    echo "!! Error: AWS_REGION is not set. Exiting."
+  if [ -z "${AWS_REGION}" ] || [ -z "${AWS_DEFAULT_REGION}" ]; then
+    echo "!! Error: Neither AWS_DEFAULT_REGION or AWS_REGION are set. Exiting."
     return
   fi
   EKS_CLUSTER_NAME=$(aws eks list-clusters | jq --raw-output '.clusters[]' | fzf)

@@ -14,7 +14,7 @@ tasks:
   rebuild:
     desc: Apply the flake
     cmds:
-      - darwin-rebuild switch --flake .#{{ .HOSTNAME }}
+      - darwin-rebuild switch --flake .#{{ .HOSTNAME }} {{ .CLI_ARGS }}
 
   update:
     desc: Run flake update (specify an argument after '--' for updating a single package)

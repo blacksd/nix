@@ -77,6 +77,7 @@
       oops = "commit --amend --no-edit";
       daje = "push --force-with-lease";
 
+      root = "rev-parse --show-toplevel";
       # # aliases for submodule
       # update = "submodule update --init --recursive";
       # foreach = "submodule foreach";

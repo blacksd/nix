@@ -9,14 +9,14 @@
   ##################################################################################################################
 
   # the nixConfig here only affects the flake itself, not the system configuration!
-  # nixConfig = {
-  #   warn-dirty = false;
-  #   substituters = [
-  #     # Query the mirror of USTC first, and then the official cache.
-  #     "https://mirrors.ustc.edu.cn/nix-channels/store"
-  #     "https://cache.nixos.org"
-  #   ];
-  # };
+  nixConfig = {
+    warn-dirty = false;
+    #   substituters = [
+    #     # Query the mirror of USTC first, and then the official cache.
+    #     "https://mirrors.ustc.edu.cn/nix-channels/store"
+    #     "https://cache.nixos.org"
+    #   ];
+  };
 
   # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
   # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
@@ -35,6 +35,11 @@
 
     darwin = {
       url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+
+    krewfile = {
+      url = "github:brumhard/krewfile";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
   };
