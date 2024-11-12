@@ -45,46 +45,11 @@
     krew
     trivy
     argocd
+    kubernetes-helm
   ];
   programs = {
     k9s = {
       enable = true;
     };
   };
-  #   { inputs, pkgs, ... }: {
-  #   imports = [
-  #     # ...
-  #     inputs.krewfile.homeManagerModules.krewfile
-  #   ];
-
-  #   programs.krewfile = {
-  #     enable = true;
-  #     krewPackage = pkgs.krew;
-  #     indexes = { foo = "https://github.com/nilic/kubectl-netshoot.git" };
-  #     plugins = [
-  #       "foo/some-package"
-  #       "explore"
-  #       "modify-secret"
-  #       "neat"
-  #       "oidc-login"
-  #       "pv-migrate"
-  #       "stern"
-  #     ];
-  #   };
-  # }
-
-  # programs.krewfile = {
-  #   enable = true;
-  #   krewPackage = pkgs.krew;
-  #   plugins = [
-  #     "explore"
-  #     # "modify-secret"
-  #     "neat"
-  #     # "oidc-login"
-  #     # "pv-migrate"
-  #     "view-cert"
-  #     "view-secret"
-  #     "stern"
-  #   ];
-  # };
 }
