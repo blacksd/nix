@@ -45,6 +45,7 @@
     krew
     trivy
     argocd
+    kubernetes-helm
   ];
   programs = {
     k9s = {
