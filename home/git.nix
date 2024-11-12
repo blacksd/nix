@@ -18,6 +18,7 @@
       git_protocol = "ssh";
       aliases = {
         prvw = "pr view --web";
+        prcw = "pr create --web";
         rvw = "repo view --web";
       };
     };
