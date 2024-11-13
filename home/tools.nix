@@ -39,13 +39,20 @@
       azure-cli.extensions.aks-preview
       azure-cli.extensions.account
     ])
+    kubelogin
 
     # Kubernetes
     kubectl
     krew
     trivy
     argocd
-    kubernetes-helm
+    (pkgs.wrapHelm pkgs.kubernetes-helm {
+      plugins = [
+        pkgs.kubernetes-helmPlugins.helm-diff
+        pkgs.kubernetes-helmPlugins.helm-secrets
+        pkgs.kubernetes-helmPlugins.helm-unittest
+      ];
+    })
   ];
   programs = {
     k9s = {
