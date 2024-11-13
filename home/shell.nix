@@ -37,6 +37,7 @@
       ## Include some useful helper functions
       # Visual Studio Code
       source ${./shell-functions/vscode.zsh}
+      # AWS
       source ${./shell-functions/aws.zsh}
     '';
 
@@ -87,6 +88,7 @@
     k = "kubectl";
 
     cdrepo = "cd $HOME/Repositories";
+    cdnixdarwin = "cd $HOME/.config/nix-darwin";
     cdgitroot = "cd $(git root)";
 
     urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";

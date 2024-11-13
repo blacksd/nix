@@ -68,16 +68,14 @@
       br = "branch";
       co = "checkout";
       st = "status";
-      # ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate";
-      # ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat";
-      # cm = "commit -m";
-      # ca = "commit -am";
+      ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate";
+      ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat";
+      bsc = "branch --show-current";
       dc = "diff --cached";
-      # amend = "commit --amend -m";
+
       css = "commit --gpg-sign --signoff";
       oops = "commit --amend --no-edit";
       daje = "push --force-with-lease";
-
       root = "rev-parse --show-toplevel";
       # # aliases for submodule
       # update = "submodule update --init --recursive";
