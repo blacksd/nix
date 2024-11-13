@@ -54,6 +54,7 @@
     nixpkgs,
     darwin,
     home-manager,
+    krewfile,
     ...
   }: let
     username = "marco.bulgarini";
@@ -75,7 +76,6 @@
         ./modules/system.nix
         ./modules/host-users.nix
 
-        # home manager
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

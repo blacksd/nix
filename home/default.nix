@@ -1,6 +1,6 @@
 {
   username,
-  inputs,
+  krewfile,
   ...
 }: {
   # import sub modules
@@ -11,7 +11,7 @@
     ./gpg.nix
     ./tools.nix
     ./ssh.nix
-    inputs.krewfile.homeManagerModules.krewfile
+    krewfile.homeManagerModules.krewfile
   ];
 
   # Home Manager needs a bit of information about you and the
