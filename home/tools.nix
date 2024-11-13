@@ -43,8 +43,8 @@
 
     # Kubernetes
     kubectl
-    krew
     trivy
+    kubie
     argocd
     (pkgs.wrapHelm pkgs.kubernetes-helm {
       plugins = [
@@ -57,6 +57,24 @@
   programs = {
     k9s = {
       enable = true;
+    };
+    krewfile = {
+      # FIXME: upon installation, krew pkg should update the plugin index
+      enable = true;
+      plugins = [
+        "access-matrix"
+        "blame"
+        "cert-manager"
+        "explore"
+        "kor"
+        "neat"
+        "pv-migrate"
+        "resource-capacity"
+        "stern"
+        "view-cert"
+        "view-secret"
+        "who-can"
+      ];
     };
   };
 }
