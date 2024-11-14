@@ -1,14 +1,12 @@
 # shellcheck shell=bash
 function _aws_set_profile {
   if [ -n "${AWS_PROFILE}" ]; then
-    echo "!! Error: AWS_PROFILE is already set. Exiting."
-    return
-  else
-    AWS_PROFILE=$(jc --ini <~/.aws/config | jq --raw-output 'keys[] | select(contains("sso") | not) | sub("^profile "; "")' | fzf)
-    export AWS_PROFILE
-    AWS_REGION=$(jc --ini <~/.aws/config | jq --raw-output --arg aws_profile "$AWS_PROFILE" 'with_entries(select(.key | contains("sso") and contains($aws_profile))) | .[].sso_region')
-    export AWS_REGION
+    echo "!! Warning: AWS_PROFILE is already set to ${AWS_PROFILE}. Exiting."
   fi
+  AWS_PROFILE=$(jc --ini <~/.aws/config | jq --raw-output 'keys[] | select(contains("sso") | not) | sub("^profile "; "")' | fzf)
+  export AWS_PROFILE
+  AWS_REGION=$(jc --ini <~/.aws/config | jq --raw-output --arg aws_profile "$AWS_PROFILE" 'with_entries(select(.key | contains("sso") and contains($aws_profile))) | .[].sso_region')
+  export AWS_REGION
 }
 
 function _aws_eks_refresh_kubeconfig {
