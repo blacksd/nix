@@ -37,6 +37,8 @@
       Magnet = 441258766;
       AppleConfigurator = 1037126344;
       Irvue = 1039633667;
+      NextMeeting = 1017470484;
+      HiddenBar = 1452453066;
     };
 
     taps = [
