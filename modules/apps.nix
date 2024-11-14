@@ -67,6 +67,7 @@
       "logseq"
       "discord"
       "lens"
+      "chatgpt"
 
       # Let's try to survive the day
       # "background-music" # TODO: needs Rosetta
