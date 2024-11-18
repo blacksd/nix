@@ -94,6 +94,18 @@
     urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
     urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
 
+    k_config_off = "unset KUBECONFIG";
+    # TODO: touch these
+    k_config_switch_aws = "export KUBECONFIG=\"$HOME/.kube/config_aws\"";
+    k_config_switch_azure = "export KUBECONFIG=\"$HOME/.kube/config_azure\"";
+    k_config_switch_gcp = "export KUBECONFIG=\"$HOME/.kube/config_gcp\"";
+
     hmqc_repo = "pushd \"$(find $HOME/Repositories -type d -maxdepth 1 -exec basename {} \\; | sort | fzf)\"";
+  };
+
+  home.file = {
+    ".kube/config" = {
+      text = "";
+    };
   };
 }
