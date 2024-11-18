@@ -25,6 +25,7 @@
     tflint
     tflint-plugins.tflint-ruleset-aws
     tflint-plugins.tflint-ruleset-google
+    # tfvar # TODO: add a nixpkg
 
     # AWS
     awscli2
@@ -45,6 +46,7 @@
     kubectl
     trivy
     kubie
+    ctlptl
     argocd
     (pkgs.wrapHelm pkgs.kubernetes-helm {
       plugins = [
