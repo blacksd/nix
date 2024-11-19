@@ -44,12 +44,14 @@
     taps = [
       "homebrew/services"
       "hivemq/mqtt-cli"
+      "shihanng/tfvar"
     ];
 
     # `brew install`
     brews = [
       "colima"
       "mqtt-cli"
+      "tfvar" # TODO: This should be a nixpkg
     ];
 
     # `brew install --cask`
