@@ -15,6 +15,8 @@
     gnutar
     gnugrep
     gawk
+    asciinema
+    asciinema-agg
     jnv # jq with dynamic filtering
     jc # json converter
 
