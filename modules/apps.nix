@@ -52,6 +52,7 @@
       "colima"
       "mqtt-cli"
       "tfvar" # TODO: This should be a nixpkg
+      "tfenv" # TODO: This should be a nixpkg
     ];
 
     # `brew install --cask`
