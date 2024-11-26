@@ -18,6 +18,7 @@
     gitleaks
 
     # General Tools
+    localsend
     gh
     pre-commit
     terraform
