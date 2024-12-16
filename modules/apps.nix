@@ -12,6 +12,7 @@
   #
   environment.systemPackages = with pkgs; [
     devbox
+    nix-prefetch
   ];
 
   # NOTE: To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -71,6 +72,7 @@
       "discord"
       "lens"
       "chatgpt"
+      "xca"
 
       # Let's try to survive the day
       # "background-music" # TODO: needs Rosetta
