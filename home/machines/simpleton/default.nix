@@ -1,17 +1,17 @@
 {
   username,
-  krewfile,
+  # krewfile,
   ...
 }: {
   # import sub modules
   imports = [
-    ./shell.nix
+    # ./shell.nix
     ./core.nix
     ./git.nix
-    ./gpg.nix
-    ./tools.nix
-    ./ssh.nix
-    krewfile.homeManagerModules.krewfile
+    #./gpg.nix
+    #./tools.nix
+    #./ssh.nix
+    #krewfile.homeManagerModules.krewfile
   ];
 
   # Home Manager needs a bit of information about you and the

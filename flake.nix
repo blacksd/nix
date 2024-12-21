@@ -63,7 +63,7 @@
       hostname = "Truman";
     };
 
-    specialArgsSimpleton =  inputs // {
+    specialArgsSimpleton = inputs // {
       username = "marco";
       useremail = "marco.bulgarini@gmail.com";
       hostname = "simpleton";
@@ -82,9 +82,9 @@
     #     {
     #       home-manager.useGlobalPkgs = true;
     #       home-manager.useUserPackages = true;
-    #       home-manager.extraSpecialArgs = specialArgs;
+    #       home-manager.extraSpecialArgs = specialArgsTruman;
     #       home-manager.backupFileExtension = "home-manager-backup";
-    #       home-manager.users.${specialArgs.username} = import ./home;
+    #       home-manager.users.${specialArgsTruman.username} = import ./home;
     #     }
     #   ];
     # };
@@ -100,15 +100,13 @@
         
         ./modules/machines/simpleton/apps.nix
 
-
         home-manager.darwinModules.home-manager
         {
-          
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.extraSpecialArgs = specialArgsSimpleton;
           home-manager.backupFileExtension = "home-manager-backup";
-          home-manager.users.${specialArgs.username} = import ./home/machines/simpleton;
+          home-manager.users.${specialArgsSimpleton.username} = import ./home/machines/simpleton;
         }
       ];
     };
