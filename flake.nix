@@ -57,37 +57,63 @@
     krewfile,
     ...
   }: let
-    username = "marco.bulgarini";
-    useremail = "marco.bulgarini@hivemq.com";
-    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-    hostname = "Truman";
+    specialArgsTruman = inputs // {
+      username = "marco.bulgarini";
+      useremail = "marco.bulgarini@hivemq.com";
+      hostname = "Truman";
+    };
 
-    specialArgs =
-      inputs
-      // {
-        inherit username useremail hostname;
-      };
+    specialArgsSimpleton =  inputs // {
+      username = "marco";
+      useremail = "marco.bulgarini@gmail.com";
+      hostname = "simpleton";
+    };
   in {
-    darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
-      inherit system specialArgs;
+    # darwinConfigurations."Truman" = darwin.lib.darwinSystem {
+    #   system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+    #   specialArgs = specialArgsTruman;
+    #   modules = [
+    #     ./modules/nix-core.nix
+    #     ./modules/apps.nix
+    #     ./modules/system.nix
+    #     ./modules/host-users.nix
+
+    #     home-manager.darwinModules.home-manager
+    #     {
+    #       home-manager.useGlobalPkgs = true;
+    #       home-manager.useUserPackages = true;
+    #       home-manager.extraSpecialArgs = specialArgs;
+    #       home-manager.backupFileExtension = "home-manager-backup";
+    #       home-manager.users.${specialArgs.username} = import ./home;
+    #     }
+    #   ];
+    # };
+
+    darwinConfigurations."simpleton" = darwin.lib.darwinSystem {
+      system = "x86_64-darwin";
+      specialArgs = specialArgsSimpleton;
       modules = [
-        ./modules/nix-core.nix
-        ./modules/apps.nix
-        ./modules/system.nix
-        ./modules/host-users.nix
+        ./modules/base/nix-core.nix
+        ./modules/base/host-users.nix
+        ./modules/base/system.nix
+        ./modules/base/apps.nix
+        
+        ./modules/machines/simpleton/apps.nix
+
 
         home-manager.darwinModules.home-manager
         {
+          
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = specialArgs;
           home-manager.backupFileExtension = "home-manager-backup";
-          home-manager.users.${username} = import ./home;
+          home-manager.users.${specialArgs.username} = import ./home/machines/simpleton;
         }
       ];
     };
 
     # nix code formatter
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+    # formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
   };
 }
