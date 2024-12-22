@@ -176,17 +176,18 @@
   # Fonts
   fonts = {
     packages = with pkgs; [
-      # fonts for Powerline10k
-      meslo-lgs-nf
+      # # fonts for Powerline10k
+      # meslo-lgs-nf
 
-      # icon fonts
-      material-design-icons
-      font-awesome
+      # # icon fonts
+      # material-design-icons
+      # font-awesome
 
       # nerdfonts
       # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
       (nerdfonts.override {
         fonts = [
+          "Meslo"
           # symbols icon only
           "NerdFontsSymbolsOnly"
           # Characters
@@ -198,3 +199,6 @@
     ];
   };
 }
+
+# TODO
+# defaults write 'com.googlecode.iterm2' "Default Bookmark Guid" ba11144f-6af3-434d-aaa6-0a48e0969958

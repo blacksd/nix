@@ -5,7 +5,7 @@
 }: {
   # import sub modules
   imports = [
-    # ./shell.nix
+    ./shell.nix
     ./core.nix
     ./git.nix
     #./gpg.nix
