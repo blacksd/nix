@@ -66,11 +66,11 @@
         src = pkgs.zsh-powerlevel10k;
         file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
-      # {
-      #   name = "powerlevel10k-config";
-      #   src = lib.cleanSource ./configs;
-      #   file = ".p10k.zsh";
-      # }
+      {
+        name = "powerlevel10k-config";
+        src = lib.cleanSource ./configs;
+        file = ".p10k.zsh";
+      }
     ];
   };
 
@@ -97,5 +97,10 @@
     ".kube/config" = {
       text = "";
     };
+    "Library/Application\ Support/iTerm2/DynamicProfiles/iTerm2-nix-profiles.plist.json" = {
+      enable = true;
+      source = lib.cleanSource ./configs/iTerm2-nix-profiles.plist.json;
+    };
+
   };
 }

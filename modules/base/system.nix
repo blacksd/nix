@@ -85,6 +85,9 @@
       # All custom entries can be found by running `defaults read` command.
       # or `defaults read xxx` to read a specific domain.
       CustomUserPreferences = {
+          "com.googlecode.iterm2" = {
+            "Default Bookmark Guid" = "ab3f2e5a-11f8-45c6-8dc3-517a8eed4cc3";
+          };
         # "com.apple.sound" = {
         #   "com.apple.sound.beep.feedback" = false;
         # }; # enable beep sound when pressing volume up/down key
