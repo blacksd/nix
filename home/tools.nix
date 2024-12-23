@@ -72,6 +72,7 @@
         "ctx"
         "explore"
         "kor"
+        "kyverno"
         "neat"
         "ns"
         "pv-migrate"
