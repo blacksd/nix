@@ -8,23 +8,8 @@
   home.packages = with pkgs; [
     zsh
     zsh-powerlevel10k
-    # fonts for Powerline10k
-    # meslo-lgs-nf
     oh-my-zsh
     direnv
-    # nerdfonts
-    # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
-    # (pkgs.nerdfonts.override {
-    #   fonts = [
-    #     "Meslo"
-    #     # symbols icon only
-    #     "NerdFontsSymbolsOnly"
-    #     # Characters
-    #     "FiraCode"
-    #     "JetBrainsMono"
-    #     "Iosevka"
-    #   ];
-    # })
   ];
 
   programs.zsh = {
