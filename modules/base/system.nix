@@ -88,6 +88,7 @@
           "com.googlecode.iterm2" = {
             "Default Bookmark Guid" = "ab3f2e5a-11f8-45c6-8dc3-517a8eed4cc3";
           };
+          "eu.exelban.Stats" = builtins.fromJSON (builtins.readFile ./configs/eu.exelban.Stats.plist.json);
         # "com.apple.sound" = {
         #   "com.apple.sound.beep.feedback" = false;
         # }; # enable beep sound when pressing volume up/down key

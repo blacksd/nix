@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Battery_state</key>
+    <false />
+    <key>CPU_barChart_position</key>
+    <integer>3</integer>
+    <key>CPU_label_position</key>
+    <integer>1</integer>
+    <key>CPU_lineChart_position</key>
+    <integer>0</integer>
+    <key>CPU_line_chart_box</key>
+    <true />
+    <key>CPU_line_chart_label</key>
+    <true />
+    <key>CPU_mini_position</key>
+    <integer>2</integer>
+    <key>CPU_pieChart_position</key>
+    <integer>4</integer>
+    <key>CPU_tachometer_position</key>
+    <integer>5</integer>
+    <key>CPU_widget</key>
+    <string>line_chart</string>
+    <key>Disk_barChart_position</key>
+    <integer>3</integer>
+    <key>Disk_label_position</key>
+    <integer>1</integer>
+    <key>Disk_memory_position</key>
+    <integer>4</integer>
+    <key>Disk_mini_position</key>
+    <integer>2</integer>
+    <key>Disk_networkChart_position</key>
+    <integer>6</integer>
+    <key>Disk_pieChart_position</key>
+    <integer>0</integer>
+    <key>Disk_pie_chart_label</key>
+    <true />
+    <key>Disk_speed_position</key>
+    <integer>5</integer>
+    <key>Disk_widget</key>
+    <string>pie_chart</string>
+    <key>FAN_bar_chart_label</key>
+    <false />
+    <key>LaunchAtLoginNext</key>
+    <true />
+    <key>NSNavPanelExpandedSizeForSaveMode</key>
+    <string>{800, 448}</string>
+    <key>NSNavPanelExpandedStateForSaveMode</key>
+    <true />
+    <key>NSToolbar Configuration eu.exelban.Stats.Settings.Toolbar</key>
+    <dict>
+      <key>TB Display Mode</key>
+      <integer>1</integer>
+      <key>TB Icon Size Mode</key>
+      <integer>1</integer>
+      <key>TB Is Shown</key>
+      <true />
+      <key>TB Size Mode</key>
+      <integer>1</integer>
+    </dict>
+    <key>NSWindow Frame NSNavPanelAutosaveName</key>
+    <string>1616 879 800 448 0 0 3008 1667 </string>
+    <key>RAM_barChart_position</key>
+    <integer>0</integer>
+    <key>RAM_bar_chart_label</key>
+    <true />
+    <key>RAM_label_position</key>
+    <integer>1</integer>
+    <key>RAM_lineChart_position</key>
+    <integer>3</integer>
+    <key>RAM_memory_position</key>
+    <integer>5</integer>
+    <key>RAM_mini_position</key>
+    <integer>2</integer>
+    <key>RAM_pieChart_position</key>
+    <integer>4</integer>
+    <key>RAM_splitValue</key>
+    <true />
+    <key>RAM_tachometer_position</key>
+    <integer>6</integer>
+    <key>RAM_updateInterval</key>
+    <integer>5</integer>
+    <key>RAM_updateTopInterval</key>
+    <integer>5</integer>
+    <key>RAM_widget</key>
+    <string>bar_chart</string>
+    <key>Sensors_barChart_position</key>
+    <integer>1</integer>
+    <key>Sensors_label_position</key>
+    <integer>2</integer>
+    <key>Sensors_mini_position</key>
+    <integer>3</integer>
+    <key>Sensors_oneView</key>
+    <false />
+    <key>Sensors_sensors_mode</key>
+    <string>twoRows</string>
+    <key>Sensors_sensors_monospacedFont</key>
+    <false />
+    <key>Sensors_sensors_size</key>
+    <false />
+    <key>Sensors_stack_position</key>
+    <integer>0</integer>
+    <key>Sensors_state</key>
+    <true />
+    <key>Sensors_widget</key>
+    <string>sensors</string>
+    <key>runAtLoginInitialized</key>
+    <true />
+    <key>sensor_Average CPU</key>
+    <true />
+    <key>sensor_Average GPU</key>
+    <true />
+    <key>sensor_F0Ac</key>
+    <true />
+    <key>sensor_F1Ac</key>
+    <true />
+    <key>sensor_Fastest fan</key>
+    <false />
+    <key>sensor_PDTR</key>
+    <false />
+    <key>sensor_PPBR</key>
+    <false />
+    <key>sensor_TCGC</key>
+    <true />
+    <key>sensor_TW0P</key>
+    <false />
+    <key>sensor_Total System Consumption</key>
+    <false />
+    <key>setupProcess</key>
+    <true />
+    <key>stack_F0Ac_index</key>
+    <integer>2</integer>
+    <key>stack_F1Ac_index</key>
+    <integer>2</integer>
+    <key>stack_TCGC_index</key>
+    <integer>1</integer>
+    <key>telemetry</key>
+    <false />
+    <key>telemetry_id</key>
+    <string>00000000-0000-0000-0000-000000000000</string>
+    <key>updater_check_ts</key>
+    <integer>1735075287</integer>
+    <key>version</key>
+    <string>2.11.22</string>
+  </dict>
+</plist>
