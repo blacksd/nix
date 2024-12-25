@@ -4,7 +4,7 @@
   ...
 }: {
   fonts.fontconfig.enable = true;
-  
+
   home.packages = with pkgs; [
     zsh
     zsh-powerlevel10k
@@ -87,6 +87,5 @@
       enable = true;
       source = lib.cleanSource ./configs/iTerm2-nix-profiles.plist.json;
     };
-
   };
 }

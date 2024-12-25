@@ -13,6 +13,8 @@
   environment.systemPackages = with pkgs; [
     devbox
     nix-prefetch
+    nvd
+    alejandra # I prefer this over nixfmt-rfc-style
   ];
 
   # NOTE: To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -34,20 +36,15 @@
     # otherwise Apple Store will refuse to install them.
     # For details, see https://github.com/mas-cli/mas
     masApps = {
-      # Xcode = 497799835; # NOTE: removed due to old version
       Magnet = 441258766;
       Irvue = 1039633667;
       HiddenBar = 1452453066;
     };
 
-    taps = [
-      "homebrew/services"
-    ];
+    taps = ["homebrew/services"];
 
     # `brew install`
-    brews = [
-      "colima"
-    ];
+    brews = ["colima"];
 
     # `brew install --cask`
     casks = [
