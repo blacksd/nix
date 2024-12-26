@@ -62,62 +62,54 @@
     flake-utils,
     ...
   }: let
-    specialArgsTruman =
-      inputs
-      // {
-        username = "marco.bulgarini";
-        useremail = "marco.bulgarini@hivemq.com";
-        hostname = "Truman";
-      };
+    specialArgs = {
+      Truman =
+        inputs
+        // {
+          username = "marco.bulgarini";
+          useremail = "marco.bulgarini@hivemq.com";
+          hostname = "Truman";
+        };
 
-    specialArgsSimpleton =
-      inputs
-      // {
-        username = "marco";
-        useremail = "marco.bulgarini@gmail.com";
-        hostname = "simpleton";
-      };
+      simpleton =
+        inputs
+        // {
+          username = "marco";
+          useremail = "marco.bulgarini@gmail.com";
+          hostname = "simpleton";
+        };
+    };
   in {
     darwinConfigurations."Truman" = darwin.lib.darwinSystem {
-      specialArgs = specialArgsTruman;
+      specialArgs = specialArgs.Truman;
       system = "aarch64-darwin";
       modules = [
-        ./modules/base/nix-core.nix
-        ./modules/base/host-users.nix
-        ./modules/base/system.nix
-        ./modules/base/apps.nix
-
-        ./modules/machines/Truman/apps.nix
+        ./hosts/Truman
 
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = specialArgsTruman;
+          home-manager.extraSpecialArgs = specialArgs.Truman;
           home-manager.backupFileExtension = "home-manager-backup";
-          home-manager.users.${specialArgsTruman.username} = import ./home/machines/Truman;
+          home-manager.users.${specialArgs.Truman.username} = import ./home/machines/Truman;
         }
       ];
     };
 
     darwinConfigurations."simpleton" = darwin.lib.darwinSystem {
-      specialArgs = specialArgsSimpleton;
+      specialArgs = specialArgs.simpleton;
       system = "x86_64-darwin";
       modules = [
-        ./modules/base/nix-core.nix
-        ./modules/base/host-users.nix
-        ./modules/base/system.nix
-        ./modules/base/apps.nix
-
-        ./modules/machines/simpleton/apps.nix
+        ./hosts/simpleton
 
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = specialArgsSimpleton;
+          home-manager.extraSpecialArgs = specialArgs.simpleton;
           home-manager.backupFileExtension = "home-manager-backup";
-          home-manager.users.${specialArgsSimpleton.username} = import ./home/machines/simpleton;
+          home-manager.users.${specialArgs.simpleton.username} = import ./home/machines/simpleton;
         }
       ];
     };
