@@ -19,6 +19,19 @@
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     '';
 
+    activationScripts.diff = {
+      supportsDryActivation = true;
+      text = ''
+        ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff /run/current-system "$systemConfig"
+      '';
+      # NOTE: this could also work
+      # text = ''
+      #   if [[ -e /run/current-system ]]; then
+      #     ${pkgs.nix}/bin/nix store diff-closures /run/current-system "$systemConfig"
+      #   fi
+      # '';
+    };
+
     defaults = {
       menuExtraClock.Show24Hour = true; # show 24 hour clock
 
@@ -85,6 +98,10 @@
       # All custom entries can be found by running `defaults read` command.
       # or `defaults read xxx` to read a specific domain.
       CustomUserPreferences = {
+        "com.googlecode.iterm2" = {
+          "Default Bookmark Guid" = "ab3f2e5a-11f8-45c6-8dc3-517a8eed4cc3";
+        };
+        "eu.exelban.Stats" = builtins.fromJSON (builtins.readFile ./configs/eu.exelban.Stats.plist.json);
         # "com.apple.sound" = {
         #   "com.apple.sound.beep.feedback" = false;
         # }; # enable beep sound when pressing volume up/down key
@@ -166,9 +183,7 @@
   # Create /etc/zshrc that loads the nix-darwin environment.
   # this is required if you want to use darwin's default shell - zsh
   programs.zsh.enable = true;
-  environment.shells = [
-    pkgs.zsh
-  ];
+  environment.shells = [pkgs.zsh];
 
   # Set your time zone.
   time.timeZone = "Europe/Rome";
@@ -176,17 +191,18 @@
   # Fonts
   fonts = {
     packages = with pkgs; [
-      # fonts for Powerline10k
-      meslo-lgs-nf
+      # # fonts for Powerline10k
+      # meslo-lgs-nf
 
-      # icon fonts
-      material-design-icons
-      font-awesome
+      # # icon fonts
+      # material-design-icons
+      # font-awesome
 
       # nerdfonts
       # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
       (nerdfonts.override {
         fonts = [
+          "Meslo"
           # symbols icon only
           "NerdFontsSymbolsOnly"
           # Characters
@@ -198,3 +214,6 @@
     ];
   };
 }
+# TODO
+# defaults write 'com.googlecode.iterm2' "Default Bookmark Guid" ba11144f-6af3-434d-aaa6-0a48e0969958
+

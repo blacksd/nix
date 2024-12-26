@@ -1,0 +1,49 @@
+{
+  "Profiles": [
+    {
+      "Custom Command": "No",
+      "Custom Directory": "No",
+      "Custom Locale": "en_US.UTF-8",
+      "Description": "My Nix-managed Profile, straight from git. Optmimized for Powerline10k.",
+      "Flashing Bell": false,
+      "Guid": "ab3f2e5a-11f8-45c6-8dc3-517a8eed4cc3",
+      "Keyboard Map": {
+        "0x7f-0x100000": {
+          "Action": 11,
+          "Text": "0x15"
+        },
+        "0x7f-0x80000": {
+          "Action": 11,
+          "Text": "\"0x1b 0x7f\""
+        },
+        "f702-0x280000": {
+          "Action": 10,
+          "Text": "b"
+        },
+        "f702-0x300000": {
+          "Action": 11,
+          "Text": "0x1"
+        },
+        "f703-0x280000": {
+          "Action": 10,
+          "Text": "f"
+        },
+        "f703-0x300000": {
+          "Action": 11,
+          "Text": "0x5"
+        },
+        "f728-0x0": {
+          "Action": 11,
+          "Text": "0x4"
+        },
+        "f728-0x80000": {
+          "Action": 10,
+          "Text": "d"
+        }
+      },
+      "Name": "Nix-managed Profile",
+      "Normal Font": "MesloLGSNF-Regular 13",
+      "Scrollback Lines": 8192
+    }
+  ]
+}

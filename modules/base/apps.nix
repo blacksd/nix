@@ -13,6 +13,8 @@
   environment.systemPackages = with pkgs; [
     devbox
     nix-prefetch
+    nvd
+    alejandra # I prefer this over nixfmt-rfc-style
   ];
 
   # NOTE: To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -34,27 +36,15 @@
     # otherwise Apple Store will refuse to install them.
     # For details, see https://github.com/mas-cli/mas
     masApps = {
-      # Xcode = 497799835; # NOTE: removed due to old version
       Magnet = 441258766;
-      AppleConfigurator = 1037126344;
       Irvue = 1039633667;
-      NextMeeting = 1017470484;
       HiddenBar = 1452453066;
     };
 
-    taps = [
-      "homebrew/services"
-      "hivemq/mqtt-cli"
-      "shihanng/tfvar"
-    ];
+    taps = ["homebrew/services"];
 
     # `brew install`
-    brews = [
-      "colima"
-      "mqtt-cli"
-      "tfvar" # TODO: This should be a nixpkg
-      "tfenv" # TODO: This should be a nixpkg
-    ];
+    brews = ["colima"];
 
     # `brew install --cask`
     casks = [
@@ -64,14 +54,10 @@
       "shottr"
       "tmpdisk"
       "daisydisk"
-      "elgato-stream-deck"
 
       # Let's work
       "visual-studio-code"
       "logseq"
-      "discord"
-      "lens"
-      "chatgpt"
       "xca"
 
       # Let's try to survive the day

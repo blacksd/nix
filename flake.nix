@@ -42,6 +42,10 @@
       url = "github:brumhard/krewfile";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
+
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
   };
 
   # The `outputs` function will return all the build results of the flake.
@@ -55,39 +59,72 @@
     darwin,
     home-manager,
     krewfile,
+    flake-utils,
     ...
   }: let
-    username = "marco.bulgarini";
-    useremail = "marco.bulgarini@hivemq.com";
-    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-    hostname = "Truman";
-
-    specialArgs =
+    specialArgsTruman =
       inputs
       // {
-        inherit username useremail hostname;
+        username = "marco.bulgarini";
+        useremail = "marco.bulgarini@hivemq.com";
+        hostname = "Truman";
+      };
+
+    specialArgsSimpleton =
+      inputs
+      // {
+        username = "marco";
+        useremail = "marco.bulgarini@gmail.com";
+        hostname = "simpleton";
       };
   in {
-    darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
-      inherit system specialArgs;
+    darwinConfigurations."Truman" = darwin.lib.darwinSystem {
+      specialArgs = specialArgsTruman;
+      system = "aarch64-darwin";
       modules = [
-        ./modules/nix-core.nix
-        ./modules/apps.nix
-        ./modules/system.nix
-        ./modules/host-users.nix
+        ./modules/base/nix-core.nix
+        ./modules/base/host-users.nix
+        ./modules/base/system.nix
+        ./modules/base/apps.nix
+
+        ./modules/machines/Truman/apps.nix
 
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.extraSpecialArgs = specialArgsTruman;
           home-manager.backupFileExtension = "home-manager-backup";
-          home-manager.users.${username} = import ./home;
+          home-manager.users.${specialArgsTruman.username} = import ./home/machines/Truman;
+        }
+      ];
+    };
+
+    darwinConfigurations."simpleton" = darwin.lib.darwinSystem {
+      specialArgs = specialArgsSimpleton;
+      system = "x86_64-darwin";
+      modules = [
+        ./modules/base/nix-core.nix
+        ./modules/base/host-users.nix
+        ./modules/base/system.nix
+        ./modules/base/apps.nix
+
+        ./modules/machines/simpleton/apps.nix
+
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = specialArgsSimpleton;
+          home-manager.backupFileExtension = "home-manager-backup";
+          home-manager.users.${specialArgsSimpleton.username} = import ./home/machines/simpleton;
         }
       ];
     };
 
     # nix code formatter
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+    formatter = flake-utils.lib.eachDefaultSystem (system: {
+      inherit (nixpkgs.legacyPackages.${system}) alejandra;
+    });
   };
 }
