@@ -6,7 +6,6 @@
   imports = [
     ../../modules/base
     ./apps.nix
-
     home-manager.darwinModules.home-manager
   ];
 
@@ -15,6 +14,6 @@
     useUserPackages = true;
     extraSpecialArgs = specialArgs;
     backupFileExtension = "home-manager-backup";
-    users.${specialArgs.username} = import ../../modules/home-manager;
+    users.${specialArgs.username} = import ./home-manager.nix;
   };
 }

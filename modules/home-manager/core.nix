@@ -17,6 +17,7 @@
     gawk
     jnv
     jc
+    localsend
   ];
 
   programs = {
