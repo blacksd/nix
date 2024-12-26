@@ -18,7 +18,7 @@
       default-key = useremail;
     };
   };
-  # FIXME: it's working without it. Why?!
+  # NOTE: it's working fine without the explicit selection
   # Also, there's a bug https://github.com/nix-community/home-manager/issues/3864
   # services.gpg-agent = {
   #   enable = true;

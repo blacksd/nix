@@ -85,7 +85,7 @@
     };
     "Library/Application\ Support/iTerm2/DynamicProfiles/iTerm2-nix-profiles.plist.json" = {
       enable = true;
-      source = lib.cleanSource ./configs/iTerm2-nix-profiles.plist.json;
+      source = lib.mkForce (lib.cleanSource ./configs/iTerm2-nix-profiles.plist.json);
     };
   };
 }

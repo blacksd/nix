@@ -37,14 +37,6 @@
     userName = "Marco Bulgarini";
     userEmail = useremail;
 
-    # includes = [
-    #   {
-    #     # use diffrent email & name for work
-    #     path = "~/Repositories/.gitconfig";
-    #     condition = "gitdir:~/Repositories/";
-    #   }
-    # ];
-
     extraConfig = {
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
@@ -77,9 +69,6 @@
       oops = "commit --amend --no-edit";
       daje = "push --force-with-lease";
       root = "rev-parse --show-toplevel";
-      # # aliases for submodule
-      # update = "submodule update --init --recursive";
-      # foreach = "submodule foreach";
     };
   };
 }
