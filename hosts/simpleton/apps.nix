@@ -8,6 +8,7 @@
       "transmission-remote-gui"
       "vlc"
       "tor-browser"
+      "calibre"
     ];
   };
 }
