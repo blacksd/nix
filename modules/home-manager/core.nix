@@ -8,20 +8,15 @@
 
     # utils
     netcat
-    ripgrep # recursively searches directories for a regex pattern
-    fzf # A command-line fuzzy finder
+    ripgrep
+    fzf
     tree
     gnused
     gnutar
     gnugrep
     gawk
-    asciinema
-    asciinema-agg
-    jnv # jq with dynamic filtering
-    jc # json converter
-
-    # nix
-    alejandra
+    jnv
+    jc
   ];
 
   programs = {

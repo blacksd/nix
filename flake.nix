@@ -102,15 +102,6 @@
       system = "x86_64-darwin";
       modules = [
         ./hosts/simpleton
-
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = specialArgs.simpleton;
-          home-manager.backupFileExtension = "home-manager-backup";
-          home-manager.users.${specialArgs.simpleton.username} = import ./home/machines/simpleton;
-        }
       ];
     };
 
