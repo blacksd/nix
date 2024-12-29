@@ -6,7 +6,7 @@
       "Custom Locale": "en_US.UTF-8",
       "Description": "My Nix-managed Profile, straight from git. Optmimized for Powerline10k.",
       "Flashing Bell": false,
-      "Guid": "ab3f2e5a-11f8-45c6-8dc3-517a8eed4cc3",
+      "Guid": "aabbccdd-d3ad-b33f-1337-001122334455",
       "Keyboard Map": {
         "0x7f-0x100000": {
           "Action": 11,
@@ -14,7 +14,7 @@
         },
         "0x7f-0x80000": {
           "Action": 11,
-          "Text": "\"0x1b 0x7f\""
+          "Text": "0x1B 0x08"
         },
         "f702-0x280000": {
           "Action": 10,

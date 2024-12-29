@@ -84,7 +84,7 @@
       specialArgs = specialArgs.Truman;
       system = "aarch64-darwin";
       modules = [
-        ./hosts/Truman
+        ./hosts/${specialArgs.Truman.hostname}
 
         home-manager.darwinModules.home-manager
         {
@@ -92,7 +92,7 @@
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = specialArgs.Truman;
           home-manager.backupFileExtension = "home-manager-backup";
-          home-manager.users.${specialArgs.Truman.username} = import ./home/machines/Truman;
+          home-manager.users.${specialArgs.Truman.username} = import ./home/machines/${specialArgs.Truman.hostname};
         }
       ];
     };
@@ -101,7 +101,7 @@
       specialArgs = specialArgs.simpleton;
       system = "x86_64-darwin";
       modules = [
-        ./hosts/simpleton
+        ./hosts/${specialArgs.simpleton.hostname}
       ];
     };
 

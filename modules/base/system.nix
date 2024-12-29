@@ -99,7 +99,7 @@
       # or `defaults read xxx` to read a specific domain.
       CustomUserPreferences = {
         "com.googlecode.iterm2" = {
-          "Default Bookmark Guid" = "ab3f2e5a-11f8-45c6-8dc3-517a8eed4cc3";
+          "Default Bookmark Guid" = "aabbccdd-d3ad-b33f-1337-001122334455";
         };
         "eu.exelban.Stats" = builtins.fromJSON (builtins.readFile ./configs/eu.exelban.Stats.plist.json);
         # "com.apple.sound" = {
