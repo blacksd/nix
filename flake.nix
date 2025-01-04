@@ -85,15 +85,6 @@
       system = "aarch64-darwin";
       modules = [
         ./hosts/${specialArgs.Truman.hostname}
-
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = specialArgs.Truman;
-          home-manager.backupFileExtension = "home-manager-backup";
-          home-manager.users.${specialArgs.Truman.username} = import ./home/machines/${specialArgs.Truman.hostname};
-        }
       ];
     };
 

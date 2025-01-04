@@ -1,8 +1,6 @@
-{pkgs, ...}: {
+{...}: {
   imports = [
-    ../../modules/home-manager 
-  ];
-  home.packages = with pkgs; [
-    ffmpeg
+    ../../modules/home-manager
+    ./home-manager/core.nix
   ];
 }

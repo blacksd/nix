@@ -12,7 +12,7 @@ tasks:
     silent: true
 
   rebuild:
-    desc: Apply the flake
+    desc: Build and apply the system configuration
     cmds:
       - darwin-rebuild switch --flake .#{{ .HOSTNAME }} {{ .CLI_ARGS }}
 
@@ -25,10 +25,10 @@ tasks:
     desc: Garbage collect
     cmds:
       # garbage collect all unused nix store entries(system-wide)
-      - sudo nix-collect-garbage --delete-older-than 7d
+      - sudo nix-collect-garbage --delete-older-than 45d
       # garbage collect all unused nix store entries(for the user - home-manager)
       # https://github.com/NixOS/nix/issues/8508
-      - nix-collect-garbage --delete-older-than 7d
+      - nix-collect-garbage --delete-older-than 45d
 
   fmt:
     desc: Format all nix files
