@@ -2,9 +2,6 @@
 
 version: "3"
 
-vars:
-  HOSTNAME: Truman
-
 tasks:
   default:
     cmds:
@@ -39,4 +36,32 @@ tasks:
     desc: Run a REPL shell for the flake
     cmds:
       - nix repl -f flake:nixpkgs
+
+  macos_install_git:
+    desc: Install git
+    cmds:
+      - xcode-select --install
+    status:
+      - xcode-select --print-path &>/dev/null
+
+  macos_install_nix:
+    desc: Install nix
+    cmds:
+      - curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+    status:
+      - nix --version &>/dev/null &>/dev/null
+
+  macos_install_brew:
+    desc: Install Homebrew
+    cmds:
+      - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    status:
+      - brew --version &>/dev/null
+
+  prerequisites:
+    desc: Install prerequisites
+    cmds:
+      - task: macos_install_git
+      - task: macos_install_nix
+      - task: macos_install_brew
 # sudo -i nix-env --uninstall nix

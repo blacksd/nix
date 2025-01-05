@@ -15,6 +15,8 @@
     nix-prefetch
     nvd
     alejandra # I prefer this over nixfmt-rfc-style
+    rsync
+    wget
   ];
 
   # NOTE: To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -50,7 +52,7 @@
     casks = [
       # Let's make macOS better
       "iterm2"
-      "stats" # TODO: export/import settings
+      "stats"
       "shottr"
       "tmpdisk"
       "daisydisk"

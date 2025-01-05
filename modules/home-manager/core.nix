@@ -1,10 +1,14 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    # mandatory lulz
+    neofetch
+
     # archives
     zip
     unzip
     xz
     p7zip
+    gnutar
 
     # utils
     netcat
@@ -12,12 +16,12 @@
     fzf
     tree
     gnused
-    gnutar
     gnugrep
     gawk
     jnv
     jc
     localsend
+    go-task
   ];
 
   programs = {
