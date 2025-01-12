@@ -9,6 +9,7 @@
       "vlc"
       "tor-browser"
       "calibre"
+      "dropbox"
     ];
   };
 }

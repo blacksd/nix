@@ -98,6 +98,99 @@
       # All custom entries can be found by running `defaults read` command.
       # or `defaults read xxx` to read a specific domain.
       CustomUserPreferences = {
+        "com.apple.Spotlight" = {
+          "orderedItems" = [
+            {
+              "name" = "APPLICATIONS";
+              "enabled" = true;
+            }
+            {
+              "name" = "MENU_EXPRESSION";
+              "enabled" = false;
+            }
+            {
+              "name" = "CONTACT";
+              "enabled" = false;
+            }
+            {
+              "name" = "MENU_CONVERSION";
+              "enabled" = false;
+            }
+            {
+              "name" = "MENU_DEFINITION";
+              "enabled" = false;
+            }
+            {
+              "name" = "SOURCE";
+              "enabled" = false;
+            }
+            {
+              "name" = "DOCUMENTS";
+              "enabled" = false;
+            }
+            {
+              "name" = "EVENT_TODO";
+              "enabled" = false;
+            }
+            {
+              "name" = "DIRECTORIES";
+              "enabled" = false;
+            }
+            {
+              "name" = "FONTS";
+              "enabled" = false;
+            }
+            {
+              "name" = "IMAGES";
+              "enabled" = false;
+            }
+            {
+              "name" = "MESSAGES";
+              "enabled" = false;
+            }
+            {
+              "name" = "MOVIES";
+              "enabled" = false;
+            }
+            {
+              "name" = "MUSIC";
+              "enabled" = false;
+            }
+            {
+              "name" = "MENU_OTHER";
+              "enabled" = false;
+            }
+            {
+              "name" = "PDF";
+              "enabled" = false;
+            }
+            {
+              "name" = "PRESENTATIONS";
+              "enabled" = false;
+            }
+            {
+              "name" = "MENU_SPOTLIGHT_SUGGESTIONS";
+              "enabled" = false;
+            }
+            {
+              "name" = "SPREADSHEETS";
+              "enabled" = false;
+            }
+            {
+              "name" = "SYSTEM_PREFS";
+              "enabled" = true;
+            }
+            {
+              "name" = "TIPS";
+              "enabled" = false;
+            }
+            {
+              "name" = "BOOKMARKS";
+              "enabled" = false;
+            }
+          ];
+        };
+
         "com.googlecode.iterm2" = {
           "Default Bookmark Guid" = "aabbccdd-d3ad-b33f-1337-001122334455";
         };
@@ -191,13 +284,6 @@
   # Fonts
   fonts = {
     packages = with pkgs; [
-      # # fonts for Powerline10k
-      # meslo-lgs-nf
-
-      # # icon fonts
-      # material-design-icons
-      # font-awesome
-
       # nerdfonts
       # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
       (nerdfonts.override {
@@ -214,6 +300,3 @@
     ];
   };
 }
-# TODO
-# defaults write 'com.googlecode.iterm2' "Default Bookmark Guid" ba11144f-6af3-434d-aaa6-0a48e0969958
-
