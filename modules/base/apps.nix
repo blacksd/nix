@@ -17,6 +17,7 @@
     alejandra # I prefer this over nixfmt-rfc-style
     rsync
     wget
+    tmux
   ];
 
   # NOTE: To make this work, homebrew need to be installed manually, see https://brew.sh

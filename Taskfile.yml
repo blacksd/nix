@@ -64,4 +64,9 @@ tasks:
       - task: macos_install_git
       - task: macos_install_nix
       - task: macos_install_brew
+
+  reinstall:
+    desc: Reinstall nix darwin
+    cmds:
+      - nix run nix-darwin -- switch --flake .#{{ .HOSTNAME }}
 # sudo -i nix-env --uninstall nix
