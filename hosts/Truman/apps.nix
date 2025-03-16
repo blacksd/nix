@@ -29,6 +29,7 @@
       "lens"
       "chatgpt"
       "xca"
+      "keystore-explorer"
     ];
   };
 }

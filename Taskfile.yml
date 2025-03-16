@@ -8,10 +8,10 @@ tasks:
       - task --list
     silent: true
 
-  rebuild:
+  switch:
     desc: Build and apply the system configuration
     cmds:
-      - darwin-rebuild switch --flake .#{{ .HOSTNAME }} {{ .CLI_ARGS }}
+      - darwin-rebuild switch --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
 
   update:
     desc: Run flake update (specify an argument after '--' for updating a single package)

@@ -57,6 +57,7 @@
       "shottr"
       "tmpdisk"
       "daisydisk"
+      "yubico-yubikey-manager"
 
       # Let's work
       "visual-studio-code"

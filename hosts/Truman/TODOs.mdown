@@ -1,0 +1,6 @@
+# TODOs
+
+* backport `aws-vault` longer unlock
+* `1password` explore one-unlock per session
+* `gh` extension to fetch org
+* configure k9s to hide header and customize shortcuts
