@@ -3,7 +3,7 @@
     # TODO: it may make sense to migrate a subset of this to a devbox (global or local) config
 
     # Security
-    _1password
+    _1password-cli
     sops
     yubikey-manager
     gitleaks
