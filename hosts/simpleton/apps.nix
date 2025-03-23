@@ -10,6 +10,7 @@
       "tor-browser"
       "calibre"
       "dropbox"
+      "tailscale"
     ];
   };
 }
