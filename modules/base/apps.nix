@@ -39,9 +39,9 @@
     # otherwise Apple Store will refuse to install them.
     # For details, see https://github.com/mas-cli/mas
     masApps = {
-      Magnet = 441258766;
       Irvue = 1039633667;
       HiddenBar = 1452453066;
+      iMovie = 408981434;
     };
 
     taps = ["homebrew/services"];

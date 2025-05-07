@@ -2,7 +2,7 @@
 function code_open_workspace {
   pushd "$HOME"/Workspaces >/dev/null 2>&1 || exit
   # shellcheck disable=SC2035
-  _workspace=$(find *.code-workspace -type f -exec basename {} \; | fzf)
+  _workspace=$(find . -type f -path '*.code-workspace' | fzf)
   if [ -n "${_workspace}" ]; then
     code "${_workspace}"
   else

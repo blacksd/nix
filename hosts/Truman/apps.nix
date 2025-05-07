@@ -30,6 +30,7 @@
       "chatgpt"
       "xca"
       "keystore-explorer"
+      "rectangle"
     ];
   };
 }

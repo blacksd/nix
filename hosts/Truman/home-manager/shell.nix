@@ -15,6 +15,9 @@
       source ${./shell-functions/vscode.zsh}
       # AWS
       source ${./shell-functions/aws.zsh}
+
+      # Try to resolve VScode stuff
+      [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
     '';
 
     oh-my-zsh = {

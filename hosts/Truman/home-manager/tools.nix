@@ -14,6 +14,7 @@
     shellcheck
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processer https://github.com/mikefarah/yq
+    act
 
     # General Tools
     gh
