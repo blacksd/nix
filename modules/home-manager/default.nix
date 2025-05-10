@@ -1,6 +1,6 @@
 {
   username,
-  # krewfile,
+  krewfile,
   ...
 }: {
   # import sub modules
@@ -9,6 +9,8 @@
     ./core.nix
     ./git.nix
     ./gpg.nix
+    ./k8s.nix
+    krewfile.homeManagerModules.krewfile
   ];
 
   # Home Manager needs a bit of information about you and the

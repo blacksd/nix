@@ -11,6 +11,8 @@
       "tor-browser"
       "calibre"
       "dropbox"
+      "tailscale"
+      "headlamp"
     ];
   };
 }
