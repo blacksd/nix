@@ -23,14 +23,21 @@
     casks = [
       # Let's make macOS better
       "elgato-stream-deck"
+      "logitech-camera-settings"
+      "rectangle"
 
       # Let's work
       "discord"
       "lens"
       "chatgpt"
+
+      # Cert stuff
       "xca"
       "keystore-explorer"
-      "rectangle"
+
+      # Java things
+      "temurin"
+      "visualvm"
     ];
   };
 }
