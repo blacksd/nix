@@ -6,6 +6,7 @@
     # archives
     zip
     unzip
+    zstd
     xz
     p7zip
     gnutar

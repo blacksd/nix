@@ -5,6 +5,7 @@
       Magnet = 441258766;
     };
     casks = [
+      "macfuse"
       "ferdium"
       "transmission-remote-gui"
       "vlc"
@@ -13,6 +14,7 @@
       "dropbox"
       "tailscale"
       "headlamp"
+      "balenaetcher"
     ];
   };
 }

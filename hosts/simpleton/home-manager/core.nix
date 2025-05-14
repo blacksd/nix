@@ -3,5 +3,6 @@
     ffmpeg
     yt-dlp
     wakeonlan
+    ext4fuse
   ];
 }
