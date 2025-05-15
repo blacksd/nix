@@ -78,6 +78,7 @@
     plist_to_json = "python3 -c 'import plistlib,sys,json,base64; print(json.dumps(plistlib.loads(sys.stdin.read().encode(\"utf-8\")), default=lambda o:\"base64:\"+base64.b64encode(o).decode(\"ascii\")))'";
 
     k_config_off = "unset KUBECONFIG";
+    k_conform = "kubeconform -strict -ignore-missing-schemas -summary -schema-location default -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' -verbose -summary";
   };
 
   home.file = {

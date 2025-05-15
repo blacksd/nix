@@ -42,18 +42,10 @@
     kubelogin
 
     # Kubernetes
-    kubectl
     trivy
     kubie
     ctlptl
     argocd
-    (pkgs.wrapHelm pkgs.kubernetes-helm {
-      plugins = [
-        pkgs.kubernetes-helmPlugins.helm-diff
-        pkgs.kubernetes-helmPlugins.helm-secrets
-        pkgs.kubernetes-helmPlugins.helm-unittest
-      ];
-    })
 
     # AI tools
     # open-webui
