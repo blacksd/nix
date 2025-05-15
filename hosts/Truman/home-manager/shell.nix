@@ -5,7 +5,7 @@
 }: {
   programs.zsh = {
     initExtra = ''
-      export PATH="$HOME/.krew/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
+      export PATH="$KREW_ROOT/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
 
       # Devbox globals setup
       eval "$(devbox global shellenv)"

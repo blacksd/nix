@@ -6,9 +6,29 @@
         k9s = {
           ui = {
             headless = true;
+            # defaultsToFullScreen = true;
           };
           logger = {
-            fullScreen = true;
+            buffer = 4000;
+          };
+        };
+      };
+      hotkey = {
+        hotKeys = {
+          shift-k = {
+            shortCut = "Shift-K";
+            description = "Flux Kustomizations (all namespaces)";
+            command = "kustomize.toolkit.fluxcd.io/v1/kustomizations all";
+          };
+          shift-h = {
+            shortCut = "Shift-H";
+            description = "HelmReleases (all namespaces)";
+            command = "helmreleases.helm.toolkit.fluxcd.io all";
+          };
+          shift-f = {
+            shortCut = "Shift-F";
+            description = "FluxInstances (all namespaces)";
+            command = "fluxinstances.fluxcd.controlplane.io all";
           };
         };
       };
@@ -17,7 +37,6 @@
     # https://github.com/derailed/k9s/blob/master/plugins/flux.yaml
     # https://github.com/derailed/k9s/blob/master/plugins/log-stern.yaml
     krewfile = {
-      # FIXME: upon installation, krew pkg should update the plugin index
       enable = true;
       plugins = [
         "access-matrix"
