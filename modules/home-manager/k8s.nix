@@ -2,7 +2,20 @@
   programs = {
     k9s = {
       enable = true;
+      settings = {
+        k9s = {
+          ui = {
+            headless = true;
+          };
+          logger = {
+            fullScreen = true;
+          };
+        };
+      };
     };
+    # TODO: plugins
+    # https://github.com/derailed/k9s/blob/master/plugins/flux.yaml
+    # https://github.com/derailed/k9s/blob/master/plugins/log-stern.yaml
     krewfile = {
       # FIXME: upon installation, krew pkg should update the plugin index
       enable = true;
