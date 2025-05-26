@@ -16,7 +16,7 @@
     enable = true;
     enableCompletion = true;
 
-    initExtra = ''
+    initContent = ''
       export PATH="$HOME/.krew/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
 
       # Devbox globals setup
