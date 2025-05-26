@@ -1,4 +1,8 @@
-{pkgs, ...}:
+{
+  pkgs,
+  username,
+  ...
+}:
 ###################################################################################
 #
 #  macOS's System configuration
@@ -11,12 +15,13 @@
 ###################################################################################
 {
   system = {
+    primaryUser = username;
     stateVersion = 5;
     # activationScripts are executed every time you boot the system or run `nixos-rebuild` / `darwin-rebuild`.
-    activationScripts.postUserActivation.text = ''
+    activationScripts.postActivation.text = ''
       # activateSettings -u will reload the settings from the database and apply them to the current session,
       # so we do not need to logout and login again to make the changes take effect.
-      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+      sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     '';
 
     activationScripts.diff = {
@@ -271,7 +276,7 @@
   };
 
   # Add ability to used TouchID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   # this is required if you want to use darwin's default shell - zsh
@@ -284,19 +289,13 @@
   # Fonts
   fonts = {
     packages = with pkgs; [
-      # nerdfonts
-      # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
-      (nerdfonts.override {
-        fonts = [
-          "Meslo"
-          # symbols icon only
-          "NerdFontsSymbolsOnly"
-          # Characters
-          "FiraCode"
-          "JetBrainsMono"
-          "Iosevka"
-        ];
-      })
+      # nerd-fonts
+      # https://github.com/NixOS/nixpkgs/blob/25.05/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
+      nerd-fonts.meslo-lg
+      nerd-fonts.symbols-only
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.iosevka
     ];
   };
 }

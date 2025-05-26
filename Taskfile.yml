@@ -11,7 +11,7 @@ tasks:
   switch:
     desc: Build and apply the system configuration
     cmds:
-      - darwin-rebuild switch --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
+      - sudo darwin-rebuild switch --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
 
   update:
     desc: Run flake update (specify an argument after '--' for updating a single package)
@@ -66,7 +66,20 @@ tasks:
       - task: macos_install_brew
 
   reinstall:
-    desc: Reinstall nix darwin
+    desc: Reinstall nix-darwin
     cmds:
-      - nix run nix-darwin -- switch --flake .#{{ .HOSTNAME }}
-# sudo -i nix-env --uninstall nix
+      - sudo nix run nix-darwin/nix-darwin-25.05 -- switch --flake .#{{ .HOSTNAME }}
+
+  uninstall:
+    desc: Remove nix darwin
+    prompt:
+      - This will remove nix-darwin. Are you sure?
+    cmds:
+      - sudo nix --extra-experimental-features "nix-command flakes" run nix-darwin#darwin-uninstaller
+
+  uninstall_nix:
+    desc: Remove nix
+    prompt:
+      - This will remove Nix entirely! Are you sure?
+    cmds:
+      - sudo -i nix-env --uninstall nix
