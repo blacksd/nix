@@ -4,7 +4,7 @@
   ...
 }: {
   programs.zsh = {
-    initExtra = ''
+    initContent = ''
       export PATH="$KREW_ROOT/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
 
       # Devbox globals setup
