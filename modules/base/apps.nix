@@ -18,6 +18,7 @@
     rsync
     wget
     tmux
+    htop
   ];
 
   # NOTE: To make this work, homebrew need to be installed manually, see https://brew.sh
