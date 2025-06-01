@@ -7,6 +7,7 @@
     ../../modules/base
     ./apps.nix
     ./aerospace.nix
+    ./jankyborders.nix
     home-manager.darwinModules.home-manager
   ];
 
