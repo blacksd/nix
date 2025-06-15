@@ -5,8 +5,9 @@
 }: {
   # import sub modules
   imports = [
-    ./shell.nix
     ./core.nix
+    ./shell.nix
+    ./nvim.nix
     ./git.nix
     ./gpg.nix
     ./k8s.nix

@@ -14,7 +14,6 @@
     # utils
     netcat
     ripgrep
-    fzf
     tree
     gnused
     gnugrep
@@ -26,13 +25,6 @@
   ];
 
   programs = {
-    # modern vim
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      vimAlias = true;
-    };
-
     java = {
       enable = true;
     };

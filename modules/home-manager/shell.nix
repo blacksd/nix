@@ -12,6 +12,58 @@
     direnv
   ];
 
+  programs.wezterm = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    extraConfig = ''
+      return {
+        font = wezterm.font("JetBrains Mono"),
+        font_size = 14.0,
+        color_scheme = "Dracula",
+        hide_tab_bar_if_only_one_tab = true,
+      }
+    '';
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
+
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+    mouse = true;
+    terminal = "screen-256color";
+    plugins = with pkgs.tmuxPlugins; [
+      cpu
+      dracula
+    ];
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
+
+  programs.bat = {
+    enable = true;
+    themes = {
+      dracula = {
+        src = pkgs.fetchFromGitHub {
+          owner = "dracula";
+          repo = "sublime"; # Bat uses sublime syntax for its themes
+          rev = "26c57ec282abcaa76e57e055f38432bd827ac34e";
+          sha256 = "019hfl4zbn4vm4154hh3bwk6hm7bdxbr1hdww83nabxwjn99ndhv";
+        };
+        file = "Dracula.tmTheme";
+      };
+    };
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;

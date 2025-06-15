@@ -17,7 +17,6 @@
     alejandra # I prefer this over nixfmt-rfc-style
     rsync
     wget
-    tmux
     htop
   ];
 
