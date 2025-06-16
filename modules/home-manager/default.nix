@@ -7,6 +7,7 @@
   imports = [
     ./core.nix
     ./shell.nix
+    ./tmux.nix
     ./nvim.nix
     ./git.nix
     ./gpg.nix
