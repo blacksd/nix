@@ -17,12 +17,7 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
     extraConfig = ''
-      return {
-        font = wezterm.font("JetBrains Mono"),
-        font_size = 14.0,
-        color_scheme = "Dracula",
-        hide_tab_bar_if_only_one_tab = true,
-      }
+      ${builtins.readFile ./configs/wezterm.lua}
     '';
   };
 
