@@ -24,7 +24,6 @@
       # Let's make macOS better
       "elgato-stream-deck"
       "logitech-camera-settings"
-      "rectangle"
 
       # Let's work
       "discord"

@@ -41,7 +41,6 @@
     masApps = {
       Irvue = 1039633667;
       HiddenBar = 1452453066;
-      iMovie = 408981434;
     };
 
     taps = ["homebrew/services"];
@@ -58,6 +57,7 @@
       "tmpdisk"
       "daisydisk"
       "yubico-yubikey-manager"
+      "rectangle-pro"
 
       # Let's work
       "visual-studio-code"

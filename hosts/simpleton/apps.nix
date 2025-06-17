@@ -2,7 +2,7 @@
   homebrew = {
     masApps = {
       Enpass = 732710998;
-      #  Magnet = 441258766;
+      iMovie = 408981434;
     };
 
     # NOTE: avoid this and prefer the native nix-darwin way
@@ -20,7 +20,6 @@
       "tailscale"
       "headlamp"
       "balenaetcher"
-      "rectangle-pro"
     ];
   };
 }
