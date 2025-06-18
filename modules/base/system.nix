@@ -279,6 +279,7 @@
   security.pam.services.sudo_local = {
     enable = true;
     touchIdAuth = true;
+    reattach = true; # For screen/tmux
   };
 
   # Increase sudo timeout to 10 minutes
