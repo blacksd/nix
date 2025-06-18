@@ -13,6 +13,34 @@
           };
         };
       };
+      plugin = {
+        plugins = {
+          node-shell = {
+            shortCut = "Ctrl-N";
+            description = "Open a root shell on a node using the node-shell plugin";
+            scopes = ["nodes"];
+            command = "kubectl";
+            background = false;
+            confirm = false;
+            args = [
+              "node-shell"
+              "$NAME"
+              "--context $CONTEXT"
+            ];
+          };
+        };
+        view-secret = {
+          shortCut = "Shift-S";
+          description = "View secret (all)";
+          scopes = ["secrets"];
+          command = "sh";
+          background = false;
+          args = [
+            "-c"
+            "kubectl view-secret --context $CLUSTER --namespace $NAMESPACE --all $NAME | less"
+          ];
+        };
+      };
       # hotkey = {
       #   hotKeys = {
       #     shift-k = {
@@ -44,6 +72,7 @@
         "view-cert"
         "view-secret"
         "who-can"
+        "node-shell"
       ];
     };
   };
