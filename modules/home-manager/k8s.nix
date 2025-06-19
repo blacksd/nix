@@ -25,20 +25,21 @@
             args = [
               "node-shell"
               "$NAME"
-              "--context $CONTEXT"
+              "--context"
+              "$CLUSTER"
             ];
           };
-        };
-        view-secret = {
-          shortCut = "Shift-S";
-          description = "View secret (all)";
-          scopes = ["secrets"];
-          command = "sh";
-          background = false;
-          args = [
-            "-c"
-            "kubectl view-secret --context $CLUSTER --namespace $NAMESPACE --all $NAME | less"
-          ];
+          view-secret = {
+            shortCut = "Shift-S";
+            description = "View secret (all)";
+            scopes = ["secrets"];
+            command = "sh";
+            background = false;
+            args = [
+              "-c"
+              "kubectl view-secret --context $CLUSTER --namespace $NAMESPACE --all $NAME | less"
+            ];
+          };
         };
       };
       # hotkey = {
