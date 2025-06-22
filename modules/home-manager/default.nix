@@ -8,6 +8,7 @@
     ./core.nix
     ./shell.nix
     ./wezterm.nix
+    ./kitty.nix
     ./tmux.nix
     ./nvim.nix
     ./git.nix
