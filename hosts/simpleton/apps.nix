@@ -11,6 +11,7 @@
     casks = [
       # "aerospace"
       "macfuse"
+      "rectangle"
       "ferdium"
       "transmission-remote-gui"
       "vlc"

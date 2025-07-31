@@ -57,7 +57,6 @@
       "tmpdisk"
       "daisydisk"
       "yubico-yubikey-manager"
-      "rectangle-pro"
 
       # Let's work
       "visual-studio-code"

@@ -29,6 +29,7 @@
       "discord"
       "lens"
       "chatgpt"
+      "rectangle-pro"
 
       # Cert stuff
       "xca"
