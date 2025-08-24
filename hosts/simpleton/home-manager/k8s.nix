@@ -24,4 +24,7 @@
     # TODO: plugins
     # https://github.com/derailed/k9s/blob/master/plugins/flux.yaml
   };
+  home.packages = with pkgs; [
+    talosctl
+  ];
 }
