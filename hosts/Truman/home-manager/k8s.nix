@@ -28,7 +28,7 @@
               "applications"
               "$NAME"
               "--type=json"
-              "--patch=[{\"op\":\"replace\", \"path\": \"/spec/syncPolicy\", \"value\": {\"automated\": {} }}]"
+              "--patch=[{\"op\":\"replace\", \"path\": \"/spec/syncPolicy\", \"value\": {\"automated\": {} }}]" # perhaps use builtins.toJSON
             ];
           };
           disable-auto-sync = {

@@ -5,6 +5,7 @@
 }: {
   # import sub modules
   imports = [
+    krewfile.homeManagerModules.krewfile
     ./core.nix
     ./shell.nix
     ./wezterm.nix
@@ -14,7 +15,6 @@
     ./git.nix
     ./gpg.nix
     ./k8s.nix
-    krewfile.homeManagerModules.krewfile
   ];
 
   # Home Manager needs a bit of information about you and the

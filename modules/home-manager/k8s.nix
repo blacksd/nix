@@ -62,6 +62,7 @@
         "cert-manager"
         "cnpg"
         "ctx"
+        "deprecations"
         "explore"
         "kor"
         "kyverno"
