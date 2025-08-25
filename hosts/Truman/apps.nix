@@ -30,7 +30,6 @@
       "lens"
       "chatgpt"
       "rectangle-pro"
-      "tailscale"
 
       # Cert stuff
       "xca"
