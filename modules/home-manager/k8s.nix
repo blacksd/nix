@@ -68,6 +68,7 @@
         "kyverno"
         "neat"
         "ns"
+        "oidc-login"
         "pv-migrate"
         "resource-capacity"
         "stern"
@@ -81,6 +82,7 @@
   home.packages = with pkgs; [
     kubeconform
     kubectl
+    kustomize
     (pkgs.wrapHelm pkgs.kubernetes-helm {
       plugins = [
         pkgs.kubernetes-helmPlugins.helm-diff
