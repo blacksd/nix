@@ -80,9 +80,11 @@
     };
   };
   home.packages = with pkgs; [
+    cilium-cli
     kubeconform
     kubectl
     kustomize
+    kubernetes-helm
     (pkgs.wrapHelm pkgs.kubernetes-helm {
       plugins = [
         pkgs.kubernetes-helmPlugins.helm-diff

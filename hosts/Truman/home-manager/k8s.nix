@@ -74,4 +74,7 @@
       };
     };
   };
+  home.packages = with pkgs; [
+    argocd
+  ];
 }
