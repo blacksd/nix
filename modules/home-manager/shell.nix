@@ -95,8 +95,6 @@
   };
 
   home.shellAliases = {
-    k = "kubectl";
-
     cdrepo = "cd $HOME/Repositories";
     cdnixdarwin = "cd $HOME/.config/nix-darwin";
     cdgitroot = "cd $(git root)";
@@ -105,9 +103,6 @@
     urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
     urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
     plist_to_json = "python3 -c 'import plistlib,sys,json,base64; print(json.dumps(plistlib.loads(sys.stdin.read().encode(\"utf-8\")), default=lambda o:\"base64:\"+base64.b64encode(o).decode(\"ascii\")))'";
-
-    k_config_off = "unset KUBECONFIG";
-    k_conform = "kubeconform -strict -ignore-missing-schemas -summary -schema-location default -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' -verbose -summary";
   };
 
   home.file = {

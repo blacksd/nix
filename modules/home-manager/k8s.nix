@@ -19,14 +19,12 @@
             shortCut = "Ctrl-N";
             description = "Open a root shell on a node using the node-shell plugin";
             scopes = ["nodes"];
-            command = "kubectl";
+            command = "sh";
             background = false;
             confirm = false;
             args = [
-              "node-shell"
-              "$NAME"
-              "--context"
-              "$CLUSTER"
+              "-c"
+              "kubectl node-shell --context $CONTEXT $NAME"
             ];
           };
           view-secret = {
@@ -37,20 +35,42 @@
             background = false;
             args = [
               "-c"
-              "kubectl view-secret --context $CLUSTER --namespace $NAMESPACE --all $NAME | less"
+              "kubectl view-secret --context $CONTEXT --namespace $NAMESPACE --all $NAME | less"
+            ];
+          };
+          neat_nodes = {
+            shortCut = "Ctrl-T";
+            description = "Clean manifest with kubectl neat (nodes)";
+            scopes = ["nodes"];
+            command = "sh";
+            background = false;
+            args = [
+              "-c"
+              "kubectl neat get -- node --context $CONTEXT $NAME --output yaml | less"
+            ];
+          };
+          neat_non_nodes = {
+            shortCut = "Ctrl-T";
+            description = "Clean manifest with kubectl neat (non-nodes)";
+            scopes = ["pods" "deployments" "statefulsets" "secrets" "configmaps"];
+            command = "sh";
+            background = false;
+            args = [
+              "-c"
+              "kubectl neat get -- $RESOURCE_NAME --context $CONTEXT --namespace $NAMESPACE $NAME --output yaml | less"
             ];
           };
         };
       };
-      # hotkey = {
-      #   hotKeys = {
-      #     shift-k = {
-      #       shortCut = "Shift-K";
-      #       description = "Flux Kustomizations (all namespaces)";
-      #       command = "kustomize.toolkit.fluxcd.io/v1/kustomizations all";
-      #     };
-      #   };
-      # };
+      hotkey = {
+        hotKeys = {
+          shift-k = {
+            shortCut = "Shift-K";
+            description = "Flux Kustomizations (all namespaces)";
+            command = "kustomize.toolkit.fluxcd.io/v1/kustomizations all";
+          };
+        };
+      };
     };
     # TODO: plugins
     # https://github.com/derailed/k9s/blob/master/plugins/log-stern.yaml
@@ -93,4 +113,10 @@
       ];
     })
   ];
+  home.shellAliases = {
+    k = "kubectl";
+
+    k_config_off = "unset KUBECONFIG";
+    k_conform = "kubeconform -strict -ignore-missing-schemas -summary -schema-location default -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' -verbose -summary";
+  };
 }
