@@ -32,7 +32,8 @@
     k_config_switch_aws = "export KUBECONFIG=\"$HOME/.kube/config_aws\"";
     k_config_switch_azure = "export KUBECONFIG=\"$HOME/.kube/config_azure\"";
     k_config_switch_gcp = "export KUBECONFIG=\"$HOME/.kube/config_gcp\"";
+    k_config_switch_ephemeral = "export KUBECONFIG=\"$HOME/.kube/config_ephemeral\"";
 
-    hmqc_repo = "pushd \"$(find $HOME/Repositories -type d -maxdepth 1 -exec basename {} \\; | sort | fzf)\"";
+    hmqc_repo = "pushd $HOME/Repositories/\"$(find $HOME/Repositories -type d -maxdepth 1 -exec basename {} \\; | sort | fzf)\"";
   };
 }

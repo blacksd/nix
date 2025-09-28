@@ -28,7 +28,6 @@
       # Let's work
       "discord"
       "lens"
-      "chatgpt"
       "rectangle-pro"
 
       # Cert stuff

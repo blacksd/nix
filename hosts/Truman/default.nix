@@ -6,6 +6,7 @@
   imports = [
     ../../modules/base
     ./apps.nix
+    ./ai.nix
     home-manager.darwinModules.home-manager
   ];
 

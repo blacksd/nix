@@ -22,6 +22,9 @@
     jc
     localsend
     go-task
+
+    # I don't know what fun is
+    devenv
   ];
 
   programs = {
