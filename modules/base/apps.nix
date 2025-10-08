@@ -62,7 +62,7 @@
       "visual-studio-code"
       "logseq"
       "xca"
-      "tailscale"
+      "tailscale-app"
 
       # Let's try to survive the day
       # "background-music" # TODO: needs Rosetta

@@ -6,5 +6,6 @@
     ./home-manager/shell.nix
     ./home-manager/ssh.nix
     ./home-manager/tools.nix
+    ./home-manager/ai.nix
   ];
 }
