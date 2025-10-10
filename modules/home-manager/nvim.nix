@@ -5,6 +5,7 @@
       enable = true;
       defaultEditor = true;
       vimAlias = true;
+      viAlias = true;
       plugins = with pkgs.vimPlugins; [
         vim-nix
         dracula-nvim
