@@ -1,11 +1,13 @@
 {
   username,
   krewfile,
+  claude-code,
   ...
 }: {
   # import sub modules
   imports = [
     krewfile.homeManagerModules.krewfile
+    claude-code.homeManagerModules.claude-code
     ./core.nix
     ./shell.nix
     ./wezterm.nix

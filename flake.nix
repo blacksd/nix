@@ -46,6 +46,11 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
+
+    claude-code = {
+      url = "github:roman/claude-code.nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   # The `outputs` function will return all the build results of the flake.
@@ -55,11 +60,12 @@
   # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
   outputs = inputs @ {
     self,
-    nixpkgs,
+    nixpkgs-darwin,
     darwin,
     home-manager,
     krewfile,
     flake-utils,
+    claude-code,
     ...
   }: let
     specialArgs = {
@@ -97,8 +103,7 @@
     };
 
     # nix code formatter
-    formatter = flake-utils.lib.eachDefaultSystem (system: {
-      inherit (nixpkgs.legacyPackages.${system}) alejandra;
-    });
+    formatter.aarch64-darwin = nixpkgs-darwin.legacyPackages.aarch64-darwin.alejandra;
+    formatter.x86_64-darwin = nixpkgs-darwin.legacyPackages.x86_64-darwin.alejandra;
   };
 }
