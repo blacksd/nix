@@ -47,11 +47,15 @@
       url = "github:numtide/flake-utils";
     };
 
-    # An alternative approach? https://github.com/natsukium/mcp-servers-nix/
     claude-code = {
       url = "github:roman/claude-code.nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    # mcp-servers-nix = {
+    #   url = "github:natsukium/mcp-servers-nix";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
   };
 
   # The `outputs` function will return all the build results of the flake.
@@ -67,6 +71,7 @@
     krewfile,
     flake-utils,
     claude-code,
+    # mcp-servers-nix,
     ...
   }: let
     specialArgs = {
