@@ -47,6 +47,7 @@
       url = "github:numtide/flake-utils";
     };
 
+    # An alternative approach? https://github.com/natsukium/mcp-servers-nix/
     claude-code = {
       url = "github:roman/claude-code.nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";

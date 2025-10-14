@@ -30,6 +30,7 @@ in {
       #   # tokenFilepath = "/path/to/github-token";
       # };
       servers = {
+        # https://github.com/edicarloslds/businessmap-mcp
         businessmap-mcp = {
           type = "stdio";
           command = "${pkgs.nodejs_24}/bin/npx";
