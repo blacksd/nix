@@ -109,7 +109,9 @@
     };
 
     # nix code formatter
-    formatter.aarch64-darwin = nixpkgs-darwin.legacyPackages.aarch64-darwin.alejandra;
-    formatter.x86_64-darwin = nixpkgs-darwin.legacyPackages.x86_64-darwin.alejandra;
+    formatter = flake-utils.lib.eachDefaultSystemMap (
+      system:
+        nixpkgs-darwin.legacyPackages.${system}.alejandra
+    );
   };
 }
