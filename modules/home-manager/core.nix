@@ -18,10 +18,13 @@
     gnused
     gnugrep
     gawk
+    jq
     jnv
-    jc
+    jc # json converter
+    yq-go # yaml processer https://github.com/mikefarah/yq
     localsend
     go-task
+    fd
 
     # I don't know what fun is
     devenv

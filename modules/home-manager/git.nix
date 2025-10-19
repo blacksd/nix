@@ -26,9 +26,18 @@
       gh-s
       gh-f
       gh-poi
-      # TODO: add a package for matt-bartel/gh-clone-org or rm3l/gh-org-repo-sync
     ];
   };
+  # TODO: add a package for matt-bartel/gh-clone-org or rm3l/gh-org-repo-sync; can't do this b/c the symlink will fail
+  # home.file = {
+  #   ".local/share/gh/extensions/gh-clone-org" = {
+  #     enable = true;
+  #     source = builtins.fetchurl {
+  #       url = "https://raw.githubusercontent.com/matt-bartel/gh-clone-org/refs/heads/master/gh-clone-org";
+  #       sha256 = "a3d2732de7b6cd91d5bdb543f2007bb048754624dc159bb4b1436e5e293c165f";
+  #     };
+  #   };
+  # };
 
   programs.git = {
     enable = true;
