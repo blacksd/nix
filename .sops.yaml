@@ -1,9 +1,9 @@
 keys:
+  - &Truman age1ryvy7qla9uxjpcw9hsz5y3ycejgfmldn7hlvptwu9rslgj2693rqmk2tfk
   - &Truman_backup age1ry6l8lwhkqg64z9543yqhua2fy97j3gennsxenm5pd0kqtfghfcq6zgdcy
-  - &Truman_yubikey age1yubikey1qg77kfk3fgw332qdjhl69sn3g2j3479kl59r27xe6up8eew3cd77ju0365g
 creation_rules:
-  - path_regex: hosts/Truman/secrets/.*\.sops\.yaml$
+  - path_regex: hosts\/Truman\/secrets\/.*\.sops(?:\.yaml)*$
     key_groups:
       - age:
+          - *Truman
           - *Truman_backup
-          - *Truman_yubikey

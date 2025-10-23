@@ -2,6 +2,7 @@
   pkgs,
   nixpkgs-unstable,
   username,
+  config,
   ...
 }: let
   # Get claude-code from nixpkgs-unstable
@@ -70,11 +71,10 @@ in {
         # https://github.com/edicarloslds/businessmap-mcp
         businessmap-mcp = {
           type = "stdio";
-          command = "${pkgs.nodejs_24}/bin/npx";
-          args = ["-y" "@edicarlos.lds/businessmap-mcp"];
+          command = "${pkgs.bash}/bin/bash";
+          args = ["-c" "source ${config.sops.templates.businessmap-env.path} && exec ${pkgs.nodejs_24}/bin/npx -y @edicarlos.lds/businessmap-mcp"];
           env = {
             BUSINESSMAP_DEFAULT_WORKSPACE_ID = "1";
-            # API_KEY_FILE = "/path/to/api-key";
           };
         };
         # nixos = {

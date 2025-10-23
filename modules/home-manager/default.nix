@@ -2,6 +2,7 @@
   username,
   krewfile,
   claude-code,
+  sops-nix,
   ...
 }: {
   # import sub modules
@@ -13,6 +14,7 @@
     ./kitty.nix
     ./nvim.nix
     ./shell.nix
+    ./sops.nix
     ./tmux.nix
     ./wezterm.nix
     claude-code.homeManagerModules.claude-code

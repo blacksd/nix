@@ -1,4 +1,4 @@
 **/.DS_Store
 **/result
-hosts/*/.key/*
-!hosts/*/.key/.gitkeep
+hosts/*/.keys/*
+!hosts/*/.keys/.gitkeep
