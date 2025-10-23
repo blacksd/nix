@@ -6,17 +6,17 @@
 }: {
   # import sub modules
   imports = [
-    krewfile.homeManagerModules.krewfile
-    claude-code.homeManagerModules.claude-code
     ./core.nix
-    ./shell.nix
-    ./wezterm.nix
-    ./kitty.nix
-    ./tmux.nix
-    ./nvim.nix
     ./git.nix
     ./gpg.nix
     ./k8s.nix
+    ./kitty.nix
+    ./nvim.nix
+    ./shell.nix
+    ./tmux.nix
+    ./wezterm.nix
+    claude-code.homeManagerModules.claude-code
+    krewfile.homeManagerModules.krewfile
   ];
 
   # Home Manager needs a bit of information about you and the

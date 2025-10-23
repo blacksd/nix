@@ -28,6 +28,7 @@
 
     # I don't know what fun is
     devenv
+    qrencode
   ];
 
   programs = {
