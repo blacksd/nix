@@ -68,20 +68,15 @@ in {
       #   # tokenFilepath = "/path/to/github-token";
       # };
       servers = {
-        # https://github.com/edicarloslds/businessmap-mcp
         businessmap-mcp = {
           type = "stdio";
           command = "${pkgs.bash}/bin/bash";
-          args = ["-c" "source ${config.sops.templates.businessmap-env.path} && exec ${pkgs.nodejs_24}/bin/npx -y @edicarlos.lds/businessmap-mcp"];
+          args = ["-c" "source ${config.sops.templates.businessmap-env.path} && ${pkgs.nodejs_24}/bin/npx -y @edicarlos.lds/businessmap-mcp"];
           env = {
-            BUSINESSMAP_DEFAULT_WORKSPACE_ID = "1";
+            BUSINESSMAP_DEFAULT_WORKSPACE_ID = "73";
+            BUSINESSMAP_READ_ONLY_MODE = "true";
           };
         };
-        # nixos = {
-        #   type = "stdio";
-        #   command = "nix";
-        #   args = ["run" "github:utensils/mcp-nixos" "--"];
-        # };
         ast-grep-mcp = {
           type = "stdio";
           command = "${pkgs.uv}/bin/uvx";
@@ -89,12 +84,6 @@ in {
         };
       };
     };
-    # extraTools = {
-    #   ast-grep = {
-    #     package = pkgs-unstable.ast-grep;
-    #     binary = "ast-grep";
-    #   };
-    # };
   };
   home.file = {
     ".claude/settings.json" = {

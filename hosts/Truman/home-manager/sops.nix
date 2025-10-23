@@ -13,21 +13,21 @@ in {
         path = "${config.home.homeDirectory}/.ssh/${fixedUsername}_hivemq";
       };
 
-      businessmap_api_key = {
+      businessmap_api_token = {
         sopsFile = ../secrets/mcp.sops.yaml;
-        key = "kanbanize/api_key";
+        key = "kanbanize/api_token";
       };
 
-      businessmap_base_url = {
+      businessmap_api_url = {
         sopsFile = ../secrets/mcp.sops.yaml;
-        key = "kanbanize/base_url";
+        key = "kanbanize/api_url";
       };
     };
 
     templates."businessmap-env" = {
       content = ''
-        export BUSINESSMAP_API_KEY="${config.sops.placeholder.businessmap_api_key}"
-        export BUSINESSMAP_BASE_URL="${config.sops.placeholder.businessmap_base_url}"
+        export BUSINESSMAP_API_URL="${config.sops.placeholder.businessmap_api_url}"
+        export BUSINESSMAP_API_TOKEN="${config.sops.placeholder.businessmap_api_token}"
       '';
     };
   };
