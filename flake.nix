@@ -52,6 +52,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+
     # mcp-servers-nix = {
     #   url = "github:natsukium/mcp-servers-nix";
     #   inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -71,6 +76,7 @@
     krewfile,
     flake-utils,
     claude-code,
+    sops-nix,
     # mcp-servers-nix,
     ...
   }: let

@@ -2,6 +2,7 @@
   pkgs,
   nixpkgs-unstable,
   username,
+  config,
   ...
 }: let
   # Get claude-code from nixpkgs-unstable
@@ -67,34 +68,29 @@ in {
       #   # tokenFilepath = "/path/to/github-token";
       # };
       servers = {
-        # https://github.com/edicarloslds/businessmap-mcp
-        businessmap-mcp = {
+        businessmap = {
           type = "stdio";
-          command = "${pkgs.nodejs_24}/bin/npx";
-          args = ["-y" "@edicarlos.lds/businessmap-mcp"];
+          command = "${pkgs.bash}/bin/bash";
+          args = ["-c" "source ${config.sops.templates.businessmap-env.path} && ${pkgs.nodejs_24}/bin/npx -y @edicarlos.lds/businessmap-mcp"];
           env = {
-            BUSINESSMAP_DEFAULT_WORKSPACE_ID = "1";
-            # API_KEY_FILE = "/path/to/api-key";
+            BUSINESSMAP_DEFAULT_WORKSPACE_ID = "73";
+            BUSINESSMAP_READ_ONLY_MODE = "true";
           };
         };
-        # nixos = {
-        #   type = "stdio";
-        #   command = "nix";
-        #   args = ["run" "github:utensils/mcp-nixos" "--"];
-        # };
-        ast-grep-mcp = {
+        ast-grep = {
           type = "stdio";
           command = "${pkgs.uv}/bin/uvx";
           args = ["--from" "git+https://github.com/ast-grep/ast-grep-mcp" "ast-grep-server"];
         };
+        linear = {
+          type = "sse";
+          url = "https://mcp.linear.app/sse";
+          # INFO: not needed, just the URL
+          # command = "${pkgs.nodejs_24}/bin/npx";
+          # args = ["-y" "mcp-remote" "https://mcp.linear.app/sse"];
+        };
       };
     };
-    # extraTools = {
-    #   ast-grep = {
-    #     package = pkgs-unstable.ast-grep;
-    #     binary = "ast-grep";
-    #   };
-    # };
   };
   home.file = {
     ".claude/settings.json" = {

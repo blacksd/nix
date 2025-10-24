@@ -63,7 +63,6 @@
       "logseq"
       "xca"
       "tailscale-app"
-      "tailscale"
       "google-drive"
 
       # Let's try to survive the day
