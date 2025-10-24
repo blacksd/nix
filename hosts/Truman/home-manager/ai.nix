@@ -68,7 +68,7 @@ in {
       #   # tokenFilepath = "/path/to/github-token";
       # };
       servers = {
-        businessmap-mcp = {
+        businessmap = {
           type = "stdio";
           command = "${pkgs.bash}/bin/bash";
           args = ["-c" "source ${config.sops.templates.businessmap-env.path} && ${pkgs.nodejs_24}/bin/npx -y @edicarlos.lds/businessmap-mcp"];
@@ -77,10 +77,17 @@ in {
             BUSINESSMAP_READ_ONLY_MODE = "true";
           };
         };
-        ast-grep-mcp = {
+        ast-grep = {
           type = "stdio";
           command = "${pkgs.uv}/bin/uvx";
           args = ["--from" "git+https://github.com/ast-grep/ast-grep-mcp" "ast-grep-server"];
+        };
+        linear = {
+          type = "sse";
+          url = "https://mcp.linear.app/sse";
+          # INFO: not needed, just the URL
+          # command = "${pkgs.nodejs_24}/bin/npx";
+          # args = ["-y" "mcp-remote" "https://mcp.linear.app/sse"];
         };
       };
     };
