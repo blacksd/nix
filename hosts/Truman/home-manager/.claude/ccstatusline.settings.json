@@ -1,0 +1,105 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "5",
+        "type": "git-branch",
+        "color": "magenta"
+      },
+      {
+        "id": "7",
+        "type": "git-changes",
+        "color": "yellow"
+      },
+      {
+        "id": "59800408-8c0f-416f-873c-e7b844598c59",
+        "type": "flex-separator"
+      },
+      {
+        "id": "703ae134-c8dd-46d6-8cb7-e6c4201e0246",
+        "type": "context-percentage"
+      },
+      {
+        "id": "452ac910-10e9-462a-8640-f50b67f3c313",
+        "type": "separator"
+      },
+      {
+        "id": "402a9a99-3c55-43b5-bd0d-169740c4c1aa",
+        "type": "context-length"
+      }
+    ],
+    [
+      {
+        "id": "7cd7b567-ae2d-4f6a-ad70-ba7a3c199a33",
+        "type": "tokens-input"
+      },
+      {
+        "id": "9471a35e-a755-4cad-9bd0-73721d936fae",
+        "type": "separator"
+      },
+      {
+        "id": "0b785626-fe94-4b26-88d4-f425c2b256df",
+        "type": "tokens-output"
+      },
+      {
+        "id": "54121855-ac54-40b6-a44d-2339c7195a0c",
+        "type": "separator"
+      },
+      {
+        "id": "efaff49c-c455-4031-8c04-371eff97a759",
+        "type": "tokens-cached"
+      },
+      {
+        "id": "05aa8110-0c9f-4c16-8f49-65087d01c9c2",
+        "type": "flex-separator"
+      },
+      {
+        "id": "d709ecf1-095e-4ddc-a484-239109c51218",
+        "type": "tokens-total"
+      }
+    ],
+    [
+      {
+        "id": "71588594-2820-48e7-8634-8aa425b290e1",
+        "type": "block-timer",
+        "metadata": {
+          "display": "progress"
+        }
+      },
+      {
+        "id": "d14ee65d-a303-4b3e-9b72-87d81e8cc6bb",
+        "type": "flex-separator"
+      },
+      {
+        "id": "f8110309-a8b6-4284-9716-3aab26664b20",
+        "type": "session-clock"
+      }
+    ],
+    [
+      {
+        "id": "dd76fee1-894e-4307-b1a8-56a6157de7b7",
+        "type": "current-working-dir"
+      }
+    ]
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 3,
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "powerline": {
+    "enabled": false,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [],
+    "endCaps": [],
+    "autoAlign": false,
+    "theme": "nord-aurora"
+  },
+  "defaultPadding": " "
+}

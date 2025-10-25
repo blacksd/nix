@@ -103,7 +103,13 @@ in {
         };
         alwaysThinkingEnabled = false;
         # model = "Sonnet"; # INFO: omitted as it's the default
+        statusLine = {
+          type = "command";
+          command = "${pkgs.bun}/bin/bunx ccstatusline@latest";
+        };
       };
     };
+    # INFO: use this to visually edit the config: nix shell nixpkgs#bun --command bunx ccstatusline@latest
+    ".config/ccstatusline/settings.json".source = ./.claude/ccstatusline.settings.json;
   };
 }
