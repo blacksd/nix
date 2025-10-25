@@ -1,0 +1,13 @@
+<project_principles>
+  <principle priority="critical">
+    <name>User experience is paramount</name>
+    <directive>NEVER break user experience under any circumstances</directive>
+    <requirement>Prioritize contribution quality and end-user experience above all else</requirement>
+  </principle>
+
+  <principle priority="high">
+    <name>Evidence-based contributions</name>
+    <directive>Provide hard proof for all contributions</directive>
+    <requirement>Validate and test everywhere applicable before submission</requirement>
+  </principle>
+</project_principles>
