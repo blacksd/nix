@@ -45,6 +45,10 @@
   # And then we link the .mcp.json to a project directory
   # home.file."Repositories/project/.mcp.json".source = mcpConfig;
 in {
+  imports = [
+    ./claude
+  ];
+
   home.packages = with pkgs-unstable; [
     codex
     yek
@@ -54,6 +58,7 @@ in {
   # Using programs.claude-code from roman/claude-code for personal setup
   programs.claude-code = {
     enable = true;
+    assembleClaudeMd = true;
     # Use claude-code from nixpkgs-unstable
     package = pkgs-unstable.claude-code;
     # mcp-servers packages come from mcp-servers-nix overlay in modules/base/nix-core.nix
@@ -110,6 +115,6 @@ in {
       };
     };
     # INFO: use this to visually edit the config: nix shell nixpkgs#bun --command bunx ccstatusline@latest
-    ".config/ccstatusline/settings.json".source = ./.claude/ccstatusline.settings.json;
+    ".config/ccstatusline/settings.json".source = ./claude/statusline/ccstatusline.settings.json;
   };
 }

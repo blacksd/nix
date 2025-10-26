@@ -31,9 +31,12 @@
 
   <contribution_formatting>
     <emoji_policy>
-      <ban scope="bullet_points">Absolute ban on emojis in bullet points</ban>
-      <ban scope="commits">Absolute ban on emojis in commits</ban>
-      <restriction scope="general">Use parsimoniously elsewhere</restriction>
+      <scope name="bullet_points" policy="banned" />
+      <scope name="commits" policy="banned" />
+      <scope name="pr_descriptions" policy="banned" />
+      <scope name="code_comments" policy="banned" />
+      <scope name="documentation" policy="banned" />
+      <scope name="chat_interaction" policy="restricted" />
     </emoji_policy>
 
     <language_style>
