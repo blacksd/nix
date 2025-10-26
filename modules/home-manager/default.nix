@@ -7,6 +7,7 @@
 }: {
   # import sub modules
   imports = [
+    ./age.nix
     ./core.nix
     ./git.nix
     ./gpg.nix

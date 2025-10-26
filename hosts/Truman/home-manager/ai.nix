@@ -55,6 +55,33 @@ in {
     ast-grep
   ];
 
+  # Decrypt the files and create a template with the env var exports
+  sops = {
+    secrets = {
+      hivemq_cloud_xml = {
+        sopsFile = ../secrets/hivemq_cloud.xml.sops;
+        format = "binary";
+      };
+
+      businessmap_api_token = {
+        sopsFile = ../secrets/mcp.sops.yaml;
+        key = "kanbanize/api_token";
+      };
+
+      businessmap_api_url = {
+        sopsFile = ../secrets/mcp.sops.yaml;
+        key = "kanbanize/api_url";
+      };
+    };
+
+    templates."businessmap-env" = {
+      content = ''
+        export BUSINESSMAP_API_URL="${config.sops.placeholder.businessmap_api_url}"
+        export BUSINESSMAP_API_TOKEN="${config.sops.placeholder.businessmap_api_token}"
+      '';
+    };
+  };
+
   # Using programs.claude-code from roman/claude-code for personal setup
   programs.claude-code = {
     enable = true;
