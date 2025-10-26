@@ -3,8 +3,6 @@
 {
   imports = [
     ./prompts
+    ./settings
   ];
-
-  # Future: add statusline module here when implemented
-  # ./statusline
 }
