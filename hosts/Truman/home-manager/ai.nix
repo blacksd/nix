@@ -58,9 +58,14 @@ in {
   # Using programs.claude-code from roman/claude-code for personal setup
   programs.claude-code = {
     enable = true;
-    assembleClaudeMd = true;
     # Use claude-code from nixpkgs-unstable
     package = pkgs-unstable.claude-code;
+
+    # Assemble CLAUDE.md from XML prompts
+    assembleClaudeMd = {
+      enable = true;
+      hivemqCloudXmlPath = config.sops.secrets.hivemq_cloud_xml.path;
+    };
     # mcp-servers packages come from mcp-servers-nix overlay in modules/base/nix-core.nix
     mcp = {
       git.enable = true;

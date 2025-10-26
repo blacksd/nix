@@ -1,7 +1,15 @@
-{ lib, ... }:
+{ lib, hivemqCloudXmlPath ? null, ... }:
 
 let
   promptsDir = ./.;
+
+  hivemqSection = if hivemqCloudXmlPath != null then ''
+    ---
+
+    # HiveMQ Cloud Context
+
+    @${hivemqCloudXmlPath}
+  '' else "";
 in
 {
   text = ''
@@ -26,11 +34,6 @@ in
     # Tooling Directives
 
     ${lib.readFile "${promptsDir}/tooling.xml"}
-
-    ---
-
-    # HiveMQ Cloud Context
-
-    ${lib.readFile "${promptsDir}/hivemq_cloud.xml"}
+    ${hivemqSection}
   '';
 }
