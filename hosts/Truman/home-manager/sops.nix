@@ -13,6 +13,11 @@ in {
         path = "${config.home.homeDirectory}/.ssh/${fixedUsername}_hivemq";
       };
 
+      hivemq_cloud_xml = {
+        sopsFile = ../secrets/hivemq_cloud.xml.sops;
+        format = "binary";
+      };
+
       businessmap_api_token = {
         sopsFile = ../secrets/mcp.sops.yaml;
         key = "kanbanize/api_token";

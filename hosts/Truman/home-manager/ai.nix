@@ -45,6 +45,10 @@
   # And then we link the .mcp.json to a project directory
   # home.file."Repositories/project/.mcp.json".source = mcpConfig;
 in {
+  imports = [
+    ./claude
+  ];
+
   home.packages = with pkgs-unstable; [
     codex
     yek
@@ -56,6 +60,12 @@ in {
     enable = true;
     # Use claude-code from nixpkgs-unstable
     package = pkgs-unstable.claude-code;
+
+    # Assemble CLAUDE.md from XML prompts
+    assembleClaudeMd = {
+      enable = true;
+      hivemqCloudXmlPath = config.sops.secrets.hivemq_cloud_xml.path;
+    };
     # mcp-servers packages come from mcp-servers-nix overlay in modules/base/nix-core.nix
     mcp = {
       git.enable = true;
@@ -103,7 +113,13 @@ in {
         };
         alwaysThinkingEnabled = false;
         # model = "Sonnet"; # INFO: omitted as it's the default
+        statusLine = {
+          type = "command";
+          command = "${pkgs.bun}/bin/bunx ccstatusline@latest";
+        };
       };
     };
+    # INFO: use this to visually edit the config: nix shell nixpkgs#bun --command bunx ccstatusline@latest
+    ".config/ccstatusline/settings.json".source = ./claude/statusline/ccstatusline.settings.json;
   };
 }

@@ -1,0 +1,95 @@
+<tooling_directives>
+  <important>
+    MANDATORY: Use the specified tools for each activity type. These tools are optimized for their
+    specific use cases and MUST be preferred over generic alternatives.
+  </important>
+
+  <native_tools_policy>
+    <note>
+      Claude Code provides optimized native tools (Glob, Grep) that should be preferred when
+      available
+      and appropriate. Use fd/rg via Bash for interactive operations, complex pipelines, or when
+      native tools are insufficient.
+    </note>
+  </native_tools_policy>
+
+  <tool_mappings>
+    <mapping>
+      <activity>finding FILES</activity>
+      <tool>fd</tool>
+      <description>File discovery and search</description>
+      <note>Prefer native Glob tool when available for simple pattern matching</note>
+      <examples>
+        <example>fd '\.nix$'</example>
+        <example>fd -t f -e md</example>
+      </examples>
+    </mapping>
+
+    <mapping>
+      <activity>finding TEXT in files</activity>
+      <tool>rg</tool>
+      <description>Fast text search using ripgrep</description>
+      <note>Prefer native Grep tool when available for content search</note>
+      <examples>
+        <example>rg 'pattern' path/</example>
+        <example>rg -i 'case-insensitive'</example>
+      </examples>
+    </mapping>
+
+    <mapping>
+      <activity>finding CODE STRUCTURE</activity>
+      <tool>ast-grep</tool>
+      <description>Abstract syntax tree-based code search</description>
+      <examples>
+        <example>ast-grep --pattern 'function $NAME() { $$$ }'</example>
+      </examples>
+    </mapping>
+
+    <mapping>
+      <activity>SELECTING from multiple results</activity>
+      <tool>fzf</tool>
+      <description>Interactive fuzzy finder (pipe results to this)</description>
+      <examples>
+        <example>fd | fzf</example>
+        <example>rg -l 'pattern' | fzf</example>
+      </examples>
+    </mapping>
+
+    <mapping>
+      <activity>interacting with JSON</activity>
+      <tool>jq</tool>
+      <description>JSON parsing and manipulation</description>
+      <note>Can read files directly or filter JSON from stdin pipelines</note>
+      <examples>
+        <example>jq '.key' file.json</example>
+        <example>curl -s api.example.com | jq '.[] | select(.active)'</example>
+      </examples>
+    </mapping>
+
+    <mapping>
+      <activity>interacting with YAML or XML</activity>
+      <tool>yq</tool>
+      <description>YAML/XML parsing and manipulation</description>
+      <examples>
+        <example>yq '.key' file.yaml</example>
+        <example>yq -p xml '.path' file.xml</example>
+      </examples>
+    </mapping>
+
+    <mapping>
+      <activity>interacting with GitHub</activity>
+      <tool>gh</tool>
+      <description>GitHub CLI for repository operations</description>
+      <examples>
+        <example>gh pr create --title "..." --body "..."</example>
+        <example>gh issue list</example>
+      </examples>
+    </mapping>
+  </tool_mappings>
+
+  <anti_patterns>
+    <avoid tool="find" use_instead="fd" reason="fd is faster and has better UX" />
+    <avoid tool="grep" use_instead="rg" reason="rg is significantly faster and git-aware" />
+    <avoid tool="cat | grep" use_instead="rg" reason="Single tool is more efficient" />
+  </anti_patterns>
+</tooling_directives>
