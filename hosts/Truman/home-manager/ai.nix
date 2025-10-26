@@ -52,7 +52,7 @@ in {
   home.packages = with pkgs-unstable; [
     codex
     yek
-    # ast-grep
+    ast-grep
   ];
 
   # Using programs.claude-code from roman/claude-code for personal setup
@@ -66,6 +66,12 @@ in {
       enable = true;
       hivemqCloudXmlPath = config.sops.secrets.hivemq_cloud_xml.path;
     };
+
+    # Settings and statusline configuration
+    settings = {
+      statusLine.enable = true;
+    };
+
     # mcp-servers packages come from mcp-servers-nix overlay in modules/base/nix-core.nix
     mcp = {
       git.enable = true;
@@ -101,25 +107,5 @@ in {
         };
       };
     };
-  };
-  home.file = {
-    ".claude/settings.json" = {
-      enable = true;
-      text = builtins.toJSON {
-        env = {
-          DISABLE_TELEMETRY = "1";
-          DISABLE_ERROR_REPORTING = "1";
-          DISABLE_BUG_COMMAND = "1";
-        };
-        alwaysThinkingEnabled = false;
-        # model = "Sonnet"; # INFO: omitted as it's the default
-        statusLine = {
-          type = "command";
-          command = "${pkgs.bun}/bin/bunx ccstatusline@latest";
-        };
-      };
-    };
-    # INFO: use this to visually edit the config: nix shell nixpkgs#bun --command bunx ccstatusline@latest
-    ".config/ccstatusline/settings.json".source = ./claude/statusline/ccstatusline.settings.json;
   };
 }
