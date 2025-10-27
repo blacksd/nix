@@ -35,5 +35,6 @@
     k_config_switch_ephemeral = "export KUBECONFIG=\"$HOME/.kube/config_ephemeral\"";
 
     hmqc_repo = "pushd $HOME/Repositories/\"$(find $HOME/Repositories -type d -maxdepth 1 -exec basename {} \\; | sort | fzf)\"";
+    hmqc_code = "SELECTED=\"$HOME/Repositories/$(find $HOME/Repositories -type d -maxdepth 1 -exec basename {} \\; | sort | fzf)\" && pushd \"$SELECTED\" && code \"$SELECTED\"";
   };
 }
