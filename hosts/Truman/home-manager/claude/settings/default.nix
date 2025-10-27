@@ -58,18 +58,18 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.file = {
-      ".claude/settings.json".text = builtins.toJSON (lib.mkMerge [
+      ".claude/settings.json".text = builtins.toJSON (
         {
           inherit (cfg) env alwaysThinkingEnabled;
         }
-        (lib.optionalAttrs cfg.statusLine.enable {
+        // (lib.optionalAttrs cfg.statusLine.enable {
           statusLine = {
             type = "command";
             command = cfg.statusLine.command;
           };
         })
-        cfg.extraSettings
-      ]);
+        // cfg.extraSettings
+      );
 
       ".config/ccstatusline/settings.json" = lib.mkIf cfg.statusLine.enable {
         source = cfg.statusLine.configPath;
