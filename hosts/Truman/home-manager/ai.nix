@@ -132,6 +132,16 @@ in {
           # command = "${pkgs.nodejs_24}/bin/npx";
           # args = ["-y" "mcp-remote" "https://mcp.linear.app/sse"];
         };
+        kubernetes-mcp-server = {
+          type = "stdio";
+          command = "${pkgs.nodejs_24}/bin/npx";
+          args = [
+            "-y"
+            "kubernetes-mcp-server@latest"
+            "--disable-multi-cluster"
+            "--read-only"
+          ];
+        };
       };
     };
   };
