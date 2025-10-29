@@ -27,7 +27,7 @@
 
       # Let's work
       "discord"
-      "lens"
+      "freelens"
       "rectangle-pro"
 
       # Cert stuff
