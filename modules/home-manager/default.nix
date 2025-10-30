@@ -8,6 +8,7 @@
   # import sub modules
   imports = [
     ./age.nix
+    ./ai.nix
     ./core.nix
     ./git.nix
     ./gpg.nix
