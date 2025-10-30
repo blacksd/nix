@@ -59,6 +59,14 @@ in {
             "--read-only"
           ];
         };
+        task-master-ai = {
+          type = "stdio";
+          command = "${pkgs.nodejs_24}/bin/npx";
+          args = [
+            "-y"
+            "task-master-ai"
+          ];
+        };
       };
     };
   };
