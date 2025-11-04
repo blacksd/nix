@@ -64,8 +64,12 @@ in {
           command = "${pkgs.nodejs_24}/bin/npx";
           args = [
             "-y"
+            "--package=task-master-ai"
             "task-master-ai"
           ];
+          env = {
+            TASK_MASTER_TOOLS = "standard";
+          };
         };
       };
     };
