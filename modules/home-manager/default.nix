@@ -16,6 +16,7 @@
     ./kitty.nix
     ./nvim.nix
     ./shell.nix
+    ./ssh.nix
     ./sops.nix
     ./tmux.nix
     ./wezterm.nix
