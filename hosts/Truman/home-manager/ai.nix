@@ -44,7 +44,6 @@
           args = ["-c" "source ${config.sops.templates.businessmap-env.path} && ${pkgs.nodejs_24}/bin/npx -y @edicarlos.lds/businessmap-mcp"];
           env = {
             BUSINESSMAP_DEFAULT_WORKSPACE_ID = "73";
-            BUSINESSMAP_READ_ONLY_MODE = "true";
           };
         };
         linear = {
