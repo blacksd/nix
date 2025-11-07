@@ -29,6 +29,7 @@
       "discord"
       "freelens"
       "rectangle-pro"
+      "dbeaver-community"
 
       # Cert stuff
       "xca"
