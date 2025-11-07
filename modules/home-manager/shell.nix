@@ -49,6 +49,9 @@
 
         # Devbox globals setup
         eval "$(devbox global shellenv)"
+
+        # Load custom shell functions
+        source ${./configs/generate_password.zsh}
       '';
 
       oh-my-zsh = {
