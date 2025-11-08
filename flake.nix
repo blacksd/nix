@@ -23,6 +23,7 @@
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # home-manager, used for managing user configuration
     home-manager = {
@@ -57,6 +58,11 @@
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # mcp-servers-nix = {
     #   url = "github:natsukium/mcp-servers-nix";
     #   inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -70,6 +76,7 @@
   # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
   outputs = inputs @ {
     self,
+    nixpkgs,
     nixpkgs-darwin,
     darwin,
     home-manager,
@@ -77,6 +84,7 @@
     flake-utils,
     claude-code,
     sops-nix,
+    disko,
     # mcp-servers-nix,
     ...
   }: let
@@ -96,6 +104,14 @@
           useremail = "marco.bulgarini@gmail.com";
           hostname = "simpleton";
         };
+
+      rpi4 =
+        inputs
+        // {
+          username = "marco";
+          useremail = "marco.bulgarini@gmail.com";
+          hostname = "rpi4";
+        };
     };
   in {
     darwinConfigurations."Truman" = darwin.lib.darwinSystem {
@@ -111,6 +127,15 @@
       system = "x86_64-darwin";
       modules = [
         ./hosts/${specialArgs.simpleton.hostname}
+      ];
+    };
+
+    nixosConfigurations."rpi4" = nixpkgs.lib.nixosSystem {
+      specialArgs = specialArgs.rpi4;
+      system = "aarch64-linux";
+      modules = [
+        disko.nixosModules.disko
+        ./hosts/${specialArgs.rpi4.hostname}
       ];
     };
 
