@@ -134,7 +134,7 @@
       specialArgs = specialArgs.rpi4;
       system = "aarch64-linux";
       modules = [
-        disko.nixosModules.disko
+        # disko.nixosModules.disko  # Disabled for SD image build
         ./hosts/${specialArgs.rpi4.hostname}
       ];
     };

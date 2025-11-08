@@ -9,7 +9,9 @@
 }: {
   imports = [
     (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
-    ./disko-config.nix
+    # Note: disko-config.nix commented out to avoid conflict with sd-image
+    # Uncomment if deploying to existing system without building SD image
+    # ./disko-config.nix
     ./hardware-configuration.nix
     ./networking.nix
     ./users.nix

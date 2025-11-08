@@ -10,6 +10,7 @@
   networking.networkmanager.enable = false;
 
   # Use systemd-networkd instead (more lightweight)
+  networking.useNetworkd = true;
   systemd.network.enable = true;
 
   # Ethernet configuration - DHCP by default

@@ -15,13 +15,14 @@
     extraGroups = [
       "wheel" # Enable sudo
       "networkmanager"
-      "video"
-      "audio"
+      # "video"
+      # "audio"
     ];
 
     # SSH authorized keys
     # Add your public SSH key here
     openssh.authorizedKeys.keys = [
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBL0m7Rvr/ReyLZZdMKU78oj3v7fGHRBriWDenQFFqbH5ziRWt0HubQMIzp6HS1848ATo5F6lu/BrFHWoMxTyJd4= marco@simpleton"
       # Example: "ssh-ed25519 AAAAC3... user@host"
       # You should add your actual SSH public key here
     ];
