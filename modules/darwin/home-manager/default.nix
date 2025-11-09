@@ -9,6 +9,7 @@
 
     # Darwin-specific modules
     ./ai.nix
+    ./core.nix
     ./gpg.nix
     ./k8s.nix
 
