@@ -79,6 +79,9 @@
     allowReboot = false;
   };
 
+  # Disable ZFS to avoid kernel rebuilds
+  boot.supportedFilesystems = lib.mkForce ["ext4" "vfat"];
+
   # SD card longevity optimizations
   boot.tmp.useTmpfs = true; # Use tmpfs for /tmp (RAM instead of SD writes)
 
