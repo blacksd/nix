@@ -2,6 +2,10 @@
 
 version: "3"
 
+vars:
+  REBUILD_CMD:
+    sh: '[ "{{OS}}" = "darwin" ] && echo "darwin-rebuild" || echo "nixos-rebuild"'
+
 tasks:
   default:
     cmds:
@@ -11,12 +15,12 @@ tasks:
   build:
     desc: Just build the system configuration
     cmds:
-      - sudo darwin-rebuild build --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
+      - sudo {{.REBUILD_CMD}} build --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
 
   switch:
     desc: Build and apply the system configuration
     cmds:
-      - sudo darwin-rebuild switch --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
+      - sudo {{.REBUILD_CMD}} switch --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
 
   update:
     desc: Run flake update (specify an argument after '--' for updating a single package)
