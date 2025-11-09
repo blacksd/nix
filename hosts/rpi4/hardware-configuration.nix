@@ -16,7 +16,8 @@
 
     loader = {
       grub.enable = false;
-      generic-extlinux-compatible.enable = true;
+      # Disable bootloader installation - managed by firmware on existing systems
+      generic-extlinux-compatible.enable = false;
     };
   };
 
