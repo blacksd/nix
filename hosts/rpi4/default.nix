@@ -14,7 +14,6 @@
     ./hardware-configuration.nix
     ./networking.nix
     ./users.nix
-    ./fan-control.nix
     ../../modules/system/nixos  # NixOS modules (includes shared)
   ];
 

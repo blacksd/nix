@@ -5,7 +5,10 @@
   modulesPath,
   ...
 }: {
-  # Raspberry Pi 4 specific configuration
+  # Install monitoring tools
+  environment.systemPackages = with pkgs; [
+    lm_sensors # For temperature monitoring
+  ];
 
   # Boot configuration for RPi4
   boot = {
@@ -20,6 +23,24 @@
       generic-extlinux-compatible.enable = false;
     };
   };
+
+  # PWM Fan Control with native device tree overlay
+  # Fan connected to GPIO 14 (TXD pin)
+  # Provides variable speed control based on temperature
+  hardware.deviceTree = {
+    enable = true;
+    filter = "*rpi-4-*.dtb";
+  };
+
+  # Note: PWM fan control is configured via /boot/config.txt
+  # The pwm-fan overlay provides variable speed control based on temperature
+  # Current configuration: dtoverlay=pwm-fan,gpiopin=14
+  #
+  # To verify fan is working after reboot:
+  #   ls /sys/class/hwmon/  # Should show pwm-fan device
+  #   cat /sys/class/thermal/thermal_zone0/temp  # Check temperature
+  #
+  # The pwm-fan overlay automatically manages fan speed based on CPU temperature
 
   # Firmware
   hardware.enableRedistributableFirmware = true;
