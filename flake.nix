@@ -136,6 +136,15 @@
       modules = [
         # disko.nixosModules.disko  # Disabled for SD image build
         ./hosts/${specialArgs.rpi4.hostname}
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = specialArgs.rpi4;
+            users.${specialArgs.rpi4.username} = import ./hosts/${specialArgs.rpi4.hostname}/home.nix;
+          };
+        }
       ];
     };
 

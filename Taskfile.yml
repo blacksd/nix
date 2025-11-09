@@ -8,6 +8,11 @@ tasks:
       - task --list
     silent: true
 
+  build:
+    desc: Just build the system configuration
+    cmds:
+      - sudo darwin-rebuild build --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
+
   switch:
     desc: Build and apply the system configuration
     cmds:

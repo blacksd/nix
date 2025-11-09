@@ -1,8 +1,9 @@
-{
+{...}: {
+  # Darwin system modules
   imports = [
     ./apps.nix
-    ./nix-core.nix
     ./host-users.nix
+    ./nix-core.nix
     ./system.nix
   ];
 }
