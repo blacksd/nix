@@ -15,7 +15,7 @@
     ./networking.nix
     ./users.nix
     ./fan-control.nix
-    ../../modules/shared/nix-settings.nix
+    ../../modules/system/nixos  # NixOS modules (includes shared)
   ];
 
   # NixOS release version

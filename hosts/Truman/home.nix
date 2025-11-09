@@ -1,7 +1,7 @@
 {...}: {
   # Host-specific home-manager overrides for Truman
   imports = [
-    ../../modules/darwin/home-manager
+    ../../modules/home-manager/darwin
 
     # Host-specific HM modules
     ./home-manager/ai.nix

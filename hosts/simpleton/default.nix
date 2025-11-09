@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ../../modules/darwin
+    ../../modules/system/darwin
     ./apps.nix
     ./aerospace.nix
     ./jankyborders.nix

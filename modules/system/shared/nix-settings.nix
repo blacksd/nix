@@ -10,8 +10,8 @@
     # Enable flakes and new nix command
     experimental-features = ["nix-command" "flakes"];
 
-    # Optimize storage
-    auto-optimise-store = true;
+    # Optimize storage (can be overridden by platform-specific modules)
+    auto-optimise-store = lib.mkDefault true;
 
     # Trusted users
     trusted-users = ["root" "@wheel"];

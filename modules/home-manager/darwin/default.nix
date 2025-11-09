@@ -5,7 +5,7 @@
 }: {
   # Import shared home-manager modules first
   imports = [
-    ../../shared/home-manager
+    ../shared  # Shared home-manager modules
 
     # Darwin-specific modules
     ./ai.nix
