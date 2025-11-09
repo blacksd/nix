@@ -78,6 +78,10 @@
     allowReboot = false;
   };
 
+  # Set the default flake for nixos-rebuild
+  # This allows running `sudo nixos-rebuild switch` without --flake argument
+  environment.variables.NIXOS_CONFIG_FLAKE = "/etc/nixos#rpi4";
+
   # Disable ZFS to avoid kernel rebuilds
   boot.supportedFilesystems = lib.mkForce ["ext4" "vfat"];
 
