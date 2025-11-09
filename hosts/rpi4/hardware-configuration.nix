@@ -30,7 +30,19 @@
   # Audio (optional, can enable later)
   # hardware.raspberry-pi."4".audio.enable = true;
 
-  # File systems are managed by disko (see disko-config.nix)
+  # File systems configuration
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/NIXOS_SD";
+    fsType = "ext4";
+    options = ["noatime" "nodiratime"];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/FIRMWARE";
+    fsType = "vfat";
+    options = ["noatime"];
+  };
+
   # Swap (optional, generally not recommended for SD cards)
   swapDevices = [];
 
