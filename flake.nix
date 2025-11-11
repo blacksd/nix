@@ -11,11 +11,14 @@
   # the nixConfig here only affects the flake itself, not the system configuration!
   nixConfig = {
     warn-dirty = false;
-    #   substituters = [
-    #     # Query the mirror of USTC first, and then the official cache.
-    #     "https://mirrors.ustc.edu.cn/nix-channels/store"
-    #     "https://cache.nixos.org"
-    #   ];
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://devenv.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+    ];
   };
 
   # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
@@ -23,6 +26,7 @@
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # home-manager, used for managing user configuration
     home-manager = {
@@ -57,6 +61,11 @@
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # mcp-servers-nix = {
     #   url = "github:natsukium/mcp-servers-nix";
     #   inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -70,6 +79,7 @@
   # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
   outputs = inputs @ {
     self,
+    nixpkgs,
     nixpkgs-darwin,
     darwin,
     home-manager,
@@ -77,6 +87,7 @@
     flake-utils,
     claude-code,
     sops-nix,
+    disko,
     # mcp-servers-nix,
     ...
   }: let
@@ -96,6 +107,14 @@
           useremail = "marco.bulgarini@gmail.com";
           hostname = "simpleton";
         };
+
+      rpi4 =
+        inputs
+        // {
+          username = "marco";
+          useremail = "marco.bulgarini@gmail.com";
+          hostname = "rpi4";
+        };
     };
   in {
     darwinConfigurations."Truman" = darwin.lib.darwinSystem {
@@ -111,6 +130,24 @@
       system = "x86_64-darwin";
       modules = [
         ./hosts/${specialArgs.simpleton.hostname}
+      ];
+    };
+
+    nixosConfigurations."rpi4" = nixpkgs.lib.nixosSystem {
+      specialArgs = specialArgs.rpi4;
+      system = "aarch64-linux";
+      modules = [
+        # disko.nixosModules.disko  # Disabled for SD image build
+        ./hosts/${specialArgs.rpi4.hostname}
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = specialArgs.rpi4;
+            users.${specialArgs.rpi4.username} = import ./hosts/${specialArgs.rpi4.hostname}/home.nix;
+          };
+        }
       ];
     };
 

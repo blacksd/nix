@@ -5,7 +5,6 @@
 }: {
   home.packages = with pkgs; [
     gnupg
-    pinentry_mac
   ];
   programs.gpg = {
     enable = true;

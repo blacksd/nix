@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ../../modules/base
+    ../../modules/system/darwin
     ./apps.nix
     ./aerospace.nix
     ./jankyborders.nix
@@ -16,6 +16,6 @@
     useUserPackages = true;
     extraSpecialArgs = specialArgs;
     backupFileExtension = "home-manager-backup";
-    users.${specialArgs.username} = import ./home-manager.nix;
+    users.${specialArgs.username} = import ./home.nix;
   };
 }

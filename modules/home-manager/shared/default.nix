@@ -1,18 +1,15 @@
 {
+  pkgs,
   username,
-  krewfile,
-  claude-code,
-  sops-nix,
+  lib,
   ...
 }: {
-  # import sub modules
+  # Import all shared home-manager modules
   imports = [
     ./age.nix
-    ./ai.nix
     ./core.nix
     ./git.nix
     ./gpg.nix
-    ./k8s.nix
     ./kitty.nix
     ./nvim.nix
     ./shell.nix
@@ -20,15 +17,18 @@
     ./sops.nix
     ./tmux.nix
     ./wezterm.nix
-    claude-code.homeManagerModules.claude-code
-    krewfile.homeManagerModules.krewfile
   ];
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home = {
     username = username;
-    homeDirectory = "/Users/${username}";
+
+    # Platform-aware homeDirectory
+    homeDirectory =
+      if pkgs.stdenv.isDarwin
+      then "/Users/${username}"
+      else "/home/${username}";
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
