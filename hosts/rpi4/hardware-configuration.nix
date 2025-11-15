@@ -19,8 +19,9 @@
 
     loader = {
       grub.enable = false;
-      # Disable bootloader installation - managed by firmware on existing systems
-      generic-extlinux-compatible.enable = false;
+      # Enable extlinux bootloader for Raspberry Pi
+      # This ensures boot configuration is updated on each rebuild
+      generic-extlinux-compatible.enable = true;
     };
   };
 
