@@ -157,52 +157,6 @@
       ];
     };
 
-    # SD card image for Raspberry Pi 4
-    #
-    # Build with cross-compilation from macOS (works on M3 Mac with Rosetta):
-    #   nix build .#images.rpi4-sd.config.system.build.sdImage \
-    #     --system aarch64-darwin --impure
-    #
-    # Or on Intel Mac, build it on the rpi4:
-    #   ssh 192.168.20.110
-    #   cd /etc/nixos && sudo git pull
-    #   nix build .#images.rpi4-sd.config.system.build.sdImage
-    #
-    # The resulting image will be at:
-    #   result/sd-image/nixos-sd-image-*.img
-    #
-    # Flash with:
-    #   sudo dd if=result/sd-image/nixos-sd-image-*.img of=/dev/sdX bs=4M status=progress conv=fsync
-    images.rpi4-sd = nixpkgs.lib.nixosSystem {
-      specialArgs = specialArgs.rpi4;
-      system = "aarch64-linux";
-      modules = [
-        "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-        ./hosts/${specialArgs.rpi4.hostname}
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            extraSpecialArgs = specialArgs.rpi4;
-            users.${specialArgs.rpi4.username} = import ./hosts/${specialArgs.rpi4.hostname}/home.nix;
-          };
-
-          # SD image configuration
-          sdImage = {
-            compressImage = false; # Don't compress, faster to flash
-            firmwareSize = 512; # 512MB boot partition (vs default 30MB)
-            # Expand root partition on first boot to fill SD card
-            expandOnBoot = true;
-          };
-
-          # Override hardware-configuration to enable bootloader for SD image
-          # We have 512MB boot partition so we have plenty of space
-          boot.loader.generic-extlinux-compatible.enable = nixpkgs.lib.mkForce true;
-        }
-      ];
-    };
-
     # nix code formatter
     formatter = flake-utils.lib.eachDefaultSystemMap (
       system:
