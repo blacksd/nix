@@ -152,8 +152,21 @@
     };
 
     # SD card image for Raspberry Pi 4
-    # Build with: nix build .#images.rpi4-sd.config.system.build.sdImage
-    # Flash with: sudo dd if=result/sd-image/nixos-sd-image-*.img of=/dev/sdX bs=4M status=progress
+    #
+    # Build with cross-compilation from macOS (works on M3 Mac with Rosetta):
+    #   nix build .#images.rpi4-sd.config.system.build.sdImage \
+    #     --system aarch64-darwin --impure
+    #
+    # Or on Intel Mac, build it on the rpi4:
+    #   ssh 192.168.20.110
+    #   cd /etc/nixos && sudo git pull
+    #   nix build .#images.rpi4-sd.config.system.build.sdImage
+    #
+    # The resulting image will be at:
+    #   result/sd-image/nixos-sd-image-*.img
+    #
+    # Flash with:
+    #   sudo dd if=result/sd-image/nixos-sd-image-*.img of=/dev/sdX bs=4M status=progress conv=fsync
     images.rpi4-sd = nixpkgs.lib.nixosSystem {
       specialArgs = specialArgs.rpi4;
       system = "aarch64-linux";
