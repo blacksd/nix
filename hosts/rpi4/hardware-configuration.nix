@@ -19,9 +19,9 @@
 
     loader = {
       grub.enable = false;
-      # Enable extlinux bootloader for Raspberry Pi
-      # This ensures boot configuration is updated on each rebuild
-      generic-extlinux-compatible.enable = true;
+      # Keep bootloader disabled for existing installations with small (30MB) boot partition
+      # The SD image builder (images.rpi4-sd) has bootloader enabled with 512MB partition
+      generic-extlinux-compatible.enable = false;
     };
   };
 
