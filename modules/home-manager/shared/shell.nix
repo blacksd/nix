@@ -104,6 +104,7 @@
     urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
     plist_to_json = "python3 -c 'import plistlib,sys,json,base64; print(json.dumps(plistlib.loads(sys.stdin.read().encode(\"utf-8\")), default=lambda o:\"base64:\"+base64.b64encode(o).decode(\"ascii\")))'";
     generate_password = "python3 ${./configs/generate_password.py}";
+    my_ip = "echo \"$(curl -s ifconfig.co)/32\"";
   };
 
   home.file = {

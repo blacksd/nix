@@ -29,6 +29,8 @@
     };
   };
 
+  # TODO: add npx @toon-format/cli
+
   programs.claude-code = {
     # Assemble CLAUDE.md from XML prompts
     assembleClaudeMd = {
