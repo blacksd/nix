@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  hl,
+  ...
+}: {
   home.packages = with pkgs; [
     # mandatory lulz
     neofetch
@@ -21,6 +25,7 @@
     jq
     jnv
     jc # json converter
+    hl.packages.${pkgs.system}.default
     yq-go # yaml processer https://github.com/mikefarah/yq
     localsend
     go-task
