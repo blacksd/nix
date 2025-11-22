@@ -86,6 +86,7 @@
     vim
     wget
     git
+    ethtool  # For managing network interfaces and WoL
   ];
 
   # NixOS state version

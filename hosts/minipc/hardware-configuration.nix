@@ -42,6 +42,9 @@
   # networking.interfaces.enp88s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
+  # Enable Wake-on-LAN on wired interface
+  networking.interfaces.enp88s0.wakeOnLan.enable = true;
+
   # Platform
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
