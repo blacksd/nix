@@ -9,6 +9,7 @@
   imports = [
     ./hardware-configuration.nix
     ./users.nix
+    ./desktop-environments
     ../../modules/system/nixos
     ../../modules/system/shared
   ];
@@ -68,7 +69,9 @@
   };
 
   # Firewall
-  networking.firewall.allowedTCPPorts = [22];
+  networking.firewall.allowedTCPPorts = [
+    22 # SSH
+  ];
 
   # Firefox
   programs.firefox.enable = true;
