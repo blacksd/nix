@@ -27,6 +27,9 @@
       gh-f
       gh-poi
     ];
+    gitCredentialHelper = {
+      enable = true;
+    };
   };
   # TODO: add a package for matt-bartel/gh-clone-org or rm3l/gh-org-repo-sync; can't do this b/c the symlink will fail
   # home.file = {
