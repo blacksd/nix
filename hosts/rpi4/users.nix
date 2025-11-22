@@ -27,12 +27,8 @@
       # You should add your actual SSH public key here
     ];
 
-    # Set default shell
-    shell = pkgs.zsh;
+    # Default shell (zsh) is set in shared modules
   };
-
-  # Enable zsh system-wide
-  programs.zsh.enable = true;
 
   # Allow sudo without password for wheel group (optional, remove for production)
   security.sudo.wheelNeedsPassword = false;

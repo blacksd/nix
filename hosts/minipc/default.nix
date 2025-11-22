@@ -73,8 +73,7 @@
   # Firefox
   programs.firefox.enable = true;
 
-  # Enable zsh
-  programs.zsh.enable = true;
+  # Zsh is enabled in shared modules
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
