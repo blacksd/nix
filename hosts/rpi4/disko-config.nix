@@ -26,15 +26,15 @@
 
             # Root partition - ext4 optimized for SD card
             root = {
-              size = "100%";
+              size = "90%";
               content = {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
                 mountOptions = [
-                  "noatime"      # Don't update access times (reduces writes)
-                  "nodiratime"   # Don't update directory access times
-                  "commit=60"    # Commit interval in seconds (default 5, higher = less writes)
+                  "noatime" # Don't update access times (reduces writes)
+                  "nodiratime" # Don't update directory access times
+                  "commit=60" # Commit interval in seconds (default 5, higher = less writes)
                   "errors=remount-ro" # Remount read-only on errors
                 ];
               };

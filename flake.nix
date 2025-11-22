@@ -115,6 +115,14 @@
           useremail = "marco.bulgarini@gmail.com";
           hostname = "rpi4";
         };
+
+      minipc =
+        inputs
+        // {
+          username = "marco";
+          useremail = "marco.bulgarini@gmail.com";
+          hostname = "minipc";
+        };
     };
   in {
     darwinConfigurations."Truman" = darwin.lib.darwinSystem {
@@ -146,6 +154,23 @@
             useUserPackages = true;
             extraSpecialArgs = specialArgs.rpi4;
             users.${specialArgs.rpi4.username} = import ./hosts/${specialArgs.rpi4.hostname}/home.nix;
+          };
+        }
+      ];
+    };
+
+    nixosConfigurations."minipc" = nixpkgs.lib.nixosSystem {
+      specialArgs = specialArgs.minipc;
+      system = "x86_64-linux";
+      modules = [
+        ./hosts/${specialArgs.minipc.hostname}
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = specialArgs.minipc;
+            users.${specialArgs.minipc.username} = import ./hosts/${specialArgs.minipc.hostname}/home.nix;
           };
         }
       ];

@@ -1,0 +1,21 @@
+{
+  config,
+  pkgs,
+  username,
+  useremail,
+  ...
+}: {
+  imports = [
+    ../../modules/home-manager/nixos
+    ../../modules/home-manager/shared
+  ];
+
+  home = {
+    username = username;
+    homeDirectory = "/home/${username}";
+    stateVersion = "25.05";
+  };
+
+  # Let home-manager manage itself
+  programs.home-manager.enable = true;
+}
