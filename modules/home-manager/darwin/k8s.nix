@@ -104,6 +104,7 @@
     kubeconform
     kubectl
     kustomize
+    regctl
     kubernetes-helm
     (pkgs.wrapHelm pkgs.kubernetes-helm {
       plugins = [
