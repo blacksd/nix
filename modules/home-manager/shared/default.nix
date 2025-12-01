@@ -2,6 +2,7 @@
   pkgs,
   username,
   lib,
+  krewfile,
   ...
 }: {
   # Import all shared home-manager modules
@@ -18,6 +19,8 @@
     ./sops.nix
     ./tmux.nix
     ./wezterm.nix
+    # External modules
+    krewfile.homeManagerModules.krewfile
   ];
 
   # Home Manager needs a bit of information about you and the

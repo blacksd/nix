@@ -1,7 +1,6 @@
 {pkgs, ...}: {
-  # Truman host-specific k8s configuration
-  # Base k8s config is in shared/k8s.nix
-  # Darwin-specific config (krewfile) is in darwin/k8s.nix
+  # Truman host-specific k8s configuration (work environment)
+  # Base k8s config (including krewfile plugins) is in shared/k8s.nix
 
   programs = {
     k9s = {

@@ -1,5 +1,31 @@
 {pkgs, ...}: {
   programs = {
+    # kubectl plugins via krewfile (only works on darwin - requires krewfile input)
+    krewfile = {
+      enable = true;
+      plugins = [
+        "access-matrix"
+        "blame"
+        "cert-manager"
+        "cnpg"
+        "ctx"
+        "deprecations"
+        "explore"
+        "kor"
+        "kyverno"
+        "neat"
+        "ns"
+        "oidc-login"
+        "pv-migrate"
+        "resource-capacity"
+        "stern"
+        "view-cert"
+        "view-secret"
+        "who-can"
+        "node-shell"
+      ];
+    };
+
     k9s = {
       enable = true;
       settings = {
