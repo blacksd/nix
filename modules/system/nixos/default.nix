@@ -3,6 +3,7 @@
   imports = [
     ../shared  # Shared cross-platform modules
 
-    # NixOS-specific system modules would go here
+    # NixOS-specific system modules
+    ./nix-core.nix
   ];
 }
