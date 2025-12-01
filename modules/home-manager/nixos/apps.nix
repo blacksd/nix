@@ -1,6 +1,14 @@
-{pkgs, ...}: {
-  # NixOS-specific applications
-  home.packages = with pkgs; [
-    vscode
-  ];
+{
+  pkgs,
+  username,
+  ...
+}: {
+  # NixOS-specific core configuration
+  home = {
+    homeDirectory = "/home/${username}";
+
+    packages = with pkgs; [
+      vscode
+    ];
+  };
 }

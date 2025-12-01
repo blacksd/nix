@@ -27,12 +27,7 @@
   # paths it should manage.
   home = {
     username = username;
-
-    # Platform-aware homeDirectory
-    homeDirectory =
-      if pkgs.stdenv.isDarwin
-      then "/Users/${username}"
-      else "/home/${username}";
+    # homeDirectory is set in platform-specific modules (darwin/nixos)
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
