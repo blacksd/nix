@@ -1,8 +1,13 @@
 {pkgs, ...}: {
+  # Truman host-specific k8s configuration
+  # Base k8s config is in shared/k8s.nix
+  # Darwin-specific config (krewfile) is in darwin/k8s.nix
+
   programs = {
     k9s = {
       hotkey = {
         hotKeys = {
+          # ArgoCD-specific hotkey for work environment
           shift-0 = {
             shortCut = "Shift-0";
             description = "ArgoCD Applications (argocd namespace)";
@@ -12,6 +17,7 @@
       };
       plugin = {
         plugins = {
+          # ArgoCD-specific plugins for work environment
           enable-auto-sync = {
             shortCut = "s";
             confirm = true;
@@ -28,7 +34,7 @@
               "applications"
               "$NAME"
               "--type=json"
-              "--patch=[{\"op\":\"replace\", \"path\": \"/spec/syncPolicy\", \"value\": {\"automated\": {} }}]" # perhaps use builtins.toJSON
+              "--patch=[{\"op\":\"replace\", \"path\": \"/spec/syncPolicy\", \"value\": {\"automated\": {} }}]"
             ];
           };
           disable-auto-sync = {

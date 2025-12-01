@@ -10,6 +10,7 @@
     ./core.nix
     ./git.nix
     ./gpg.nix
+    ./k8s.nix
     ./kitty.nix
     ./nvim.nix
     ./shell.nix
