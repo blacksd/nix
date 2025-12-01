@@ -1,4 +1,4 @@
-{claude-code, ...}: {
+{...}: {
   # Import shared home-manager modules first
   imports = [
     ../shared # Shared home-manager modules
@@ -7,8 +7,5 @@
     ./ai.nix
     ./core.nix
     ./gpg.nix
-
-    # External darwin-specific modules
-    claude-code.homeManagerModules.claude-code
   ];
 }
