@@ -20,6 +20,7 @@
       "dropbox"
       "headlamp"
       "balenaetcher"
+      "steam"
     ];
   };
 }

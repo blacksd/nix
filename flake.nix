@@ -66,6 +66,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hl = {
+      url = "github:pamburus/hl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # mcp-servers-nix = {
     #   url = "github:natsukium/mcp-servers-nix";
     #   inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -88,6 +93,7 @@
     claude-code,
     sops-nix,
     disko,
+    hl,
     # mcp-servers-nix,
     ...
   }: let
@@ -145,7 +151,7 @@
       specialArgs = specialArgs.rpi4;
       system = "aarch64-linux";
       modules = [
-        disko.nixosModules.disko  # Required for nixos-anywhere
+        disko.nixosModules.disko # Required for nixos-anywhere
         ./hosts/${specialArgs.rpi4.hostname}
         home-manager.nixosModules.home-manager
         {
