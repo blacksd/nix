@@ -16,7 +16,7 @@
 {
   system = {
     primaryUser = username;
-    stateVersion = 5;
+    # stateVersion is now set in each host's default.nix (host-specific)
     # activationScripts are executed every time you boot the system or run `nixos-rebuild` / `darwin-rebuild`.
     activationScripts.postActivation.text = ''
       # activateSettings -u will reload the settings from the database and apply them to the current session,

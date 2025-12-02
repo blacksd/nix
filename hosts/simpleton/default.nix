@@ -11,6 +11,10 @@
     home-manager.darwinModules.home-manager
   ];
 
+  # nix-darwin state version (uses integers, not strings)
+  # This should match the nix-darwin version when the host was first created
+  system.stateVersion = 5;
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
