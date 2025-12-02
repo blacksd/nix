@@ -38,62 +38,51 @@
           };
         };
       };
-      plugin = {
-        plugins = {
-          node-shell = {
-            shortCut = "Ctrl-N";
-            description = "Open a root shell on a node using the node-shell plugin";
-            scopes = ["nodes"];
-            command = "sh";
-            background = false;
-            confirm = false;
-            args = [
-              "-c"
-              "kubectl node-shell --context $CONTEXT $NAME"
-            ];
-          };
-          view-secret = {
-            shortCut = "Shift-S";
-            description = "View secret (all)";
-            scopes = ["secrets"];
-            command = "sh";
-            background = false;
-            args = [
-              "-c"
-              "kubectl view-secret --context $CONTEXT --namespace $NAMESPACE --all $NAME | less"
-            ];
-          };
-          neat_nodes = {
-            shortCut = "Ctrl-T";
-            description = "Clean manifest with kubectl neat (nodes)";
-            scopes = ["nodes"];
-            command = "sh";
-            background = false;
-            args = [
-              "-c"
-              "kubectl neat get -- node --context $CONTEXT $NAME --output yaml | less"
-            ];
-          };
-          neat_non_nodes = {
-            shortCut = "Ctrl-T";
-            description = "Clean manifest with kubectl neat (non-nodes)";
-            scopes = ["pods" "deployments" "statefulsets" "secrets" "configmaps"];
-            command = "sh";
-            background = false;
-            args = [
-              "-c"
-              "kubectl neat get -- $RESOURCE_NAME --context $CONTEXT --namespace $NAMESPACE $NAME --output yaml | less"
-            ];
-          };
+      plugins = {
+        node-shell = {
+          shortCut = "Ctrl-N";
+          description = "Open a root shell on a node using the node-shell plugin";
+          scopes = ["nodes"];
+          command = "sh";
+          background = false;
+          confirm = false;
+          args = [
+            "-c"
+            "kubectl node-shell --context $CONTEXT $NAME"
+          ];
         };
-      };
-      hotkey = {
-        hotKeys = {
-          shift-k = {
-            shortCut = "Shift-K";
-            description = "Flux Kustomizations (all namespaces)";
-            command = "kustomize.toolkit.fluxcd.io/v1/kustomizations all";
-          };
+        view-secret = {
+          shortCut = "Shift-S";
+          description = "View secret (all)";
+          scopes = ["secrets"];
+          command = "sh";
+          background = false;
+          args = [
+            "-c"
+            "kubectl view-secret --context $CONTEXT --namespace $NAMESPACE --all $NAME | less"
+          ];
+        };
+        neat_nodes = {
+          shortCut = "Ctrl-T";
+          description = "Clean manifest with kubectl neat (nodes)";
+          scopes = ["nodes"];
+          command = "sh";
+          background = false;
+          args = [
+            "-c"
+            "kubectl neat get -- node --context $CONTEXT $NAME --output yaml | less"
+          ];
+        };
+        neat_non_nodes = {
+          shortCut = "Ctrl-T";
+          description = "Clean manifest with kubectl neat (non-nodes)";
+          scopes = ["pods" "deployments" "statefulsets" "secrets" "configmaps"];
+          command = "sh";
+          background = false;
+          args = [
+            "-c"
+            "kubectl neat get -- $RESOURCE_NAME --context $CONTEXT --namespace $NAMESPACE $NAME --output yaml | less"
+          ];
         };
       };
     };

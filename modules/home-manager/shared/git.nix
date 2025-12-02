@@ -46,41 +46,45 @@
     enable = true;
     lfs.enable = true;
 
-    userName = "Marco Bulgarini";
-    userEmail = useremail;
-
-    extraConfig = {
-      init.defaultBranch = "main";
-      push.autoSetupRemote = true;
-      pull.rebase = true;
-    };
-
     signing = {
       key = useremail;
       signByDefault = true;
     };
 
-    delta = {
-      enable = true;
-      options = {
-        features = "side-by-side";
+    settings = {
+      user = {
+        name = "Marco Bulgarini";
+        email = useremail;
+      };
+
+      init.defaultBranch = "main";
+      push.autoSetupRemote = true;
+      pull.rebase = true;
+
+      alias = {
+        # common aliases
+        br = "branch";
+        co = "checkout";
+        st = "status";
+        ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate";
+        ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat";
+        bsc = "branch --show-current";
+        dc = "diff --cached";
+
+        css = "commit --gpg-sign --signoff";
+        oops = "commit --amend --no-edit";
+        daje = "push --force-with-lease";
+        root = "rev-parse --show-toplevel";
       };
     };
+  };
 
-    aliases = {
-      # common aliases
-      br = "branch";
-      co = "checkout";
-      st = "status";
-      ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate";
-      ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat";
-      bsc = "branch --show-current";
-      dc = "diff --cached";
-
-      css = "commit --gpg-sign --signoff";
-      oops = "commit --amend --no-edit";
-      daje = "push --force-with-lease";
-      root = "rev-parse --show-toplevel";
+  # Delta configuration (moved from programs.git.delta)
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      features = "side-by-side";
     };
   };
 }

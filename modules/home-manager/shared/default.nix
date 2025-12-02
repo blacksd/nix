@@ -20,6 +20,7 @@
     ./sops.nix
     ./tmux.nix
     ./wezterm.nix
+    ./k8s.nix
     # External modules
     krewfile.homeManagerModules.krewfile
   ];
@@ -38,7 +39,7 @@
     # You can update Home Manager without changing this value. See
     # the Home Manager release notes for a list of state version
     # changes in each release.
-    stateVersion = "25.05";
+    stateVersion = "25.11";
   };
 
   # Let Home Manager install and manage itself.
