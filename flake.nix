@@ -61,10 +61,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hl = {
-      url = "github:pamburus/hl";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # hl = {
+    #   url = "github:pamburus/hl";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # mcp-servers-nix = {
     #   url = "github:natsukium/mcp-servers-nix";
@@ -87,7 +87,7 @@
     flake-utils,
     sops-nix,
     disko,
-    hl,
+    # hl,
     ...
   }: let
     specialArgs = {

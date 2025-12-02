@@ -11,10 +11,37 @@
     system = pkgs.system;
     config.allowUnfree = true;
   };
-in {
-  # Note: ./claude module removed - using built-in home-manager programs.claude-code
-  # If you need custom prompts/settings, configure them directly in programs.claude-code.settings
 
+  # CLAUDE.md assembly from XML prompts
+  claudeMdText = let
+    promptsDir = ./claude/prompts;
+    # TODO: Add hivemqCloudXmlPath support if needed via config.sops.secrets
+    hivemqSection = ""; # if hivemqCloudXmlPath != null then "..." else "";
+  in ''
+    # CLAUDE.md - Assistant Configuration
+
+    This document contains structured directives and context for Claude AI assistant.
+
+    ---
+
+    # Project Principles
+
+    ${lib.readFile "${promptsDir}/project_principles.xml"}
+
+    ---
+
+    # Communication and Contribution Style
+
+    ${lib.readFile "${promptsDir}/style.xml"}
+
+    ---
+
+    # Tooling Directives
+
+    ${lib.readFile "${promptsDir}/tooling.xml"}
+    ${hivemqSection}
+  '';
+in {
   home.packages = with pkgs-unstable; [
     codex
     yek
@@ -27,9 +54,23 @@ in {
     # Use claude-code from nixpkgs-unstable
     package = pkgs-unstable.claude-code;
 
-    # Settings and statusline configuration
+    # Settings configuration with privacy defaults and statusLine
     settings = {
-      statusLine.enable = true;
+      # Privacy settings
+      env = {
+        DISABLE_TELEMETRY = "1";
+        DISABLE_ERROR_REPORTING = "1";
+        DISABLE_BUG_COMMAND = "1";
+      };
+
+      # Enable ccstatusline for custom status display
+      statusLine = {
+        type = "command";
+        command = "${pkgs.bun}/bin/bunx ccstatusline@latest";
+      };
+
+      # Disable always-on thinking mode by default
+      alwaysThinkingEnabled = false;
     };
 
     # MCP servers using the built-in home-manager option
@@ -62,4 +103,10 @@ in {
       };
     };
   };
+
+  # CLAUDE.md - assembled from XML prompts
+  home.file.".claude/CLAUDE.md".text = claudeMdText;
+
+  # ccstatusline configuration
+  home.file.".config/ccstatusline/settings.json".source = ./claude/settings/ccstatusline.settings.json;
 }
