@@ -3,7 +3,6 @@
   username,
   lib,
   krewfile,
-  claude-code,
   ...
 }: {
   # Import all shared home-manager modules
@@ -23,7 +22,6 @@
     ./wezterm.nix
     # External modules
     krewfile.homeManagerModules.krewfile
-    claude-code.homeManagerModules.claude-code
   ];
 
   # Home Manager needs a bit of information about you and the

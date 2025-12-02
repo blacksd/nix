@@ -30,7 +30,7 @@
 
     # home-manager, used for managing user configuration
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with the `inputs.nixpkgs` of the current flake,
       # to avoid problems caused by different versions of nixpkgs dependencies.
@@ -49,11 +49,6 @@
 
     flake-utils = {
       url = "github:numtide/flake-utils";
-    };
-
-    claude-code = {
-      url = "github:roman/claude-code.nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     sops-nix = {
@@ -90,11 +85,9 @@
     home-manager,
     krewfile,
     flake-utils,
-    claude-code,
     sops-nix,
     disko,
     hl,
-    # mcp-servers-nix,
     ...
   }: let
     specialArgs = {
