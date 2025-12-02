@@ -12,35 +12,19 @@
     config.allowUnfree = true;
   };
 
+  # Import claude customization module (CLAUDE.md assembly, future commands/skills)
+  claudeModule = import ./claude {inherit lib;};
+
   # CLAUDE.md assembly from XML prompts
-  claudeMdText = let
-    promptsDir = ./claude/prompts;
-    # TODO: Add hivemqCloudXmlPath support if needed via config.sops.secrets
-    hivemqSection = ""; # if hivemqCloudXmlPath != null then "..." else "";
-  in ''
-    # CLAUDE.md - Assistant Configuration
+  # Check if hivemq_cloud_xml secret exists (Truman host-specific)
+  hivemqCloudXmlPath =
+    if config.sops.secrets ? hivemq_cloud_xml
+    then config.sops.secrets.hivemq_cloud_xml.path
+    else null;
 
-    This document contains structured directives and context for Claude AI assistant.
-
-    ---
-
-    # Project Principles
-
-    ${lib.readFile "${promptsDir}/project_principles.xml"}
-
-    ---
-
-    # Communication and Contribution Style
-
-    ${lib.readFile "${promptsDir}/style.xml"}
-
-    ---
-
-    # Tooling Directives
-
-    ${lib.readFile "${promptsDir}/tooling.xml"}
-    ${hivemqSection}
-  '';
+  claudeMdText = claudeModule.assembleClaudeMd {
+    inherit hivemqCloudXmlPath;
+  };
 in {
   home.packages = with pkgs-unstable; [
     codex

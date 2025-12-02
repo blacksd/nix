@@ -1,79 +1,114 @@
-# Claude Configuration
+# Claude Customization Module
 
-Structured configuration for Claude AI assistant, organized by component.
+Reusable module for Claude AI assistant customizations.
 
 ## Structure
 
 ```
 claude/
-├── prompts/                      # CLAUDE.md assembly from XML sources
+├── prompts/                      # XML prompt sources for CLAUDE.md
 │   ├── project_principles.xml
 │   ├── style.xml
 │   ├── tooling.xml
-│   ├── assemble-claude-md.nix
-│   └── default.nix
-├── settings/                     # settings.json and statusline config
-│   ├── ccstatusline.settings.json
-│   └── default.nix
-├── default.nix                   # Top-level module
+│   └── assemble-claude-md.nix    # Assembly logic
+├── settings/                     # Additional configuration files
+│   └── ccstatusline.settings.json
+├── default.nix                   # Module interface
 └── README.md
 ```
 
-**Note:** `hivemq_cloud.xml` is stored encrypted in `../../secrets/` and imported via `@import` directive.
+## Current Features
+
+### CLAUDE.md Assembly
+
+Assembles `~/.claude/CLAUDE.md` from XML prompt files with optional HiveMQ Cloud context.
+
+**Files involved:**
+- `prompts/project_principles.xml` - Project principles and directives
+- `prompts/style.xml` - Communication and contribution style
+- `prompts/tooling.xml` - Tooling directives
+- HiveMQ Cloud context (optional, from sops secret)
 
 ## Usage
 
-Enable in Home Manager:
+The module is imported and used in `modules/home-manager/shared/ai.nix`:
 
 ```nix
-imports = [ ./hosts/Truman/home-manager/claude ];
+{lib, config, ...}: let
+  # Import claude module
+  claudeModule = import ./claude {inherit lib;};
 
-programs.claude-code = {
-  enable = true;
+  # Check for optional HiveMQ Cloud secret (Truman host-specific)
+  hivemqCloudXmlPath =
+    if config.sops.secrets ? hivemq_cloud_xml
+    then config.sops.secrets.hivemq_cloud_xml.path
+    else null;
 
-  # Assemble CLAUDE.md from XML prompts
-  assembleClaudeMd = {
-    enable = true;
-    hivemqCloudXmlPath = config.sops.secrets.hivemq_cloud_xml.path;  # Optional
+  # Generate CLAUDE.md text
+  claudeMdText = claudeModule.assembleClaudeMd {
+    inherit hivemqCloudXmlPath;
   };
+in {
+  # Write CLAUDE.md to home directory
+  home.file.".claude/CLAUDE.md".text = claudeMdText;
 
-  # Settings and statusline
-  settings = {
-    statusLine.enable = true;
-    # Defaults to standard privacy settings and ccstatusline
-  };
-};
+  # Link ccstatusline config
+  home.file.".config/ccstatusline/settings.json".source =
+    ./claude/settings/ccstatusline.settings.json;
+}
 ```
-
-This will:
-- Assemble XML prompts into `~/.claude/CLAUDE.md`
-- Import HiveMQ Cloud context from decrypted sops secret (if configured)
-- Generate `~/.claude/settings.json` with privacy defaults
-- Configure ccstatusline for custom status display
-
-## Configuration Options
-
-### `assembleClaudeMd`
-- `enable`: Whether to generate CLAUDE.md
-- `hivemqCloudXmlPath`: Path to HiveMQ context XML (uses `@import` directive)
-
-### `settings`
-- `env`: Environment variables (defaults include DISABLE_TELEMETRY, etc.)
-- `alwaysThinkingEnabled`: Enable always-on thinking mode (default: false)
-- `statusLine.enable`: Enable ccstatusline integration
-- `statusLine.command`: Command to run for status line
-- `statusLine.configPath`: Path to ccstatusline settings
-- `extraSettings`: Additional settings to merge into settings.json
 
 ## Adding Prompt Sections
 
-1. Create XML file in `prompts/`
-2. Add to `prompts/assemble-claude-md.nix`
-3. Rebuild Home Manager configuration
+1. Create new XML file in `prompts/`
+2. Add reference in `prompts/assemble-claude-md.nix`
+3. Rebuild configuration: `darwin-rebuild switch`
+
+Example:
+```xml
+<!-- prompts/my_context.xml -->
+<context>
+  <description>Custom context for Claude</description>
+  <directives>
+    <directive>Follow specific guidelines...</directive>
+  </directives>
+</context>
+```
+
+## Future Extensibility
+
+The module is designed to support additional customizations:
+
+```nix
+# In claude/default.nix (future)
+{lib}: {
+  assembleClaudeMd = { ... };  # Current
+
+  # Future additions:
+  commands = {
+    myCommand = { ... };
+  };
+
+  skills = {
+    mySkill = { ... };
+  };
+
+  hooks = {
+    onPromptSubmit = { ... };
+  };
+}
+```
 
 ## Customizing ccstatusline
 
-Edit `settings/ccstatusline.settings.json` or use:
+Edit `settings/ccstatusline.settings.json` or regenerate interactively:
+
 ```bash
 nix shell nixpkgs#bun --command bunx ccstatusline@latest
 ```
+
+## Notes
+
+- **Settings.json and MCP configuration** are managed by the built-in home-manager `programs.claude-code` module in `ai.nix`
+- **HiveMQ Cloud context** is automatically included when the `hivemq_cloud_xml` sops secret exists (Truman host)
+- The module is purely functional - no side effects or home-manager options
