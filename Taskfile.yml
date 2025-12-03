@@ -17,6 +17,12 @@ tasks:
     cmds:
       - sudo {{.REBUILD_CMD}} build --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
 
+  diff:
+    desc: Build and show configuration changes (using nvd)
+    cmds:
+      - task: build
+      - nvd diff /run/current-system ./result
+
   switch:
     desc: Build and apply the system configuration
     cmds:
