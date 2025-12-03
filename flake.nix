@@ -126,24 +126,24 @@
   in {
     darwinConfigurations."Truman" = darwin.lib.darwinSystem {
       specialArgs = specialArgs.Truman;
-      system = "aarch64-darwin";
       modules = [
+        {nixpkgs.hostPlatform = "aarch64-darwin";}
         ./hosts/${specialArgs.Truman.hostname}
       ];
     };
 
     darwinConfigurations."simpleton" = darwin.lib.darwinSystem {
       specialArgs = specialArgs.simpleton;
-      system = "x86_64-darwin";
       modules = [
+        {nixpkgs.hostPlatform = "x86_64-darwin";}
         ./hosts/${specialArgs.simpleton.hostname}
       ];
     };
 
     nixosConfigurations."rpi4" = nixpkgs.lib.nixosSystem {
       specialArgs = specialArgs.rpi4;
-      system = "aarch64-linux";
       modules = [
+        {nixpkgs.hostPlatform = "aarch64-linux";}
         disko.nixosModules.disko # Required for nixos-anywhere
         ./hosts/${specialArgs.rpi4.hostname}
         home-manager.nixosModules.home-manager
@@ -160,8 +160,8 @@
 
     nixosConfigurations."minipc" = nixpkgs.lib.nixosSystem {
       specialArgs = specialArgs.minipc;
-      system = "x86_64-linux";
       modules = [
+        {nixpkgs.hostPlatform = "x86_64-linux";}
         ./hosts/${specialArgs.minipc.hostname}
         home-manager.nixosModules.home-manager
         {
