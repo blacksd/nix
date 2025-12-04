@@ -86,9 +86,9 @@
     vim
     wget
     git
-    ethtool  # For managing network interfaces and WoL
+    ethtool # For managing network interfaces and WoL
   ];
 
   # NixOS state version
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }

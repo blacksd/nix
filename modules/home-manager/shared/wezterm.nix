@@ -5,7 +5,7 @@
 }: let
   # Get wezterm from nixpkgs-unstable
   pkgs-unstable = import nixpkgs-unstable {
-    system = pkgs.system;
+    system = pkgs.stdenv.hostPlatform.system;
   };
 in {
   programs.wezterm = {

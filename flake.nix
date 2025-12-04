@@ -25,12 +25,12 @@
   # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     # home-manager, used for managing user configuration
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with the `inputs.nixpkgs` of the current flake,
       # to avoid problems caused by different versions of nixpkgs dependencies.
@@ -38,7 +38,7 @@
     };
 
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
@@ -51,11 +51,6 @@
       url = "github:numtide/flake-utils";
     };
 
-    claude-code = {
-      url = "github:roman/claude-code.nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
@@ -66,10 +61,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hl = {
-      url = "github:pamburus/hl";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # hl = {
+    #   url = "github:pamburus/hl";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # mcp-servers-nix = {
     #   url = "github:natsukium/mcp-servers-nix";
@@ -90,11 +85,9 @@
     home-manager,
     krewfile,
     flake-utils,
-    claude-code,
     sops-nix,
     disko,
-    hl,
-    # mcp-servers-nix,
+    # hl,
     ...
   }: let
     specialArgs = {
@@ -133,24 +126,24 @@
   in {
     darwinConfigurations."Truman" = darwin.lib.darwinSystem {
       specialArgs = specialArgs.Truman;
-      system = "aarch64-darwin";
       modules = [
+        {nixpkgs.hostPlatform = "aarch64-darwin";}
         ./hosts/${specialArgs.Truman.hostname}
       ];
     };
 
     darwinConfigurations."simpleton" = darwin.lib.darwinSystem {
       specialArgs = specialArgs.simpleton;
-      system = "x86_64-darwin";
       modules = [
+        {nixpkgs.hostPlatform = "x86_64-darwin";}
         ./hosts/${specialArgs.simpleton.hostname}
       ];
     };
 
     nixosConfigurations."rpi4" = nixpkgs.lib.nixosSystem {
       specialArgs = specialArgs.rpi4;
-      system = "aarch64-linux";
       modules = [
+        {nixpkgs.hostPlatform = "aarch64-linux";}
         disko.nixosModules.disko # Required for nixos-anywhere
         ./hosts/${specialArgs.rpi4.hostname}
         home-manager.nixosModules.home-manager
@@ -167,8 +160,8 @@
 
     nixosConfigurations."minipc" = nixpkgs.lib.nixosSystem {
       specialArgs = specialArgs.minipc;
-      system = "x86_64-linux";
       modules = [
+        {nixpkgs.hostPlatform = "x86_64-linux";}
         ./hosts/${specialArgs.minipc.hostname}
         home-manager.nixosModules.home-manager
         {

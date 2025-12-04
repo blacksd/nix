@@ -14,11 +14,11 @@
     ./hardware-configuration.nix
     ./networking.nix
     ./users.nix
-    ../../modules/system/nixos  # NixOS modules (includes shared)
+    ../../modules/system/nixos # NixOS modules (includes shared)
   ];
 
   # NixOS release version
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   # Set hostname
   networking.hostName = hostname;

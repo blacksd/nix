@@ -2,8 +2,6 @@
   username,
   pkgs,
   lib,
-  claude-code,
-  # mcp-servers-nix,
   ...
 }: {
   # enable flakes globally
@@ -14,10 +12,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  # Add claude-code overlay for mcp-servers support
-  nixpkgs.overlays = [
-    claude-code.overlays.default
-  ];
 
   # # Add mcp-servers-nix overlay for MCP server packages
   # nixpkgs.overlays = [
