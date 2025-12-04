@@ -1,16 +1,11 @@
 {
   imports = [
-    ./gnome
+    # Choose your desktop environment:
+    # ./gnome
+    ./hyprland
   ];
 
-  # Desktop environment
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
-    xkb = {
-      layout = "us";
-      variant = "";
-    };
-  };
+  # Desktop environment configuration is handled by the imported module
+  # For GNOME: uncomment ./gnome and comment ./hyprland
+  # For Hyprland: uncomment ./hyprland and comment ./gnome
 }

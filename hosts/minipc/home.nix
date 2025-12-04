@@ -8,6 +8,7 @@
   imports = [
     ../../modules/home-manager/nixos
     ../../modules/home-manager/shared
+    ./desktop-environments/hyprland/home.nix
   ];
 
   home = {
