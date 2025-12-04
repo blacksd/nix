@@ -24,6 +24,17 @@
         "swaybg -i ~/wallpaper.png -m fill"
       ];
 
+      # XWayland settings
+      xwayland = {
+        force_zero_scaling = true;
+      };
+
+      # Environment variables for Wayland native apps
+      env = [
+        "ELECTRON_OZONE_PLATFORM_HINT,wayland"
+        "NIXOS_OZONE_WL,1"
+      ];
+
       # Input configuration
       input = {
         kb_layout = "us";
