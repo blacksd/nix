@@ -20,8 +20,8 @@
 
       # Execute at launch
       exec-once = [
-        "mako"
-        "swaybg -i ~/wallpaper.png -m fill"
+        "swww-daemon"
+        "hyprpanel"
       ];
 
       # XWayland settings
@@ -163,10 +163,10 @@
     };
   };
 
-  # Waybar - status bar
+  # Waybar - status bar (disabled in favor of hyprpanel)
   programs.waybar = {
-    enable = true;
-    systemd.enable = true;
+    enable = false;
+    systemd.enable = false;
 
     settings = {
       mainBar = {
@@ -285,9 +285,9 @@
     '';
   };
 
-  # Notification daemon
+  # Notification daemon (disabled in favor of hyprpanel's built-in notifications)
   services.mako = {
-    enable = true;
+    enable = false;
     settings = {
       default-timeout = 5000;
       background-color = "#1e1e2e";
@@ -299,6 +299,19 @@
       height = 100;
       padding = "10";
       margin = "10";
+    };
+  };
+
+  # HyprPanel - status bar and notification center
+  programs.hyprpanel = {
+    enable = true;
+    systemd.enable = false;  # Use exec-once instead due to timing issues
+
+    settings = {
+      theme.font = {
+        name = "JetBrainsMono Nerd Font";
+        size = "12px";
+      };
     };
   };
 

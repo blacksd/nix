@@ -81,6 +81,14 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Fonts
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.meslo-lg
+    font-awesome
+  ];
+
   # System packages
   environment.systemPackages = with pkgs; [
     vim

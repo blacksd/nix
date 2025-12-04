@@ -51,8 +51,8 @@
     # Display configuration
     wlr-randr
 
-    # Wallpaper
-    swaybg
+    # Wallpaper engine
+    swww
 
     # Screen lock
     swaylock
