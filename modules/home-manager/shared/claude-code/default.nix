@@ -1,9 +1,10 @@
-{lib}: {
-  # Claude configuration module
-  # Provides utilities for CLAUDE.md assembly and future customizations
+{
+  lib,
+  config,
+  ...
+}: let
+  cfg = config.programs.claude-code;
 
-  # Assemble CLAUDE.md from XML prompts
-  # Usage: claudeMd = (import ./claude { inherit lib; }).assembleClaudeMd { hivemqCloudXmlPath = ...; }
   assembleClaudeMd = {
     hivemqCloudXmlPath ? null,
   }: let
@@ -40,8 +41,27 @@
     ${lib.readFile "${promptsDir}/tooling.xml"}
     ${hivemqSection}
   '';
+in {
+  # Claude Code configuration options
+  options.programs.claude-code = {
+    hivemqCloudXmlPath = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      description = "Path to HiveMQ Cloud XML context file (typically a decrypted sops secret)";
+    };
+  };
+
+  config = {
+    # Assemble and write CLAUDE.md
+    home.file.".claude/CLAUDE.md".text = assembleClaudeMd {
+      hivemqCloudXmlPath = cfg.hivemqCloudXmlPath;
+    };
+  };
 
   # Future: Add slash commands, skills, etc. here
-  # commands = { ... };
-  # skills = { ... };
+  # Additional exports for programmatic use if needed
+  # lib.claude = {
+  #   commands = { ... };
+  #   skills = { ... };
+  # };
 }

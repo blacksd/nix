@@ -7,7 +7,7 @@
 
   sops = {
     secrets = {
-      # HiveMQ Cloud context for CLAUDE.md (automatically included by shared/ai.nix)
+      # HiveMQ Cloud context for CLAUDE.md
       hivemq_cloud_xml = {
         sopsFile = ../secrets/hivemq_cloud.xml.sops;
         format = "binary";
@@ -34,8 +34,12 @@
 
   # TODO: add npx @toon-format/cli
 
-  # Work-specific MCP servers (extends shared/ai.nix configuration)
+  # Work-specific Claude Code configuration
   programs.claude-code = {
+    # Enable HiveMQ Cloud context in CLAUDE.md
+    hivemqCloudXmlPath = config.sops.secrets.hivemq_cloud_xml.path;
+
+    # Work-specific MCP servers (extends shared/ai.nix configuration)
     mcpServers = {
       # Businessmap (Kanbanize) integration
       businessmap = {

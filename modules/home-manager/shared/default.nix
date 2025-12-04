@@ -9,6 +9,7 @@
   imports = [
     ./age.nix
     ./ai.nix
+    ./claude-code
     ./core.nix
     ./git.nix
     ./gpg.nix
@@ -20,7 +21,6 @@
     ./sops.nix
     ./tmux.nix
     ./wezterm.nix
-    ./k8s.nix
     # External modules
     krewfile.homeManagerModules.krewfile
   ];

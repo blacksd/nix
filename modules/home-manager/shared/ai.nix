@@ -11,20 +11,6 @@
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
-
-  # Import claude customization module (CLAUDE.md assembly, future commands/skills)
-  claudeModule = import ./claude {inherit lib;};
-
-  # CLAUDE.md assembly from XML prompts
-  # Check if hivemq_cloud_xml secret exists (Truman host-specific)
-  hivemqCloudXmlPath =
-    if config.sops.secrets ? hivemq_cloud_xml
-    then config.sops.secrets.hivemq_cloud_xml.path
-    else null;
-
-  claudeMdText = claudeModule.assembleClaudeMd {
-    inherit hivemqCloudXmlPath;
-  };
 in {
   home.packages = with pkgs-unstable; [
     codex
@@ -88,9 +74,6 @@ in {
     };
   };
 
-  # CLAUDE.md - assembled from XML prompts
-  home.file.".claude/CLAUDE.md".text = claudeMdText;
-
-  # ccstatusline configuration
-  home.file.".config/ccstatusline/settings.json".source = ./claude/settings/ccstatusline.settings.json;
+  # ccstatusline configuration (for Claude Code status display)
+  home.file.".config/ccstatusline/settings.json".source = ./claude-code/settings/ccstatusline.settings.json;
 }
