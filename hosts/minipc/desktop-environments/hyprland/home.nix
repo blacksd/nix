@@ -12,7 +12,11 @@
 
     settings = {
       # Monitor configuration
-      monitor = ",preferred,auto,1";
+      # Main 4K display with 125% scaling
+      monitor = [
+        "DP-1,preferred,auto,1.25"
+        "HDMI-A-1,disable"
+      ];
 
       # Execute at launch
       exec-once = [
