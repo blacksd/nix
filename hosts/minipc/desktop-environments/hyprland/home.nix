@@ -27,6 +27,8 @@
       # Input configuration
       input = {
         kb_layout = "us";
+        kb_variant = "intl";
+        kb_options = "compose:ralt";
         follow_mouse = 1;
         float_switch_override_focus = 2;
         touchpad = {
