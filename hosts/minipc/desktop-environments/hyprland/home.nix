@@ -118,6 +118,7 @@
         "$mod, D, exec, pkill rofi || rofi -show run"
         "$mod, P, pseudo,"
         "$mod, J, togglesplit,"
+        "$mod, L, exec, hyprlock"
 
         # Move focus
         "$mod, left, movefocus, l"
@@ -373,6 +374,10 @@
 
       - **Print Screen** - Select area to screenshot (copies to clipboard)
 
+      ## Screen Lock
+
+      - **Super + L** - Lock screen
+
       ## Notes
 
       - Keybindings file location: \`$KEYBINDINGS_FILE\`
@@ -382,6 +387,67 @@
       echo "Keybindings reference generated at: $KEYBINDINGS_FILE"
     '';
     executable = true;
+  };
+
+  # Hyprlock - screen lock
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = {
+        disable_loading_bar = true;
+        hide_cursor = true;
+        grace = 0;
+        no_fade_in = false;
+      };
+
+      background = [
+        {
+          path = "screenshot";
+          blur_passes = 3;
+          blur_size = 8;
+        }
+      ];
+
+      input-field = [
+        {
+          size = "200, 50";
+          position = "0, -80";
+          monitor = "";
+          dots_center = true;
+          fade_on_empty = false;
+          font_color = "rgb(202, 211, 245)";
+          inner_color = "rgb(91, 96, 120)";
+          outer_color = "rgb(24, 25, 38)";
+          outline_thickness = 5;
+          placeholder_text = ''<span foreground="##cad3f5">Password...</span>'';
+          shadow_passes = 2;
+        }
+      ];
+    };
+  };
+
+  # Hypridle - idle management with auto-lock
+  services.hypridle = {
+    enable = true;
+    settings = {
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session";
+        after_sleep_cmd = "hyprctl dispatch dpms on";
+      };
+
+      listener = [
+        {
+          timeout = 300; # 5 minutes
+          on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 330; # 5.5 minutes
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+      ];
+    };
   };
 
   # Additional packages for Hyprland
