@@ -22,6 +22,8 @@
       exec-once = [
         "swww-daemon"
         "hyprpanel"
+        "~/.local/bin/generate-hypr-keybindings.sh"
+        "gnome-keyring-daemon --start --components=secrets"
       ];
 
       # XWayland settings
@@ -107,7 +109,7 @@
 
       bind = [
         # Application shortcuts
-        "$mod, Return, exec, kitty"
+        "$mod, Return, exec, wezterm"
         "$mod, Q, killactive,"
         "$mod, M, exit,"
         "$mod, E, exec, nautilus"
@@ -313,6 +315,73 @@
         size = "12px";
       };
     };
+  };
+
+  # Generate keybindings reference on startup
+  home.file.".local/bin/generate-hypr-keybindings.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+
+      KEYBINDINGS_FILE="$HOME/Documents/hyprland-keybindings.md"
+      mkdir -p "$(dirname "$KEYBINDINGS_FILE")"
+
+      cat > "$KEYBINDINGS_FILE" << 'EOF'
+      # Hyprland Keybindings Reference
+
+      Generated: $(date)
+
+      ## Window Management
+
+      - **Super + Return** - Open terminal (Wezterm)
+      - **Super + Q** - Close active window
+      - **Super + M** - Exit Hyprland
+      - **Super + V** - Toggle floating mode
+      - **Super + P** - Toggle pseudo-tiling
+      - **Super + J** - Toggle split direction
+
+      ## Application Launchers
+
+      - **Super + R** - Application launcher (Rofi - drun mode)
+      - **Super + D** - Command runner (Rofi - run mode)
+      - **Super + E** - File manager (Nautilus)
+
+      ## Focus Management
+
+      - **Super + Left** - Move focus left
+      - **Super + Right** - Move focus right
+      - **Super + Up** - Move focus up
+      - **Super + Down** - Move focus down
+
+      ## Workspace Switching
+
+      - **Super + 1-9** - Switch to workspace 1-9
+      - **Super + 0** - Switch to workspace 10
+      - **Super + Mouse Wheel Up** - Previous workspace
+      - **Super + Mouse Wheel Down** - Next workspace
+
+      ## Window Moving
+
+      - **Super + Shift + 1-9** - Move window to workspace 1-9
+      - **Super + Shift + 0** - Move window to workspace 10
+
+      ## Mouse Bindings
+
+      - **Super + Left Click + Drag** - Move window
+      - **Super + Right Click + Drag** - Resize window
+
+      ## Screenshots
+
+      - **Print Screen** - Select area to screenshot (copies to clipboard)
+
+      ## Notes
+
+      - Keybindings file location: \`$KEYBINDINGS_FILE\`
+      - To regenerate this file, restart Hyprland or run: \`~/.local/bin/generate-hypr-keybindings.sh\`
+      EOF
+
+      echo "Keybindings reference generated at: $KEYBINDINGS_FILE"
+    '';
+    executable = true;
   };
 
   # Additional packages for Hyprland

@@ -95,6 +95,7 @@
     wget
     git
     ethtool # For managing network interfaces and WoL
+    google-chrome
   ];
 
   # NixOS state version
