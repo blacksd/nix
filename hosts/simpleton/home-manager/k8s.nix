@@ -26,4 +26,8 @@
     talosctl
     fluxcd
   ];
+  home.shellAliases = {
+    k_config_switch_talos = "export KUBECONFIG=\"$HOME/.kube/config_talos\"";
+    k_config_switch_tailscale = "export KUBECONFIG=\"$HOME/.kube/config_tailscale\"";
+  };
 }
