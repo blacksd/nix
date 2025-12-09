@@ -83,7 +83,14 @@
       <examples>
         <example>gh pr create --title "..." --body "..."</example>
         <example>gh issue list</example>
+        <example>gh pr view 480 --repo hivemq-cloud/apiaries</example>
+        <example>gh pr diff 480 --repo hivemq-cloud/apiaries</example>
       </examples>
+      <critical_requirement>
+        MANDATORY for private GitHub organizations (e.g., hivemq-cloud).
+        NEVER use WebFetch for GitHub URLs - it will fail with 404 on private repos.
+        When encountering any GitHub URL, immediately use gh CLI instead.
+      </critical_requirement>
     </mapping>
   </tool_mappings>
 
