@@ -389,7 +389,7 @@
     executable = true;
   };
 
-  # Hyprlock - screen lock
+  # Hyprlock - enhanced screen lock with full GUI
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -400,6 +400,7 @@
         no_fade_in = false;
       };
 
+      # Blurred screenshot background
       background = [
         {
           path = "screenshot";
@@ -408,19 +409,79 @@
         }
       ];
 
+      # Profile picture / avatar
+      image = [
+        {
+          path = "~/.face";
+          size = 150;
+          rounding = -1; # -1 means circle
+          border_size = 4;
+          border_color = "rgb(137, 180, 250)";
+          position = "0, 200";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+
+      # Date label
+      label = [
+        {
+          text = ''cmd[update:1000] echo "<span>$(date '+%A, %B %d')</span>"'';
+          color = "rgb(202, 211, 245)";
+          font_size = 24;
+          font_family = "JetBrainsMono Nerd Font";
+          position = "0, 80";
+          halign = "center";
+          valign = "center";
+        }
+        # Time label
+        {
+          text = ''cmd[update:1000] echo "<span>$(date '+%H:%M')</span>"'';
+          color = "rgb(202, 211, 245)";
+          font_size = 92;
+          font_family = "JetBrainsMono Nerd Font";
+          position = "0, -50";
+          halign = "center";
+          valign = "top";
+        }
+        # User label
+        {
+          text = "Hi, $USER";
+          color = "rgb(202, 211, 245)";
+          font_size = 18;
+          font_family = "JetBrainsMono Nerd Font";
+          position = "0, 100";
+          halign = "center";
+          valign = "center";
+        }
+        # Status label (shows when typing)
+        {
+          text = ''cmd[update:1000] echo "<span>󰌾 Locked</span>"'';
+          color = "rgb(137, 180, 250)";
+          font_size = 14;
+          font_family = "JetBrainsMono Nerd Font";
+          position = "0, 30";
+          halign = "center";
+          valign = "bottom";
+        }
+      ];
+
+      # Password input field
       input-field = [
         {
-          size = "200, 50";
-          position = "0, -80";
+          size = "300, 60";
+          position = "0, -120";
           monitor = "";
           dots_center = true;
           fade_on_empty = false;
           font_color = "rgb(202, 211, 245)";
-          inner_color = "rgb(91, 96, 120)";
-          outer_color = "rgb(24, 25, 38)";
-          outline_thickness = 5;
-          placeholder_text = ''<span foreground="##cad3f5">Password...</span>'';
+          inner_color = "rgb(30, 30, 46)";
+          outer_color = "rgb(137, 180, 250)";
+          outline_thickness = 3;
+          placeholder_text = ''<span foreground="##cad3f5">Enter Password...</span>'';
           shadow_passes = 2;
+          halign = "center";
+          valign = "center";
         }
       ];
     };
@@ -448,6 +509,12 @@
         }
       ];
     };
+  };
+
+  # Download GitHub avatar for lock screen
+  home.file.".face".source = pkgs.fetchurl {
+    url = "https://avatars.githubusercontent.com/blacksd";
+    sha256 = "sha256-LIv+DHuj7q+SK6z/z++elV/jgTT5Te5SD7ByUvUWwew=";
   };
 
   # Additional packages for Hyprland
