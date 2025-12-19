@@ -22,6 +22,7 @@
       "balenaetcher"
       "steam"
       "freelens"
+      "audacity"
     ];
   };
 }
