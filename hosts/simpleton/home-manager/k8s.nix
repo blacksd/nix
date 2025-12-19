@@ -1,4 +1,14 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  nixpkgs-unstable,
+  ...
+}: let
+  # Get packages from nixpkgs-unstable
+  pkgs-unstable = import nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+in {
   programs = {
     k9s = {
       hotKeys = {
@@ -22,9 +32,10 @@
     # TODO: plugins
     # https://github.com/derailed/k9s/blob/master/plugins/flux.yaml
   };
-  home.packages = with pkgs; [
-    talosctl
-    fluxcd
+  home.packages = [
+    pkgs.talosctl
+    pkgs.fluxcd
+    # pkgs.freelens-bin
   ];
   home.shellAliases = {
     k_config_switch_talos = "export KUBECONFIG=\"$HOME/.kube/config_talos\"";

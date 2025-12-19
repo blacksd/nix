@@ -33,6 +33,11 @@ tasks:
     cmds:
       - nix flake update {{ .CLI_ARGS }}
 
+  live_on_the_edge:
+    desc: Update nixpkgs-unstable channel
+    cmds:
+      - nix flake lock --update-input nixpkgs-unstable
+
   gc:
     desc: Garbage collect
     cmds:
