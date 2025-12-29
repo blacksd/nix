@@ -16,6 +16,7 @@ in {
     codex
     yek
     ast-grep
+    goose-cli
   ];
 
   # Using built-in home-manager programs.claude-code
@@ -71,6 +72,19 @@ in {
           TASK_MASTER_TOOLS = "standard";
         };
       };
+      filesystem = {
+        args = [
+          "-y"
+          "@modelcontextprotocol/server-filesystem"
+          "/tmp"
+        ];
+        command = "npx";
+        type = "stdio";
+      };
+      # github = {
+      #   type = "http";
+      #   url = "https://api.githubcopilot.com/mcp/";
+      # };
     };
   };
 

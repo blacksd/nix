@@ -22,12 +22,23 @@
         sopsFile = ../secrets/mcp.sops.yaml;
         key = "kanbanize/api_url";
       };
+
+      context7_api_key = {
+        sopsFile = ../secrets/mcp.sops.yaml;
+        key = "context7/api_key";
+      };
     };
 
     templates."businessmap-env" = {
       content = ''
         export BUSINESSMAP_API_URL="${config.sops.placeholder.businessmap_api_url}"
         export BUSINESSMAP_API_TOKEN="${config.sops.placeholder.businessmap_api_token}"
+      '';
+    };
+
+    templates."context7-env" = {
+      content = ''
+        export CONTEXT7_API_KEY="${config.sops.placeholder.context7_api_key}"
       '';
     };
   };
@@ -54,11 +65,17 @@
       };
 
       # Linear integration
-      linear = {
-        command = "${pkgs.nodejs_24}/bin/npx";
+      linear-server = {
+        type = "http";
+        url = "https://mcp.linear.app/mcp";
+      };
+
+      # Context7 documentation MCP server
+      context7 = {
+        command = "${pkgs.bash}/bin/bash";
         args = [
-          "-y"
-          "@modelcontextprotocol/server-linear"
+          "-c"
+          "source ${config.sops.templates.context7-env.path} && ${pkgs.nodejs_24}/bin/npx -y @upstash/context7-mcp --api-key \"$CONTEXT7_API_KEY\""
         ];
       };
     };
