@@ -102,3 +102,9 @@ The configuration is organized into a modular structure separating darwin-specif
             ├── nix-settings.nix
             └── users.nix
 ```
+
+
+## Credits
+
+I'm freely taking inspiration from a few repositories that have extremely well-organized definitions:
+* https://github.com/JacobPEvans/nix

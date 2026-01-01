@@ -1,22 +1,24 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   cfg = config.programs.claude-code;
 
-  assembleClaudeMd = {
-    hivemqCloudXmlPath ? null,
-  }: let
+  assembleClaudeMd = {hivemqCloudXmlPath ? null}: let
     promptsDir = ./prompts;
 
-    hivemqSection = if hivemqCloudXmlPath != null then ''
-      ---
+    hivemqSection =
+      if hivemqCloudXmlPath != null
+      then ''
+        ---
 
-      # HiveMQ Cloud Context
+        # HiveMQ Cloud Context
 
-      @${hivemqCloudXmlPath}
-    '' else "";
+        @${hivemqCloudXmlPath}
+      ''
+      else "";
   in ''
     # CLAUDE.md - Assistant Configuration
 
@@ -56,6 +58,13 @@ in {
     home.file.".claude/CLAUDE.md".text = assembleClaudeMd {
       hivemqCloudXmlPath = cfg.hivemqCloudXmlPath;
     };
+
+    # Add Node.js and Bun for claude-mem plugin support
+    # Using nodejs_24 to match MCP server definitions
+    home.packages = with pkgs; [
+      nodejs_24
+      bun
+    ];
   };
 
   # Future: Add slash commands, skills, etc. here

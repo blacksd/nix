@@ -42,6 +42,21 @@ in {
 
       # Disable always-on thinking mode by default
       alwaysThinkingEnabled = false;
+
+      # TODO: make some improvements on declarative plugin management
+      # Reference implementation: https://github.com/JacobPEvans/nix/blob/main/modules/home-manager/ai-cli/claude/plugins.nix
+      enabledPlugins = {
+        "claude-mem@thedotmack" = true;
+      };
+
+      extraKnownMarketplaces = {
+        thedotmack = {
+          source = {
+            source = "github";
+            repo = "thedotmack/claude-mem";
+          };
+        };
+      };
     };
 
     # MCP servers using the built-in home-manager option
