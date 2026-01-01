@@ -4,6 +4,5 @@
     yt-dlp
     wakeonlan
     ext4fuse
-    audacity
   ];
 }

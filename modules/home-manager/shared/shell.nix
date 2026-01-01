@@ -49,6 +49,9 @@
 
         # Devbox globals setup
         eval "$(devbox global shellenv)"
+
+        # iTerm2 tab color management
+        source ${./configs/iterm2-tab-color.sh}
       '';
 
       oh-my-zsh = {
