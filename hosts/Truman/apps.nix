@@ -25,6 +25,9 @@
       "elgato-stream-deck"
       "logitech-camera-settings"
 
+      # Need a break
+      "vlc"
+
       # Let's work
       "discord"
       "freelens"
