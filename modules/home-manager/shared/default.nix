@@ -10,7 +10,9 @@
     ./age.nix
     ./ai.nix
     ./claude-code
+    ./claude-code.nix
     ./core.nix
+    ./opencode.nix
     ./git.nix
     ./gpg.nix
     ./k8s.nix
