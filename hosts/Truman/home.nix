@@ -4,7 +4,7 @@
     ../../modules/home-manager/darwin
 
     # Host-specific HM modules
-    ./home-manager/ai.nix
+    ./home-manager/claude-code.nix
     ./home-manager/colima.nix
     ./home-manager/core.nix
     ./home-manager/k8s.nix
