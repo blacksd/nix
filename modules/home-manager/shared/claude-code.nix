@@ -60,7 +60,7 @@ in {
         command = "${pkgs.uv}/bin/uvx";
         args = ["--from" "git+https://github.com/ast-grep/ast-grep-mcp" "ast-grep-server"];
       };
-      kubernetes-mcp-server = {
+      kubernetes = {
         command = "${pkgs.nodejs_24}/bin/npx";
         args = [
           "-y"
@@ -69,7 +69,7 @@ in {
           "--read-only"
         ];
       };
-      task-master-ai = {
+      taskmaster-ai = {
         command = "${pkgs.nodejs_24}/bin/npx";
         args = [
           "-y"

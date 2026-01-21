@@ -1,8 +1,15 @@
 {
   pkgs,
+  nixpkgs-unstable,
   config,
   ...
-}: {
+}: let
+  # Get packages from nixpkgs-unstable
+  pkgs-unstable = import nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+in {
   # Truman (work) host-specific secrets and MCP servers
 
   sops = {
@@ -27,6 +34,16 @@
         sopsFile = ../secrets/mcp.sops.yaml;
         key = "context7/api_key";
       };
+
+      grafana_url = {
+        sopsFile = ../secrets/mcp.sops.yaml;
+        key = "grafana/url";
+      };
+
+      grafana_api_key = {
+        sopsFile = ../secrets/mcp.sops.yaml;
+        key = "grafana/api_key";
+      };
     };
 
     templates."businessmap-env" = {
@@ -39,6 +56,13 @@
     templates."context7-env" = {
       content = ''
         export CONTEXT7_API_KEY="${config.sops.placeholder.context7_api_key}"
+      '';
+    };
+
+    templates."grafana-env" = {
+      content = ''
+        export GRAFANA_URL="${config.sops.placeholder.grafana_url}"
+        export GRAFANA_API_KEY="${config.sops.placeholder.grafana_api_key}"
       '';
     };
   };
@@ -65,7 +89,7 @@
       };
 
       # Linear integration
-      linear-server = {
+      linear = {
         type = "http";
         url = "https://mcp.linear.app/mcp";
       };
@@ -76,6 +100,15 @@
         args = [
           "-c"
           "source ${config.sops.templates.context7-env.path} && ${pkgs.nodejs_24}/bin/npx -y @upstash/context7-mcp --api-key \"$CONTEXT7_API_KEY\""
+        ];
+      };
+
+      # Grafana Cloud MCP server
+      grafana = {
+        command = "${pkgs.bash}/bin/bash";
+        args = [
+          "-c"
+          "source ${config.sops.templates.grafana-env.path} && ${pkgs-unstable.mcp-grafana}/bin/mcp-grafana"
         ];
       };
     };
