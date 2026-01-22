@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   nixpkgs-unstable,
   config,
   ...
@@ -44,6 +45,11 @@ in {
         sopsFile = ../secrets/mcp.sops.yaml;
         key = "grafana/api_key";
       };
+
+      otlp_auth_header = {
+        sopsFile = ../secrets/claude-code.sops.yaml;
+        key = "otlp/auth_header";
+      };
     };
 
     templates."businessmap-env" = {
@@ -65,12 +71,35 @@ in {
         export GRAFANA_API_KEY="${config.sops.placeholder.grafana_api_key}"
       '';
     };
+
+    templates."otlp-headers-helper" = {
+      mode = "0755";
+      content = ''
+        #!/bin/sh
+        echo "{\"Authorization\": \"Basic ${config.sops.placeholder.otlp_auth_header}\"}"
+      '';
+    };
   };
 
   # TODO: add npx @toon-format/cli
 
   # Work-specific Claude Code configuration
   programs.claude-code = {
+    # Override shared telemetry settings for work - enable OTEL telemetry
+    settings = {
+      env = {
+        # Override DISABLE_TELEMETRY from shared config
+        DISABLE_TELEMETRY = lib.mkForce "0";
+        CLAUDE_CODE_ENABLE_TELEMETRY = "1";
+        # OTEL configuration
+        OTEL_METRICS_EXPORTER = "otlp";
+        OTEL_EXPORTER_OTLP_PROTOCOL = "http/protobuf";
+        OTEL_EXPORTER_OTLP_ENDPOINT = "http://alloy.hmqc.dev:4318";
+        OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE = "cumulative";
+      };
+      # Helper script for OTEL auth header (secret injected via sops)
+      otelHeadersHelper = config.sops.templates."otlp-headers-helper".path;
+    };
     # Enable HiveMQ Cloud context in CLAUDE.md
     hivemqCloudXmlPath = config.sops.secrets.hivemq_cloud_xml.path;
 
