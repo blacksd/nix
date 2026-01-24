@@ -14,31 +14,36 @@ config.hide_tab_bar_if_only_one_tab = true
 local act = wezterm.action
 
 config.keys = {
-  -- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word and Option-Right equivalent to Alt-f for forward-word
+  -- Word navigation - Option+Arrow
   { key = "LeftArrow",  mods = "OPT", action = act { SendString = "\x1bb" } },
   { key = "RightArrow", mods = "OPT", action = act { SendString = "\x1bf" } },
-  -- Beginning and end of the line
-  { key = 'LeftArrow',  mods = 'CMD', action = act { SendString = "\x1bOH" }, },
-  { key = 'RightArrow', mods = 'CMD', action = act { SendString = "\x1bOF" }, },
-  -- Select next tab with cmd-opt-left/right arrow
-  {
-    key = 'LeftArrow',
-    mods = 'CMD|OPT',
-    action = act.ActivateTabRelative(-1)
-  },
-  {
-    key = 'RightArrow',
-    mods = 'CMD|OPT',
-    action = act.ActivateTabRelative(1)
-  },
-  -- Select next pane with cmd-arrow
-  { key = 'LeftArrow',  mods = 'CMD',       action = act { ActivatePaneDirection = 'Left' }, },
-  { key = 'RightArrow', mods = 'CMD',       action = act { ActivatePaneDirection = 'Right' }, },
-  { key = 'UpArrow',    mods = 'CMD',       action = act { ActivatePaneDirection = 'Up' }, },
-  { key = 'DownArrow',  mods = 'CMD',       action = act { ActivatePaneDirection = 'Down' }, },
-  -- Split
-  { key = 'd',          mods = 'CMD',       action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
-  { key = 'd',          mods = 'CMD|SHIFT', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
+
+  -- Line navigation - Cmd+Arrow (beginning/end of line)
+  { key = 'LeftArrow',  mods = 'CMD', action = act { SendString = "\x01" } },  -- Ctrl-A
+  { key = 'RightArrow', mods = 'CMD', action = act { SendString = "\x05" } },  -- Ctrl-E
+
+  -- Pane navigation - Cmd+Opt+Arrow (like iTerm2)
+  { key = 'LeftArrow',  mods = 'CMD|OPT', action = act { ActivatePaneDirection = 'Left' } },
+  { key = 'RightArrow', mods = 'CMD|OPT', action = act { ActivatePaneDirection = 'Right' } },
+  { key = 'UpArrow',    mods = 'CMD|OPT', action = act { ActivatePaneDirection = 'Up' } },
+  { key = 'DownArrow',  mods = 'CMD|OPT', action = act { ActivatePaneDirection = 'Down' } },
+
+  -- Tab navigation - Cmd+Shift+Arrow
+  { key = 'LeftArrow',  mods = 'CMD|SHIFT', action = act.ActivateTabRelative(-1) },
+  { key = 'RightArrow', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
+
+  -- Split panes - Cmd+D / Cmd+Shift+D
+  { key = 'd', mods = 'CMD|SHIFT', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+  { key = 'd', mods = 'CMD',       action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+
+  -- Delete word backward - Option+Backspace
+  { key = 'Backspace', mods = 'OPT', action = act { SendString = "\x17" } },  -- Ctrl-W
+
+  -- Delete to beginning of line - Cmd+Backspace
+  { key = 'Backspace', mods = 'CMD', action = act { SendString = "\x15" } },  -- Ctrl-U
+
+  -- Delete word forward - Option+Delete
+  { key = 'Delete', mods = 'OPT', action = act { SendString = "\x1bd" } },
 }
 
 return config
