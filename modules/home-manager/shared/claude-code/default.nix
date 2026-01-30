@@ -66,11 +66,4 @@ in {
       bun
     ];
   };
-
-  # Future: Add slash commands, skills, etc. here
-  # Additional exports for programmatic use if needed
-  # lib.claude = {
-  #   commands = { ... };
-  #   skills = { ... };
-  # };
 }
