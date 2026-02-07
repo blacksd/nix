@@ -20,6 +20,9 @@ in {
 
     # Settings configuration with privacy defaults and statusLine
     settings = {
+      # Model selection
+      model = "claude-opus-4-6";
+
       # Privacy settings
       env = {
         DISABLE_TELEMETRY = "1";
