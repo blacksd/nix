@@ -7,5 +7,6 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #1287 | 1:21 PM | 🔵 | Work-Specific Claude Code Configuration with Secrets and Enterprise Integrations | ~640 |
+| #1320 | 4:27 PM | ✅ | Applied Claude Code Overlay to Darwin System Configuration | ~318 |
+| #1318 | " | 🔵 | Darwin Nix Core Module with Commented Overlay Pattern | ~321 |
 </claude-mem-context>

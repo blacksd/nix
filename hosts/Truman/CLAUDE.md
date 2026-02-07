@@ -7,5 +7,5 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #1287 | 1:21 PM | 🔵 | Work-Specific Claude Code Configuration with Secrets and Enterprise Integrations | ~640 |
+| #1319 | 4:27 PM | 🔵 | Truman Host Configuration Structure | ~284 |
 </claude-mem-context>

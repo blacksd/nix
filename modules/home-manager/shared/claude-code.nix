@@ -1,22 +1,15 @@
 {
   pkgs,
   lib,
-  nixpkgs-unstable,
   username,
   config,
   ...
-}: let
-  # Get packages from nixpkgs-unstable
-  pkgs-unstable = import nixpkgs-unstable {
-    system = pkgs.stdenv.hostPlatform.system;
-    config.allowUnfree = true;
-  };
-in {
+}: {
   # Using built-in home-manager programs.claude-code
   programs.claude-code = {
     enable = true;
-    # Use claude-code from nixpkgs-unstable
-    package = pkgs-unstable.claude-code;
+    # Use claude-code from sadjow/claude-code-nix overlay
+    package = pkgs.claude-code;
 
     # Settings configuration with privacy defaults and statusLine
     settings = {

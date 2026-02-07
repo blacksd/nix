@@ -70,6 +70,10 @@
     #   url = "github:natsukium/mcp-servers-nix";
     #   inputs.nixpkgs.follows = "nixpkgs-unstable";
     # };
+
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+    };
   };
 
   # The `outputs` function will return all the build results of the flake.
