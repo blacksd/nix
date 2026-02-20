@@ -29,6 +29,7 @@
       "vlc"
 
       # Let's work
+      "kitlangton-hex"
       "discord"
       "freelens"
       "rectangle-pro"
