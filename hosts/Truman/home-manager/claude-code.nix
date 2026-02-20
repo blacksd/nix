@@ -46,6 +46,11 @@ in {
         key = "grafana/api_key";
       };
 
+      pagerduty_api_key = {
+        sopsFile = ../secrets/mcp.sops.yaml;
+        key = "pagerduty/api_key";
+      };
+
       otlp_auth_header = {
         sopsFile = ../secrets/claude-code.sops.yaml;
         key = "otlp/auth_header";
@@ -69,6 +74,12 @@ in {
       content = ''
         export GRAFANA_URL="${config.sops.placeholder.grafana_url}"
         export GRAFANA_API_KEY="${config.sops.placeholder.grafana_api_key}"
+      '';
+    };
+
+    templates."pagerduty-env" = {
+      content = ''
+        export PAGERDUTY_USER_API_KEY="${config.sops.placeholder.pagerduty_api_key}"
       '';
     };
 
@@ -138,6 +149,15 @@ in {
         args = [
           "-c"
           "source ${config.sops.templates.grafana-env.path} && ${pkgs-unstable.mcp-grafana}/bin/mcp-grafana"
+        ];
+      };
+
+      # PagerDuty MCP server (self-hosted via uvx)
+      pagerduty = {
+        command = "${pkgs.bash}/bin/bash";
+        args = [
+          "-c"
+          "source ${config.sops.templates.pagerduty-env.path} && ${pkgs.uv}/bin/uvx pagerduty-mcp"
         ];
       };
     };
