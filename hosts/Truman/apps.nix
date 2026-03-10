@@ -34,6 +34,8 @@
       "freelens"
       "rectangle-pro"
       "dbeaver-community"
+      "tuple"
+      "granola" # on probation
 
       # Cert stuff
       "xca"
