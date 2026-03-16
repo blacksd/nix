@@ -9,6 +9,7 @@
       "homebrew/services"
       "hivemq/mqtt-cli"
       "shihanng/tfvar"
+      "manaflow-ai/cmux"
     ];
 
     # `brew install`
@@ -17,6 +18,7 @@
       "mqtt-cli"
       "tfvar" # TODO: This should be a nixpkg
       "tfenv" # TODO: This should be a nixpkg
+      "nono"
     ];
 
     # `brew install --cask`
@@ -35,7 +37,7 @@
       "rectangle-pro"
       "dbeaver-community"
       "tuple"
-      "granola" # on probation
+      "cmux"
 
       # Cert stuff
       "xca"
