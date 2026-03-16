@@ -51,6 +51,16 @@ in {
         key = "pagerduty/api_key";
       };
 
+      slack_xoxc_token = {
+        sopsFile = ../secrets/mcp.sops.yaml;
+        key = "slack/xoxc_token";
+      };
+
+      slack_xoxd_token = {
+        sopsFile = ../secrets/mcp.sops.yaml;
+        key = "slack/xoxd_token";
+      };
+
       otlp_auth_header = {
         sopsFile = ../secrets/claude-code.sops.yaml;
         key = "otlp/auth_header";
@@ -80,6 +90,13 @@ in {
     templates."pagerduty-env" = {
       content = ''
         export PAGERDUTY_USER_API_KEY="${config.sops.placeholder.pagerduty_api_key}"
+      '';
+    };
+
+    templates."slack-env" = {
+      content = ''
+        export SLACK_MCP_XOXC_TOKEN="${config.sops.placeholder.slack_xoxc_token}"
+        export SLACK_MCP_XOXD_TOKEN="${config.sops.placeholder.slack_xoxd_token}"
       '';
     };
 
@@ -158,6 +175,15 @@ in {
         args = [
           "-c"
           "source ${config.sops.templates.pagerduty-env.path} && ${pkgs.uv}/bin/uvx pagerduty-mcp"
+        ];
+      };
+
+      # Slack MCP server (xoxc/xoxd auth)
+      slack = {
+        command = "${pkgs.bash}/bin/bash";
+        args = [
+          "-c"
+          "source ${config.sops.templates.slack-env.path} && ${pkgs.nodejs_24}/bin/npx -y slack-mcp-server@latest --transport stdio"
         ];
       };
     };
