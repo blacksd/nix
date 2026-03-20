@@ -6,7 +6,7 @@ config.font = wezterm.font("JetBrains Mono")
 config.font_size = 14
 config.harfbuzz_features = { 'liga=0', 'clig=0', 'calt=0' }
 
-config.window_background_opacity = 0.97
+config.window_background_opacity = 0.95
 config.color_scheme = "Dracula"
 
 config.scrollback_lines = 8096

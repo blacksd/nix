@@ -19,10 +19,16 @@
         '';
       }
     ];
+    prefix = "C-a";
     extraConfig = ''
       set-option -g status-interval 5
       set-option -g automatic-rename on
       set-option -g automatic-rename-format '#{b:pane_current_path}'
+
+      # Copy tmux selection to macOS clipboard
+      set-option -g set-clipboard on
+      bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
     '';
   };
 }

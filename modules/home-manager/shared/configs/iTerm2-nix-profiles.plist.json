@@ -42,8 +42,9 @@
         }
       },
       "Name": "Nix-managed Profile",
-      "Normal Font": "MesloLGSNF-Regular 13",
-      "Scrollback Lines": 8192
+      "Normal Font": "JetBrainsMonoNFM-Regular 14",
+      "Scrollback Lines": 8192,
+      "Transparency": 0.05
     }
   ]
 }

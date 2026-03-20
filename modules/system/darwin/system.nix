@@ -198,6 +198,7 @@
 
         "com.googlecode.iterm2" = {
           "Default Bookmark Guid" = "aabbccdd-d3ad-b33f-1337-001122334455";
+          OptionClickMovesCursor = false;
         };
         "eu.exelban.Stats" = builtins.fromJSON (builtins.readFile ./configs/eu.exelban.Stats.plist.json);
         # "com.apple.sound" = {
