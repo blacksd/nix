@@ -10,7 +10,6 @@
   };
 in {
   home.packages = with pkgs-unstable; [
-    codex
     yek
     ast-grep
     goose-cli

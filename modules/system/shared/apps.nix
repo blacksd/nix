@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
+    cachix
     devbox
     nix-prefetch
     nvd

@@ -1,9 +1,23 @@
 keys:
   - &Truman age1ryvy7qla9uxjpcw9hsz5y3ycejgfmldn7hlvptwu9rslgj2693rqmk2tfk
   - &Truman_backup age1ry6l8lwhkqg64z9543yqhua2fy97j3gennsxenm5pd0kqtfghfcq6zgdcy
+  - &simpleton age1yd986swekxn356ka9ue56tn2keh668g5gw8zn6c2rl6nq24lqd6qfgauq6
+  - &simpleton_backup age153juj3ja5qec3fk5c8fffjmuvzs7x6lks8whj4k4hqs22nd99efs8tggym
 creation_rules:
   - path_regex: hosts\/Truman\/secrets\/.*\.sops(?:\.yaml)*$
     key_groups:
       - age:
           - *Truman
           - *Truman_backup
+  - path_regex: hosts\/simpleton\/secrets\/.*\.sops(?:\.yaml)*$
+    key_groups:
+      - age:
+          - *simpleton
+          - *simpleton_backup
+  - path_regex: modules\/home-manager\/shared\/secrets\/.*\.sops(?:\.yaml)*$
+    key_groups:
+      - age:
+          - *Truman
+          - *Truman_backup
+          - *simpleton
+          - *simpleton_backup

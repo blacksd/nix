@@ -9,6 +9,7 @@
   imports = [
     ./age.nix
     ./ai.nix
+    ./cachix.nix
     ./claude-code
     ./claude-code.nix
     ./core.nix
