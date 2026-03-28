@@ -14,8 +14,16 @@
     firmwareSize = 512; # MB - enough for bootloader + kernels
   };
 
-  # Disable disko and hardware-configuration.nix fileSystems —
-  # the sd-image module provides its own partition/filesystem layout
+  # Disable disko — the sd-image module provides its own partition/filesystem layout
   disko.devices = lib.mkForce {};
-  fileSystems = lib.mkForce {};
+
+  # Override hardware-configuration.nix fileSystems that conflict with sd-image module
+  fileSystems."/" = lib.mkForce {
+    device = "/dev/disk/by-label/NIXOS_SD";
+    fsType = "ext4";
+  };
+  fileSystems."/boot" = lib.mkForce {
+    device = "/dev/disk/by-label/FIRMWARE";
+    fsType = "vfat";
+  };
 }
