@@ -27,17 +27,10 @@
     jc # json converter
     # hl.packages.${pkgs.system}.default
     yq-go # yaml processer https://github.com/mikefarah/yq
-    localsend
     go-task
     fd
 
     # I don't know what fun is
     qrencode
   ];
-
-  programs = {
-    java = {
-      enable = true;
-    };
-  };
 }

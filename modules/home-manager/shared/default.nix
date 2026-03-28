@@ -13,6 +13,7 @@
     ./claude-code
     ./claude-code.nix
     ./core.nix
+    ./core-desktop.nix
     ./opencode.nix
     ./git.nix
     ./gpg.nix
