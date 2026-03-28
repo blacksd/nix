@@ -6,7 +6,9 @@ This is my `nix` setup, currently in use for three systems:
 - `simpleton` *(darwin, Intel)*
 - `rpi4` *(linux, arm64)*
 
-## How to Use (existing system)
+## How to Use
+
+### macOS (darwin) hosts
 
 0. Install `git`, `nix` and `Homebrew`, and log in with your Apple ID
 1. Clone this repo in a local directory, i.e. `~/.config/nix-darwin`
@@ -28,6 +30,45 @@ This is my `nix` setup, currently in use for three systems:
    darwin-rebuild build --flake ~/.config/nix-darwin#simpleton
    nvd diff /run/current-system ./result
    ```
+
+### NixOS hosts (rpi4)
+
+#### Initial provisioning
+
+1. Flash the [official minimal NixOS aarch64 image](https://nixos.org/download/#nixos-iso) to the SD card
+2. Boot the Pi, connect via SSH
+3. Clone this repo and apply the configuration:
+
+   ```shell
+   sudo nixos-rebuild switch --flake .#rpi4
+   ```
+
+Alternatively, build a custom SD image with the full configuration baked in:
+
+```shell
+# Requires an aarch64-linux builder
+nix build .#images.rpi4-sd
+zstd -d result/sd-image/*.img.zst -o rpi4.img
+# Flash to SD card (replace diskN with your device)
+sudo dd if=rpi4.img of=/dev/diskN bs=4M status=progress
+```
+
+#### Ongoing updates
+
+From your Mac, push config changes over SSH (builds on the Pi):
+
+```shell
+nixos-rebuild switch \
+  --flake .#rpi4 \
+  --target-host marco@rpi4.local \
+  --use-remote-sudo
+```
+
+Or SSH into the Pi and rebuild locally:
+
+```shell
+sudo nixos-rebuild switch --flake .#rpi4
+```
 
 ## Configuration Structure
 
@@ -58,6 +99,7 @@ The configuration is organized into a modular structure separating darwin-specif
 │       ├── default.nix
 │       ├── home.nix
 │       ├── hardware-configuration.nix
+│       ├── sd-image.nix           # SD card image builder (flake output: images.rpi4-sd)
 │       ├── disko-config.nix       # disk partitioning config
 │       ├── networking.nix
 │       └── users.nix

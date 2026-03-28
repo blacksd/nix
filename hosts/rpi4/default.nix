@@ -8,9 +8,6 @@
   ...
 }: {
   imports = [
-    # Note: sd-image module only needed when building SD card images
-    # For existing installations, comment it out to avoid build issues
-    # (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
     ./hardware-configuration.nix
     ./networking.nix
     ./users.nix
@@ -65,22 +62,9 @@
     tmux
   ];
 
-  # Garbage collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
-
-  # Auto-upgrade
-  system.autoUpgrade = {
-    enable = false;
-    allowReboot = false;
-  };
-
-  # Set the default flake for nixos-rebuild
-  # This allows running `sudo nixos-rebuild switch` without --flake argument
-  environment.variables.NIXOS_CONFIG_FLAKE = "/etc/nixos#rpi4";
+  # Garbage collection is configured in shared nix-settings.nix
+  # Set NixOS-specific gc schedule (shared module doesn't set dates)
+  nix.gc.dates = "weekly";
 
   # Disable ZFS to avoid kernel rebuilds
   boot.supportedFilesystems = lib.mkForce ["ext4" "vfat"];

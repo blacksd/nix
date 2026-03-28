@@ -19,9 +19,7 @@
 
     loader = {
       grub.enable = false;
-      # Keep bootloader disabled for existing installations with small (30MB) boot partition
-      # The SD image builder (images.rpi4-sd) has bootloader enabled with 512MB partition
-      generic-extlinux-compatible.enable = false;
+      generic-extlinux-compatible.enable = true;
     };
   };
 
