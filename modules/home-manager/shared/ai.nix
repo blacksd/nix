@@ -12,6 +12,6 @@ in {
   home.packages = with pkgs-unstable; [
     yek
     ast-grep
-    goose-cli
+    # goose-cli # INFO: no cache
   ];
 }

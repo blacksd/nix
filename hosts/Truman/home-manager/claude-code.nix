@@ -151,14 +151,14 @@ in {
         url = "https://mcp.linear.app/mcp";
       };
 
-      # Context7 documentation MCP server
-      context7 = {
-        command = "${pkgs.bash}/bin/bash";
-        args = [
-          "-c"
-          "source ${config.sops.templates.context7-env.path} && ${pkgs.nodejs_24}/bin/npx -y @upstash/context7-mcp --api-key \"$CONTEXT7_API_KEY\""
-        ];
-      };
+      # Context7 documentation MCP server (disabled)
+      # context7 = {
+      #   command = "${pkgs.bash}/bin/bash";
+      #   args = [
+      #     "-c"
+      #     "source ${config.sops.templates.context7-env.path} && ${pkgs.nodejs_24}/bin/npx -y @upstash/context7-mcp --api-key \"$CONTEXT7_API_KEY\""
+      #   ];
+      # };
 
       # Grafana Cloud MCP server
       grafana = {

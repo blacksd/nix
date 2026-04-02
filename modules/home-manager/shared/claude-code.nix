@@ -35,7 +35,10 @@
       # TODO: make some improvements on declarative plugin management
       # Reference implementation: https://github.com/JacobPEvans/nix/blob/main/modules/home-manager/ai-cli/claude/plugins.nix
       enabledPlugins = {
-        "claude-mem@thedotmack" = true;
+        "claude-mem@thedotmack" = false;
+        "context7@claude-plugins-official" = true;
+        "superpowers@claude-plugins-official" = true;
+        "codex@openai-codex" = true;
       };
 
       extraKnownMarketplaces = {
@@ -43,6 +46,12 @@
           source = {
             source = "github";
             repo = "thedotmack/claude-mem";
+          };
+        };
+        openai-codex = {
+          source = {
+            source = "github";
+            repo = "openai/codex-plugin-cc";
           };
         };
       };

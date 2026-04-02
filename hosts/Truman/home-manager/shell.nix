@@ -37,5 +37,7 @@
 
     hmqc_repo = "pushd $HOME/Repositories/\"$(find $HOME/Repositories -type d -maxdepth 1 -exec basename {} \\; | sort | fzf)\"";
     hmqc_code = "SELECTED=\"$HOME/Repositories/$(find $HOME/Repositories -type d -maxdepth 1 -exec basename {} \\; | sort | fzf)\" && pushd \"$SELECTED\" && code \"$SELECTED\"";
+
+    ts_kubeconfig_all = "tailscale status --json | jq -r '.Peer[].Tags[]? | select(startswith(\"tag:k8s-api\")) | ltrimstr(\"tag:k8s-api-\")' | sort -u | while read -r apiary; do tailscale configure kubeconfig $apiary; done";
   };
 }
