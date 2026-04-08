@@ -151,6 +151,12 @@ in {
         url = "https://mcp.linear.app/mcp";
       };
 
+      # Miro collaboration MCP server
+      miro = {
+        type = "http";
+        url = "https://mcp.miro.com";
+      };
+
       # Context7 documentation MCP server (disabled)
       # context7 = {
       #   command = "${pkgs.bash}/bin/bash";
