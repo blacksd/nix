@@ -76,6 +76,10 @@
     claude-code = {
       url = "github:sadjow/claude-code-nix";
     };
+
+    codex-cli = {
+      url = "github:sadjow/codex-cli-nix";
+    };
   };
 
   # The `outputs` function will return all the build results of the flake.
@@ -127,6 +131,14 @@
           username = "marco";
           useremail = "marco.bulgarini@gmail.com";
           hostname = "minipc";
+        };
+
+      rpi1 =
+        inputs
+        // {
+          username = "marco";
+          useremail = "marco.bulgarini@gmail.com";
+          hostname = "rpi1";
         };
     };
   in {
@@ -181,6 +193,14 @@
       ];
     };
 
+    nixosConfigurations."rpi1" = nixpkgs.lib.nixosSystem {
+      specialArgs = specialArgs.rpi1;
+      modules = [
+        {nixpkgs.hostPlatform = "armv6l-linux";}
+        ./hosts/${specialArgs.rpi1.hostname}
+      ];
+    };
+
     # SD card image for initial RPi4 provisioning
     # Build with: nix build .#images.rpi4-sd --system aarch64-linux
     # Flash with: zstd -d result/sd-image/*.img.zst -o rpi4.img && sudo dd if=rpi4.img of=/dev/diskN bs=4M status=progress
@@ -200,6 +220,19 @@
             users.${specialArgs.rpi4.username} = import ./hosts/${specialArgs.rpi4.hostname}/home.nix;
           };
         }
+      ];
+    }).config.system.build.sdImage;
+
+    # SD card image for initial RPi1 provisioning
+    # Build with: nix build .#images.rpi1-sd --system armv6l-linux
+    # (requires cross-compilation or binfmt emulation for armv6l)
+    # Flash with: zstd -d result/sd-image/*.img.zst -o rpi1.img && sudo dd if=rpi1.img of=/dev/diskN bs=4M status=progress
+    images.rpi1-sd = (nixpkgs.lib.nixosSystem {
+      specialArgs = specialArgs.rpi1;
+      modules = [
+        {nixpkgs.hostPlatform = "armv6l-linux";}
+        ./hosts/${specialArgs.rpi1.hostname}
+        ./hosts/${specialArgs.rpi1.hostname}/sd-image.nix
       ];
     }).config.system.build.sdImage;
 

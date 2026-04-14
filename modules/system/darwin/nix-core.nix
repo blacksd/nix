@@ -3,6 +3,7 @@
   pkgs,
   lib,
   claude-code,
+  codex-cli,
   ...
 }: {
   # enable flakes globally
@@ -17,6 +18,7 @@
   # Overlays
   nixpkgs.overlays = [
     claude-code.overlays.default
+    codex-cli.overlays.default
   ];
 
   # Auto upgrade nix package and the daemon service.
