@@ -11,7 +11,7 @@
   };
 in {
   programs.opencode = {
-    enable = true;
+    enable = !pkgs.stdenv.hostPlatform.isx86_64;
     # Use opencode from nixpkgs-unstable
     package = pkgs-unstable.opencode;
 
