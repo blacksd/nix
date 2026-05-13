@@ -41,6 +41,7 @@
     masApps = {
       Irvue = 1039633667;
       HiddenBar = 1452453066;
+      HomeAssistant = 1099568401;
     };
 
     taps = ["homebrew/services"];

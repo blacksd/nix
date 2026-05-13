@@ -10,6 +10,7 @@
       "hivemq/mqtt-cli"
       "shihanng/tfvar"
       "manaflow-ai/cmux"
+      "skyhook-io/tap"
     ];
 
     # `brew install`
@@ -19,6 +20,7 @@
       "tfvar" # TODO: This should be a nixpkg
       "tfenv" # TODO: This should be a nixpkg
       "nono"
+      "radar"
     ];
 
     # `brew install --cask`
@@ -38,6 +40,7 @@
       "dbeaver-community"
       "tuple"
       "cmux"
+      "bruno"
 
       # Cert stuff
       "xca"
