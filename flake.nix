@@ -80,6 +80,7 @@
     codex-cli = {
       url = "github:sadjow/codex-cli-nix";
     };
+
   };
 
   # The `outputs` function will return all the build results of the flake.

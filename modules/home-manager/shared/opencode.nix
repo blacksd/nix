@@ -4,7 +4,6 @@
   nixpkgs-unstable,
   ...
 }: let
-  # Get packages from nixpkgs-unstable
   pkgs-unstable = import nixpkgs-unstable {
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
@@ -12,7 +11,6 @@
 in {
   programs.opencode = {
     enable = !pkgs.stdenv.hostPlatform.isx86_64;
-    # Use opencode from nixpkgs-unstable
     package = pkgs-unstable.opencode;
 
     # Enable MCP integration (merges programs.mcp.servers into opencode config)

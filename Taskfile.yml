@@ -104,3 +104,8 @@ tasks:
       - This will remove Nix entirely! Are you sure?
     cmds:
       - sudo -i nix-env --uninstall nix
+
+  update_ccstatusline_config:
+    desc: Update ccstatusline config
+    cmds:
+      - npx -y ccstatusline@latest config --config ./modules/home-manager/shared/claude-code/settings/ccstatusline.settings.json
