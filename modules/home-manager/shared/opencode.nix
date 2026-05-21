@@ -1,17 +1,11 @@
 {
   pkgs,
   lib,
-  nixpkgs-unstable,
   ...
-}: let
-  pkgs-unstable = import nixpkgs-unstable {
-    system = pkgs.stdenv.hostPlatform.system;
-    config.allowUnfree = true;
-  };
-in {
+}: {
   programs.opencode = {
     enable = !pkgs.stdenv.hostPlatform.isx86_64;
-    package = pkgs-unstable.opencode;
+    package = pkgs.llm-agents.opencode;
 
     # Enable MCP integration (merges programs.mcp.servers into opencode config)
     enableMcpIntegration = true;

@@ -8,8 +8,7 @@
   # Using built-in home-manager programs.claude-code
   programs.claude-code = {
     enable = true;
-    # Use claude-code from sadjow/claude-code-nix overlay
-    package = pkgs.claude-code;
+    package = pkgs.llm-agents.claude-code;
 
     # Settings configuration with privacy defaults and statusLine
     settings = {
@@ -26,7 +25,7 @@
       # Enable ccstatusline for custom status display
       statusLine = {
         type = "command";
-        command = "${pkgs.bun}/bin/bunx ccstatusline@latest";
+        command = "${pkgs.llm-agents.ccstatusline}/bin/ccstatusline";
       };
 
       # Disable always-on thinking mode by default

@@ -15,11 +15,13 @@
       "https://blacksd.cachix.org"
       "https://nix-community.cachix.org"
       "https://devenv.cachix.org"
+      "https://cache.numtide.com"
     ];
     extra-trusted-public-keys = [
       "blacksd.cachix.org-1:Oq+4sItlUvLuWqr7QfUwb6+Mdl+gdIvdgMatVtJlJFc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
 
@@ -73,12 +75,8 @@
     #   inputs.nixpkgs.follows = "nixpkgs-unstable";
     # };
 
-    claude-code = {
-      url = "github:sadjow/claude-code-nix";
-    };
-
-    codex-cli = {
-      url = "github:sadjow/codex-cli-nix";
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
     };
 
   };
