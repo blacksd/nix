@@ -13,7 +13,7 @@
     # Settings configuration with privacy defaults and statusLine
     settings = {
       # Model selection
-      model = "claude-opus-4-6";
+      model = "claude-opus-4-7";
 
       # Privacy settings
       env = {
