@@ -31,6 +31,15 @@
       # Disable always-on thinking mode by default
       alwaysThinkingEnabled = false;
 
+      # Auto-copy selected text to clipboard ("copied N chars" hint)
+      copyOnSelect = true;
+
+      # Auto-scroll conversation view to bottom (fullscreen mode only)
+      autoScrollEnabled = true;
+
+      # Use the flicker-free fullscreen renderer (required for autoScrollEnabled)
+      tui = "fullscreen";
+
       # TODO: make some improvements on declarative plugin management
       # Reference implementation: https://github.com/JacobPEvans/nix/blob/main/modules/home-manager/ai-cli/claude/plugins.nix
       enabledPlugins = {
