@@ -4,6 +4,7 @@
     ../../modules/home-manager/darwin
 
     # Host-specific HM modules
+    ./home-manager/ai.nix
     ./home-manager/core.nix
     ./home-manager/gaming.nix
     ./home-manager/k8s.nix
