@@ -20,6 +20,7 @@
       "tfvar" # TODO: This should be a nixpkg
       "tfenv" # TODO: This should be a nixpkg
       "radar"
+      "sem-cli"
     ];
 
     # `brew install --cask`

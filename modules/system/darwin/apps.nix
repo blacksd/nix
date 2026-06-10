@@ -44,6 +44,9 @@
       upgrade = true; # Upgrade outdated casks, formulae, and App Store apps
       # 'zap': uninstalls all formulae(and related files) not listed in the generated Brewfile
       cleanup = "zap";
+      extraFlags = [
+        "--force-cleanup"
+      ];
     };
 
     # Applications to install from Mac App Store using mas.
