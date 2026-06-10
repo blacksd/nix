@@ -1,4 +1,16 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  nixpkgs-unstable,
+  ...
+}: {
+  # Workaround: stable nixpkgs ships mas 2.2.2, which is broken against the current
+  # App Store. Pull mas from unstable until the backport (NixOS/nixpkgs#509715) lands.
+  nixpkgs.overlays = [
+    (_final: _prev: {
+      mas = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mas;
+    })
+  ];
+
   ##########################################################################
   #
   #  Install all apps and packages here.

@@ -36,7 +36,7 @@ tasks:
   live_on_the_edge:
     desc: Update nixpkgs-unstable channel
     cmds:
-      - nix flake update nixpkgs-unstable claude-code codex-cli
+      - nix flake update nixpkgs-unstable llm-agents
       # - nix flake lock --update-input nixpkgs-unstable
 
   gc:
