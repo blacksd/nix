@@ -5,7 +5,7 @@
 }: {
   home.packages = with pkgs; [
     # mandatory lulz
-    neofetch
+    fastfetch
 
     # archives
     zip

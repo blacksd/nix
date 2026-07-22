@@ -3,111 +3,120 @@
   lib,
   username,
   config,
+  llm-agents,
   ...
-}: {
-  # Using built-in home-manager programs.claude-code
-  programs.claude-code = {
-    enable = true;
-    package = pkgs.llm-agents.claude-code;
+}: let
+  system = pkgs.stdenv.hostPlatform.system;
+  supported = builtins.hasAttr system llm-agents.packages;
+  llmPkgs =
+    if supported
+    then llm-agents.packages.${system}
+    else null;
+in
+  lib.mkIf supported {
+    # Using built-in home-manager programs.claude-code
+    programs.claude-code = {
+      enable = true;
+      package = llmPkgs.claude-code;
 
-    # Settings configuration with privacy defaults and statusLine
-    settings = {
-      # Model selection
-      model = "claude-opus-4-7";
+      # Settings configuration with privacy defaults and statusLine
+      settings = {
+        # Model selection
+        model = "claude-opus-4-7";
 
-      # Privacy settings
-      env = {
-        DISABLE_TELEMETRY = "1";
-        DISABLE_ERROR_REPORTING = "1";
-        DISABLE_BUG_COMMAND = "1";
-      };
-
-      # Enable ccstatusline for custom status display
-      statusLine = {
-        type = "command";
-        command = "${pkgs.llm-agents.ccstatusline}/bin/ccstatusline";
-      };
-
-      # Disable always-on thinking mode by default
-      alwaysThinkingEnabled = false;
-
-      # Auto-copy selected text to clipboard ("copied N chars" hint)
-      copyOnSelect = true;
-
-      # Auto-scroll conversation view to bottom (fullscreen mode only)
-      autoScrollEnabled = true;
-
-      # Use the flicker-free fullscreen renderer (required for autoScrollEnabled)
-      tui = "fullscreen";
-
-      # TODO: make some improvements on declarative plugin management
-      # Reference implementation: https://github.com/JacobPEvans/nix/blob/main/modules/home-manager/ai-cli/claude/plugins.nix
-      enabledPlugins = {
-        "claude-mem@thedotmack" = false;
-        "context7@claude-plugins-official" = true;
-        "superpowers@claude-plugins-official" = true;
-        "codex@openai-codex" = true;
-      };
-
-      extraKnownMarketplaces = {
-        thedotmack = {
-          source = {
-            source = "github";
-            repo = "thedotmack/claude-mem";
-          };
-        };
-        openai-codex = {
-          source = {
-            source = "github";
-            repo = "openai/codex-plugin-cc";
-          };
-        };
-      };
-    };
-
-    # MCP servers using the built-in home-manager option
-    # Note: mcpServers (not mcp) - this is the home-manager format
-    mcpServers = {
-      # Custom MCP servers (work everywhere)
-      ast-grep = {
-        command = "${pkgs.uv}/bin/uvx";
-        args = ["--from" "git+https://github.com/ast-grep/ast-grep-mcp" "ast-grep-server"];
-      };
-      kubernetes = {
-        command = "${pkgs.nodejs_24}/bin/npx";
-        args = [
-          "-y"
-          "kubernetes-mcp-server@latest"
-          "--disable-multi-cluster"
-          "--read-only"
-        ];
-      };
-      taskmaster-ai = {
-        command = "${pkgs.nodejs_24}/bin/npx";
-        args = [
-          "-y"
-          "--package=task-master-ai"
-          "task-master-ai"
-        ];
+        # Privacy settings
         env = {
-          TASK_MASTER_TOOLS = "standard";
+          DISABLE_TELEMETRY = "1";
+          DISABLE_ERROR_REPORTING = "1";
+          DISABLE_BUG_COMMAND = "1";
+        };
+
+        # Enable ccstatusline for custom status display
+        statusLine = {
+          type = "command";
+          command = "${llmPkgs.ccstatusline}/bin/ccstatusline";
+        };
+
+        # Disable always-on thinking mode by default
+        alwaysThinkingEnabled = false;
+
+        # Auto-copy selected text to clipboard ("copied N chars" hint)
+        copyOnSelect = true;
+
+        # Auto-scroll conversation view to bottom (fullscreen mode only)
+        autoScrollEnabled = true;
+
+        # Use the flicker-free fullscreen renderer (required for autoScrollEnabled)
+        tui = "fullscreen";
+
+        # TODO: make some improvements on declarative plugin management
+        # Reference implementation: https://github.com/JacobPEvans/nix/blob/main/modules/home-manager/ai-cli/claude/plugins.nix
+        enabledPlugins = {
+          "claude-mem@thedotmack" = false;
+          "context7@claude-plugins-official" = true;
+          "superpowers@claude-plugins-official" = true;
+          "codex@openai-codex" = true;
+        };
+
+        extraKnownMarketplaces = {
+          thedotmack = {
+            source = {
+              source = "github";
+              repo = "thedotmack/claude-mem";
+            };
+          };
+          openai-codex = {
+            source = {
+              source = "github";
+              repo = "openai/codex-plugin-cc";
+            };
+          };
         };
       };
-      filesystem = {
-        args = [
-          "-y"
-          "@modelcontextprotocol/server-filesystem"
-        ];
-        command = "npx";
-        type = "stdio";
-      };
-      # github = {
-      #   type = "http";
-      #   url = "https://api.githubcopilot.com/mcp/";
-      # };
-    };
-  };
 
-  # ccstatusline configuration (for Claude Code status display)
-  home.file.".config/ccstatusline/settings.json".source = ./claude-code/settings/ccstatusline.settings.json;
-}
+      # MCP servers using the built-in home-manager option
+      # Note: mcpServers (not mcp) - this is the home-manager format
+      mcpServers = {
+        # Custom MCP servers (work everywhere)
+        ast-grep = {
+          command = "${pkgs.uv}/bin/uvx";
+          args = ["--from" "git+https://github.com/ast-grep/ast-grep-mcp" "ast-grep-server"];
+        };
+        kubernetes = {
+          command = "${pkgs.nodejs_24}/bin/npx";
+          args = [
+            "-y"
+            "kubernetes-mcp-server@latest"
+            "--disable-multi-cluster"
+            "--read-only"
+          ];
+        };
+        taskmaster-ai = {
+          command = "${pkgs.nodejs_24}/bin/npx";
+          args = [
+            "-y"
+            "--package=task-master-ai"
+            "task-master-ai"
+          ];
+          env = {
+            TASK_MASTER_TOOLS = "standard";
+          };
+        };
+        filesystem = {
+          args = [
+            "-y"
+            "@modelcontextprotocol/server-filesystem"
+          ];
+          command = "npx";
+          type = "stdio";
+        };
+        # github = {
+        #   type = "http";
+        #   url = "https://api.githubcopilot.com/mcp/";
+        # };
+      };
+    };
+
+    # ccstatusline configuration (for Claude Code status display)
+    home.file.".config/ccstatusline/settings.json".source = ./claude-code/settings/ccstatusline.settings.json;
+  }

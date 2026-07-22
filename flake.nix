@@ -29,12 +29,12 @@
   # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-26.05-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     # home-manager, used for managing user configuration
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with the `inputs.nixpkgs` of the current flake,
       # to avoid problems caused by different versions of nixpkgs dependencies.
@@ -42,7 +42,7 @@
     };
 
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
+      url = "github:LnL7/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
@@ -108,14 +108,6 @@
           hostname = "Truman";
         };
 
-      simpleton =
-        inputs
-        // {
-          username = "marco";
-          useremail = "marco.bulgarini@gmail.com";
-          hostname = "simpleton";
-        };
-
       rpi4 =
         inputs
         // {
@@ -146,14 +138,6 @@
       modules = [
         {nixpkgs.hostPlatform = "aarch64-darwin";}
         ./hosts/${specialArgs.Truman.hostname}
-      ];
-    };
-
-    darwinConfigurations."simpleton" = darwin.lib.darwinSystem {
-      specialArgs = specialArgs.simpleton;
-      modules = [
-        {nixpkgs.hostPlatform = "x86_64-darwin";}
-        ./hosts/${specialArgs.simpleton.hostname}
       ];
     };
 

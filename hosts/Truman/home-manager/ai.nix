@@ -1,7 +1,13 @@
-{pkgs, ...}: {
-  home.packages = with pkgs.llm-agents; [
-    codex
-    nono
-    openspec
+{
+  pkgs,
+  llm-agents,
+  ...
+}: let
+  llmPkgs = llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+in {
+  home.packages = [
+    llmPkgs.codex
+    llmPkgs.nono
+    llmPkgs.openspec
   ];
 }
