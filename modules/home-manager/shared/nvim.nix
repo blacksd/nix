@@ -6,6 +6,10 @@
       defaultEditor = true;
       vimAlias = true;
       viAlias = true;
+      # home-manager 26.05 flipped these defaults to false; keep the current
+      # plugin set, none of which depend on Ruby/Python3 remote providers.
+      withRuby = false;
+      withPython3 = false;
       plugins = with pkgs.vimPlugins; [
         vim-nix
         dracula-nvim

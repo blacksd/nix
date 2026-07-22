@@ -13,11 +13,11 @@ in {
     };
   };
   programs.ssh = {
-    matchBlocks = {
+    settings = {
       "github.com" = {
-        user = "git";
-        hostname = "github.com";
-        identityFile = "/Users/${username}/.ssh/${fixedUsername}_hivemq";
+        User = "git";
+        HostName = "github.com";
+        IdentityFile = "/Users/${username}/.ssh/${fixedUsername}_hivemq";
       };
     };
   };

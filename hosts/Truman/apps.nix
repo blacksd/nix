@@ -5,12 +5,28 @@
       NextMeeting = 1017470484;
     };
 
+    # Homebrew 6.0.0 enabled HOMEBREW_REQUIRE_TAP_TRUST by default, which refuses
+    # to load formulae/casks from third-party taps unless they are marked trusted.
+    # Set `trusted = true` on any non-official tap whose formulae/casks are listed
+    # in `brews`/`casks` below; official taps (homebrew/*) are always trusted.
     taps = [
       "homebrew/services"
-      "hivemq/mqtt-cli"
-      "shihanng/tfvar"
-      "manaflow-ai/cmux"
-      "skyhook-io/tap"
+      {
+        name = "hivemq/mqtt-cli";
+        trusted = true;
+      }
+      {
+        name = "shihanng/tfvar";
+        trusted = true;
+      }
+      {
+        name = "manaflow-ai/cmux";
+        trusted = true;
+      }
+      {
+        name = "skyhook-io/tap";
+        trusted = true;
+      }
     ];
 
     # `brew install`
