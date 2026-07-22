@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  herdr,
+  ...
+}: {
   home.packages = with pkgs; [
     # TODO: it may make sense to migrate a subset of this to a devbox (global or local) config
 
@@ -44,6 +48,7 @@
     kubie
     ctlptl
     argocd
+    herdr.packages.${pkgs.stdenv.hostPlatform.system}.herdr
 
     # AI tools
     # open-webui

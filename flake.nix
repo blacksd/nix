@@ -79,6 +79,10 @@
       url = "github:numtide/llm-agents.nix";
     };
 
+    herdr = {
+      url = "github:ogulcancelik/herdr";
+    };
+
   };
 
   # The `outputs` function will return all the build results of the flake.
