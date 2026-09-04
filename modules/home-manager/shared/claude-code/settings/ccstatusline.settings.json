@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "lines": [
     [
       {
@@ -25,7 +25,7 @@
         "type": "compaction-counter",
         "metadata": {
           "nerdFont": "true",
-          "hideZero": "true"
+          "hide": "zero"
         }
       }
     ],
@@ -119,6 +119,7 @@
   "compactThreshold": 60,
   "colorLevel": 3,
   "defaultPadding": " ",
+  "defaultPaddingSide": "both",
   "inheritSeparatorColors": false,
   "globalBold": false,
   "gitCacheTtlSeconds": 5,
@@ -136,5 +137,6 @@
     "theme": "nord-aurora",
     "autoAlign": false,
     "continueThemeAcrossLines": false
-  }
+  },
+  "exportedBy": "2.2.29"
 }

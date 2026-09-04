@@ -115,6 +115,17 @@ in
       };
     };
 
-    # ccstatusline configuration (for Claude Code status display)
-    home.file.".config/ccstatusline/settings.json".source = ./claude-code/settings/ccstatusline.settings.json;
+    # ccstatusline configuration (for Claude Code status display).
+    # Deployed as a writable copy rather than a store symlink because
+    # ccstatusline >=2.2.29 rewrites this file to migrate the schema on load.
+    home.activation.ccstatuslineSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      run mkdir -p "$HOME/.config/ccstatusline"
+      # Replace any prior Nix store symlink with a writable copy so
+      # ccstatusline's on-load schema migration can rewrite it in place.
+      if [ -L "$HOME/.config/ccstatusline/settings.json" ]; then
+        run rm -f "$HOME/.config/ccstatusline/settings.json"
+      fi
+      run install -m 0644 ${./claude-code/settings/ccstatusline.settings.json} \
+        "$HOME/.config/ccstatusline/settings.json"
+    '';
   }
