@@ -55,7 +55,7 @@ in
           "claude-mem@thedotmack" = false;
           "context7@claude-plugins-official" = true;
           "superpowers@claude-plugins-official" = true;
-          "codex@openai-codex" = true;
+          "codex@openai-codex" = false;
         };
 
         extraKnownMarketplaces = {
@@ -90,17 +90,6 @@ in
             "--disable-multi-cluster"
             "--read-only"
           ];
-        };
-        taskmaster-ai = {
-          command = "${pkgs.nodejs_24}/bin/npx";
-          args = [
-            "-y"
-            "--package=task-master-ai"
-            "task-master-ai"
-          ];
-          env = {
-            TASK_MASTER_TOOLS = "standard";
-          };
         };
         filesystem = {
           args = [

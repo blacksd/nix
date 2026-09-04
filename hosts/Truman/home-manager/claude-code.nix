@@ -21,16 +21,6 @@ in {
         format = "binary";
       };
 
-      businessmap_api_token = {
-        sopsFile = ../secrets/mcp.sops.yaml;
-        key = "kanbanize/api_token";
-      };
-
-      businessmap_api_url = {
-        sopsFile = ../secrets/mcp.sops.yaml;
-        key = "kanbanize/api_url";
-      };
-
       context7_api_key = {
         sopsFile = ../secrets/mcp.sops.yaml;
         key = "context7/api_key";
@@ -51,27 +41,10 @@ in {
         key = "pagerduty/api_key";
       };
 
-      slack_xoxc_token = {
-        sopsFile = ../secrets/mcp.sops.yaml;
-        key = "slack/xoxc_token";
-      };
-
-      slack_xoxd_token = {
-        sopsFile = ../secrets/mcp.sops.yaml;
-        key = "slack/xoxd_token";
-      };
-
       otlp_auth_header = {
         sopsFile = ../secrets/claude-code.sops.yaml;
         key = "otlp/auth_header";
       };
-    };
-
-    templates."businessmap-env" = {
-      content = ''
-        export BUSINESSMAP_API_URL="${config.sops.placeholder.businessmap_api_url}"
-        export BUSINESSMAP_API_TOKEN="${config.sops.placeholder.businessmap_api_token}"
-      '';
     };
 
     templates."context7-env" = {
@@ -90,13 +63,6 @@ in {
     templates."pagerduty-env" = {
       content = ''
         export PAGERDUTY_USER_API_KEY="${config.sops.placeholder.pagerduty_api_key}"
-      '';
-    };
-
-    templates."slack-env" = {
-      content = ''
-        export SLACK_MCP_XOXC_TOKEN="${config.sops.placeholder.slack_xoxc_token}"
-        export SLACK_MCP_XOXD_TOKEN="${config.sops.placeholder.slack_xoxd_token}"
       '';
     };
 
@@ -165,6 +131,10 @@ in {
           "Never access or transmit SSH private keys outside the local machine"
         ];
       };
+      enabledPlugins = {
+        "slack@claude-plugins-official" = true;
+        "code-review@claude-plugins-official" = true;
+      };
       # Override shared telemetry settings for work - enable OTEL telemetry
       env = {
         # Override DISABLE_TELEMETRY from shared config
@@ -184,18 +154,6 @@ in {
 
     # Work-specific MCP servers (extends shared/ai.nix configuration)
     mcpServers = {
-      # Businessmap (Kanbanize) integration
-      businessmap = {
-        command = "${pkgs.bash}/bin/bash";
-        args = [
-          "-c"
-          "source ${config.sops.templates.businessmap-env.path} && ${pkgs.nodejs_24}/bin/npx -y @edicarlos.lds/businessmap-mcp"
-        ];
-        env = {
-          BUSINESSMAP_DEFAULT_WORKSPACE_ID = "73";
-        };
-      };
-
       # Linear integration
       linear = {
         type = "http";
@@ -232,15 +190,6 @@ in {
         args = [
           "-c"
           "source ${config.sops.templates.pagerduty-env.path} && ${pkgs.uv}/bin/uvx pagerduty-mcp"
-        ];
-      };
-
-      # Slack MCP server (xoxc/xoxd auth)
-      slack = {
-        command = "${pkgs.bash}/bin/bash";
-        args = [
-          "-c"
-          "source ${config.sops.templates.slack-env.path} && ${pkgs.nodejs_24}/bin/npx -y slack-mcp-server@latest --transport stdio"
         ];
       };
     };
