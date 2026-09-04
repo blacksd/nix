@@ -22,7 +22,16 @@ in
       # Settings configuration with privacy defaults and statusLine
       settings = {
         # Model selection
-        model = "claude-opus-4-7";
+        model = "claude-opus-4-8";
+
+        # Reasoning effort for supported models
+        effortLevel = "xhigh";
+
+        # Default permission mode
+        permissions.defaultMode = "auto";
+
+        # Concise built-in output style
+        outputStyle = "Concise";
 
         # Privacy settings
         env = {
