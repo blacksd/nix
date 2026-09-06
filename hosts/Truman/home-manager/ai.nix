@@ -9,6 +9,6 @@ in {
     llmPkgs.codex
     llmPkgs.nono
     llmPkgs.openspec
-    llmPkgs.pi
+    llmPkgs.omp
   ];
 }
