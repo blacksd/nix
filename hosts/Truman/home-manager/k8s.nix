@@ -3,6 +3,20 @@
   # Base k8s config (including krewfile plugins) is in shared/k8s.nix
 
   programs = {
+    sofka = {
+      enable = true;
+      skin.name = "dracula";
+      settings = {
+        journal = {
+          enabled = true;
+          max_size_mb = 64;
+        };
+        # Surface the custom "designation" node label as a role, so nodes
+        # labelled designation=sharedxl show "sharedxl" in the ROLES column.
+        node_roles.label_keys = ["designation"];
+      };
+    };
+
     k9s = {
       hotKeys = {
         # ArgoCD-specific hotkey for work environment

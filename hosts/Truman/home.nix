@@ -1,7 +1,10 @@
-{...}: {
+{sofka, ...}: {
   # Host-specific home-manager overrides for Truman
   imports = [
     ../../modules/home-manager/darwin
+
+    # Upstream flake-provided HM modules
+    sofka.homeManagerModules.default
 
     # Host-specific HM modules
     ./home-manager/ai.nix

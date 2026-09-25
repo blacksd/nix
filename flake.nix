@@ -76,11 +76,15 @@
     # };
 
     llm-agents = {
-      url = "github:numtide/llm-agents.nix";
+      url = "github:blacksd/llm-agents.nix/feat/add-omnigent";
     };
 
     herdr = {
-      url = "github:ogulcancelik/herdr";
+      url = "github:herdrdev/herdr";
+    };
+
+    sofka = {
+      url = "github:nklmilojevic/sofka";
     };
 
   };

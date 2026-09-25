@@ -12,6 +12,12 @@
     if supported
     then llm-agents.packages.${system}
     else null;
+
+  # Personal skills fetched from upstream and pinned in the Nix store.
+  # Each entry maps a skill directory name to a derivation containing SKILL.md.
+  skills = {
+    typesafe-ai = import ./claude-code/skills/typesafe-ai.nix {inherit pkgs;};
+  };
 in
   lib.mkIf supported {
     # Using built-in home-manager programs.claude-code
@@ -22,7 +28,7 @@ in
       # Settings configuration with privacy defaults and statusLine
       settings = {
         # Model selection
-        model = "claude-opus-4-8";
+        model = "claude-opus-5-5";
 
         # Reasoning effort for supported models
         effortLevel = "xhigh";
@@ -46,8 +52,8 @@ in
           command = "${llmPkgs.ccstatusline}/bin/ccstatusline";
         };
 
-        # Disable always-on thinking mode by default
-        alwaysThinkingEnabled = false;
+        # Opus 5.5 is not available with thinking mode switched off.
+        alwaysThinkingEnabled = true;
 
         # Auto-copy selected text to clipboard ("copied N chars" hint)
         copyOnSelect = true;
@@ -114,6 +120,12 @@ in
         # };
       };
     };
+
+    # Personal skills, symlinked from the Nix store into ~/.claude/skills.
+    # Claude Code only reads these, so a store symlink is safe here.
+    home.file = lib.mapAttrs' (name: drv:
+      lib.nameValuePair ".claude/skills/${name}" {source = drv;})
+    skills;
 
     # ccstatusline configuration (for Claude Code status display).
     # Deployed as a writable copy rather than a store symlink because

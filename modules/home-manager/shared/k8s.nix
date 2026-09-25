@@ -52,7 +52,7 @@
           ];
         };
         view-secret = {
-          shortCut = "Shift-S";
+          shortCut = "s";
           description = "View secret (all)";
           scopes = ["secrets"];
           command = "sh";

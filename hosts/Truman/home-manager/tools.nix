@@ -49,6 +49,7 @@
     ctlptl
     argocd
     herdr.packages.${pkgs.stdenv.hostPlatform.system}.herdr
+    # sofka installed via programs.sofka HM module (see home-manager/k8s.nix)
 
     # AI tools
     # open-webui
