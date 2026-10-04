@@ -41,9 +41,8 @@
       menuExtraClock.Show24Hour = true; # show 24 hour clock
 
       # customize dock
+      # autohide / show-recents are managed by nix-plist-manager (hosts/Truman/plist/user.nix)
       dock = {
-        autohide = true;
-        show-recents = false; # disable recent apps
 
         # customize Hot Corners(触发角, 鼠标移动到屏幕角落时触发的动作)
         # wvous-tl-corner = 2;  # top-left - Mission Control

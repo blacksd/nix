@@ -28,6 +28,21 @@ tasks:
     cmds:
       - sudo {{.REBUILD_CMD}} switch --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
 
+  plist-drift:
+    desc: Show macOS settings that differ from the nix-plist-manager config (hosts/<host>/macos.nix, hosts/<host>/home-manager/macos.nix)
+    vars:
+      TMP:
+        sh: mktemp -d
+      HOST:
+        sh: scutil --get LocalHostName
+    cmds:
+      - defer: rm -rf {{.TMP}}
+      # Evaluate the modules' own definitions: the merged option tree also contains upstream removed options that throw.
+      - nix eval -f hosts/{{.HOST}}/macos.nix --arg nix-plist-manager '{}' --arg config '{}' --arg username '""' programs.nix-plist-manager.options > {{.TMP}}/system.nix
+      - nix eval -f hosts/{{.HOST}}/home-manager/macos.nix --arg nix-plist-manager '{}' programs.nix-plist-manager.options > {{.TMP}}/user.nix
+      - nix run github:sushydev/nix-plist-manager#current -- --scope system --against {{.TMP}}/system.nix
+      - nix run github:sushydev/nix-plist-manager#current -- --scope user --against {{.TMP}}/user.nix
+
   update:
     desc: Run flake update (specify an argument after '--' for updating a single package)
     cmds:

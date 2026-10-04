@@ -87,6 +87,11 @@
       url = "github:nklmilojevic/sofka";
     };
 
+    nix-plist-manager = {
+      url = "github:sushydev/nix-plist-manager";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+
   };
 
   # The `outputs` function will return all the build results of the flake.

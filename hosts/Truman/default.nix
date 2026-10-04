@@ -7,6 +7,7 @@
     ../../modules/system/darwin
     ./apps.nix
     ./ai.nix
+    ./macos.nix
     home-manager.darwinModules.home-manager
   ];
 

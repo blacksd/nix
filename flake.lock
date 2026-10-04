@@ -238,6 +238,26 @@
         "type": "github"
       }
     },
+    "nix-plist-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-darwin"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790283696,
+        "narHash": "sha256-c8J9LK40Mn+6UaS7sJZKSW28L2XkSivSF9dYl6bOeEc=",
+        "owner": "sushydev",
+        "repo": "nix-plist-manager",
+        "rev": "f3ac4aaa9504e2f27da6314a47acea69a2e778e4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sushydev",
+        "repo": "nix-plist-manager",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1779911860,
@@ -343,6 +363,7 @@
         "home-manager": "home-manager",
         "krewfile": "krewfile",
         "llm-agents": "llm-agents",
+        "nix-plist-manager": "nix-plist-manager",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-unstable": "nixpkgs-unstable",
