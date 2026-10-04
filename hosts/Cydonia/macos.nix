@@ -2,6 +2,7 @@
   config,
   nix-plist-manager,
   username,
+  hostname,
   ...
 }: let
   home = config.users.users.${username}.home;
@@ -65,7 +66,12 @@ in {
   # Dock contents: rebuilt from these lists on every switch; manual pins are dropped.
   system.defaults.dock = {
     persistent-apps = [
-      "/System/Applications/Launchpad.app"
+      # macOS 26 replaced Launchpad with Apps; Truman is still on macOS 15
+      (
+        if hostname == "Truman"
+        then "/System/Applications/Launchpad.app"
+        else "/System/Applications/Apps.app"
+      )
       "/System/Applications/App Store.app"
       "/System/Applications/Calendar.app"
       "/System/Applications/System Settings.app"

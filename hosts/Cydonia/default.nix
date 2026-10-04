@@ -13,7 +13,7 @@
 
   # nix-darwin state version (uses integers, not strings)
   # This should match the nix-darwin version when the host was first created
-  system.stateVersion = 5;
+  system.stateVersion = 6;
 
   home-manager = {
     useGlobalPkgs = true;

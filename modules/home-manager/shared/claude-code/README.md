@@ -61,14 +61,14 @@ config = {
 
 The module is automatically imported and works with default settings on all hosts.
 
-### Host-Specific Override (Truman)
+### Host-Specific Override (Cydonia)
 
 ```nix
-# hosts/Truman/home-manager/ai.nix
+# hosts/Cydonia/home-manager/claude-code.nix
 programs.claude-code.hivemqCloudXmlPath = config.sops.secrets.hivemq_cloud_xml.path;
 ```
 
-This enables the HiveMQ Cloud context section in CLAUDE.md for the Truman (work) host.
+This enables the HiveMQ Cloud context section in CLAUDE.md for the Cydonia (work) host.
 
 ## CLAUDE.md Content
 
@@ -138,7 +138,7 @@ Claude Code runtime configuration is in `modules/home-manager/shared/ai.nix`:
 - `programs.claude-code.mcpServers` - MCP server definitions
 - ccstatusline settings link
 
-### Host-Specific MCP (hosts/Truman/home-manager/ai.nix)
+### Host-Specific MCP (hosts/Cydonia/home-manager/claude-code.nix)
 
 Work-specific MCP servers:
 - `businessmap` - Kanbanize integration
@@ -165,4 +165,4 @@ options.programs.claude-code = {
 - **Scope**: This module only handles CLAUDE.md assembly
 - **Settings**: Claude Code settings.json and MCP configuration are in `ai.nix`
 - **ccstatusline**: Config file stored here but linked from `ai.nix`
-- **HiveMQ Context**: Automatically included when secret exists (Truman only)
+- **HiveMQ Context**: Automatically included when secret exists (Cydonia only)

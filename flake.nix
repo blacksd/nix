@@ -113,6 +113,14 @@
     ...
   }: let
     specialArgs = {
+      Cydonia =
+        inputs
+        // {
+          username = "marco.bulgarini";
+          useremail = "marco.bulgarini@hivemq.com";
+          hostname = "Cydonia";
+        };
+
       Truman =
         inputs
         // {
@@ -146,11 +154,21 @@
         };
     };
   in {
+    darwinConfigurations."Cydonia" = darwin.lib.darwinSystem {
+      specialArgs = specialArgs.Cydonia;
+      modules = [
+        {nixpkgs.hostPlatform = "aarch64-darwin";}
+        ./hosts/${specialArgs.Cydonia.hostname}
+      ];
+    };
+
+    # Truman is being replaced by Cydonia and shares its host config until decommissioned
     darwinConfigurations."Truman" = darwin.lib.darwinSystem {
       specialArgs = specialArgs.Truman;
       modules = [
         {nixpkgs.hostPlatform = "aarch64-darwin";}
-        ./hosts/${specialArgs.Truman.hostname}
+        ./hosts/${specialArgs.Cydonia.hostname}
+        {system.stateVersion = nixpkgs-darwin.lib.mkForce 5;}
       ];
     };
 

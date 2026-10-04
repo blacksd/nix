@@ -1,5 +1,5 @@
 {sofka, ...}: {
-  # Host-specific home-manager overrides for Truman
+  # Host-specific home-manager overrides for Cydonia
   imports = [
     ../../modules/home-manager/darwin
 
@@ -16,5 +16,6 @@
     ./home-manager/shell.nix
     ./home-manager/ssh.nix
     ./home-manager/tools.nix
+    ./home-manager/yubikey.nix
   ];
 }

@@ -11,7 +11,7 @@
     config.allowUnfree = true;
   };
 in {
-  # Truman (work) host-specific secrets and MCP servers
+  # Cydonia (work) host-specific secrets and MCP servers
 
   sops = {
     secrets = {

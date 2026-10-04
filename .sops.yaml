@@ -4,7 +4,8 @@ keys:
   - &simpleton age1yd986swekxn356ka9ue56tn2keh668g5gw8zn6c2rl6nq24lqd6qfgauq6
   - &simpleton_backup age153juj3ja5qec3fk5c8fffjmuvzs7x6lks8whj4k4hqs22nd99efs8tggym
 creation_rules:
-  - path_regex: hosts\/Truman\/secrets\/.*\.sops(?:\.yaml)*$
+  # Cydonia (YubiKey + paper backup) keys get added here during bootstrap; Truman's go when it is decommissioned
+  - path_regex: hosts\/Cydonia\/secrets\/.*\.sops(?:\.yaml)*$
     key_groups:
       - age:
           - *Truman

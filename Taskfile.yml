@@ -34,11 +34,12 @@ tasks:
       TMP:
         sh: mktemp -d
       HOST:
-        sh: scutil --get LocalHostName
+        # Truman shares Cydonia's host config until decommissioned
+        sh: h=$(scutil --get LocalHostName); [ "$h" = Truman ] && h=Cydonia; echo "$h"
     cmds:
       - defer: rm -rf {{.TMP}}
       # Evaluate the modules' own definitions: the merged option tree also contains upstream removed options that throw.
-      - nix eval -f hosts/{{.HOST}}/macos.nix --arg nix-plist-manager '{}' --arg config '{}' --arg username '""' programs.nix-plist-manager.options > {{.TMP}}/system.nix
+      - nix eval -f hosts/{{.HOST}}/macos.nix --arg nix-plist-manager '{}' --arg config '{}' --arg username '""' --arg hostname '""' programs.nix-plist-manager.options > {{.TMP}}/system.nix
       - nix eval -f hosts/{{.HOST}}/home-manager/macos.nix --arg nix-plist-manager '{}' programs.nix-plist-manager.options > {{.TMP}}/user.nix
       - nix run github:sushydev/nix-plist-manager#current -- --scope system --against {{.TMP}}/system.nix
       - nix run github:sushydev/nix-plist-manager#current -- --scope user --against {{.TMP}}/user.nix
@@ -83,7 +84,9 @@ tasks:
   macos_install_nix:
     desc: Install nix
     cmds:
-      - curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+      # NixOS community installer: upstream Nix, which nix-darwin manages (nix.enable = true).
+      # The Determinate installer now defaults to Determinate Nix, which requires nix.enable = false.
+      - curl --proto '=https' --tlsv1.2 -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install --enable-flakes
     status:
       - nix --version &>/dev/null &>/dev/null
 
@@ -119,6 +122,11 @@ tasks:
       - This will remove Nix entirely! Are you sure?
     cmds:
       - sudo -i nix-env --uninstall nix
+
+  sops_updatekeys:
+    desc: Re-encrypt every sops file for the recipients currently listed in .sops.yaml
+    cmds:
+      - git ls-files -z '*.sops' '*.sops.yaml' ':!.sops.yaml' | xargs -0 -n1 sops updatekeys --yes
 
   update_ccstatusline_config:
     desc: Update ccstatusline config

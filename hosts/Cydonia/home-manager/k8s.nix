@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  # Truman host-specific k8s configuration (work environment)
+  # Cydonia host-specific k8s configuration (work environment)
   # Base k8s config (including krewfile plugins) is in shared/k8s.nix
 
   programs = {
