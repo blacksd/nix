@@ -16,6 +16,6 @@
     ./home-manager/shell.nix
     ./home-manager/ssh.nix
     ./home-manager/tools.nix
-    ./home-manager/yubikey.nix
+    ./home-manager/secure-enclave.nix
   ];
 }
