@@ -55,14 +55,15 @@
     # For details, see https://github.com/mas-cli/mas
     masApps = {
       Irvue = 1039633667;
-      HiddenBar = 1452453066;
       HomeAssistant = 1099568401;
     };
 
-    taps = ["homebrew/services"];
+    # taps = ["homebrew/services"];
 
     # `brew install`
-    brews = ["colima"];
+    brews = [
+      "colima"
+    ];
 
     # `brew install --cask`
     casks = [
@@ -72,7 +73,7 @@
       "shottr"
       "tmpdisk"
       "daisydisk"
-      "yubico-yubikey-manager"
+      "hiddenbar"
 
       # Let's work
       "visual-studio-code"

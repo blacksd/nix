@@ -76,7 +76,7 @@
     # };
 
     llm-agents = {
-      url = "github:blacksd/llm-agents.nix/feat/add-omnigent";
+      url = "github:numtide/llm-agents.nix";
     };
 
     herdr = {
@@ -91,7 +91,6 @@
       url = "github:sushydev/nix-plist-manager";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
-
   };
 
   # The `outputs` function will return all the build results of the flake.
@@ -218,37 +217,39 @@
     # SD card image for initial RPi4 provisioning
     # Build with: nix build .#images.rpi4-sd --system aarch64-linux
     # Flash with: zstd -d result/sd-image/*.img.zst -o rpi4.img && sudo dd if=rpi4.img of=/dev/diskN bs=4M status=progress
-    images.rpi4-sd = (nixpkgs.lib.nixosSystem {
-      specialArgs = specialArgs.rpi4;
-      modules = [
-        {nixpkgs.hostPlatform = "aarch64-linux";}
-        disko.nixosModules.disko
-        ./hosts/${specialArgs.rpi4.hostname}
-        ./hosts/${specialArgs.rpi4.hostname}/sd-image.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            extraSpecialArgs = specialArgs.rpi4;
-            users.${specialArgs.rpi4.username} = import ./hosts/${specialArgs.rpi4.hostname}/home.nix;
-          };
-        }
-      ];
-    }).config.system.build.sdImage;
+    images.rpi4-sd =
+      (nixpkgs.lib.nixosSystem {
+        specialArgs = specialArgs.rpi4;
+        modules = [
+          {nixpkgs.hostPlatform = "aarch64-linux";}
+          disko.nixosModules.disko
+          ./hosts/${specialArgs.rpi4.hostname}
+          ./hosts/${specialArgs.rpi4.hostname}/sd-image.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = specialArgs.rpi4;
+              users.${specialArgs.rpi4.username} = import ./hosts/${specialArgs.rpi4.hostname}/home.nix;
+            };
+          }
+        ];
+      }).config.system.build.sdImage;
 
     # SD card image for initial RPi1 provisioning
     # Build with: nix build .#images.rpi1-sd --system armv6l-linux
     # (requires cross-compilation or binfmt emulation for armv6l)
     # Flash with: zstd -d result/sd-image/*.img.zst -o rpi1.img && sudo dd if=rpi1.img of=/dev/diskN bs=4M status=progress
-    images.rpi1-sd = (nixpkgs.lib.nixosSystem {
-      specialArgs = specialArgs.rpi1;
-      modules = [
-        {nixpkgs.hostPlatform = "armv6l-linux";}
-        ./hosts/${specialArgs.rpi1.hostname}
-        ./hosts/${specialArgs.rpi1.hostname}/sd-image.nix
-      ];
-    }).config.system.build.sdImage;
+    images.rpi1-sd =
+      (nixpkgs.lib.nixosSystem {
+        specialArgs = specialArgs.rpi1;
+        modules = [
+          {nixpkgs.hostPlatform = "armv6l-linux";}
+          ./hosts/${specialArgs.rpi1.hostname}
+          ./hosts/${specialArgs.rpi1.hostname}/sd-image.nix
+        ];
+      }).config.system.build.sdImage;
 
     # nix code formatter
     formatter = flake-utils.lib.eachDefaultSystemMap (
