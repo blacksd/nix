@@ -1,13 +1,17 @@
 keys:
+  - &Cydonia age1se1qtecf4q3d40nkcgwp6kzjfdhk52j8nv7elkqlcf9nryne87m9p0kyzrw74s
+  - &Cydonia_backup age1l2z2tnks3nuh6ml47gcz3fzxvvwrwa9x3qmzykv75lr7avxwlgfqn8ynw2
   - &Truman age1ryvy7qla9uxjpcw9hsz5y3ycejgfmldn7hlvptwu9rslgj2693rqmk2tfk
   - &Truman_backup age1ry6l8lwhkqg64z9543yqhua2fy97j3gennsxenm5pd0kqtfghfcq6zgdcy
   - &simpleton age1yd986swekxn356ka9ue56tn2keh668g5gw8zn6c2rl6nq24lqd6qfgauq6
   - &simpleton_backup age153juj3ja5qec3fk5c8fffjmuvzs7x6lks8whj4k4hqs22nd99efs8tggym
 creation_rules:
-  # Cydonia (Secure Enclave + paper backup) keys get added here during bootstrap; Truman's go when it is decommissioned
+  # Truman's keys go when it is decommissioned
   - path_regex: hosts\/Cydonia\/secrets\/.*\.sops(?:\.yaml)*$
     key_groups:
       - age:
+          - *Cydonia
+          - *Cydonia_backup
           - *Truman
           - *Truman_backup
   - path_regex: hosts\/simpleton\/secrets\/.*\.sops(?:\.yaml)*$
@@ -18,6 +22,8 @@ creation_rules:
   - path_regex: modules\/home-manager\/shared\/secrets\/.*\.sops(?:\.yaml)*$
     key_groups:
       - age:
+          - *Cydonia
+          - *Cydonia_backup
           - *Truman
           - *Truman_backup
           - *simpleton
