@@ -15,42 +15,46 @@ This is my `nix` setup, currently in use for these systems:
 #### Fresh install
 
 1. In Setup Assistant, set the account short name to the `username` in `flake.nix` (`marco.bulgarini`, not the suggested `marcobulgarini`), skip Migration Assistant, and sign in to the App Store (`mas` apps need it)
-2. Install the prerequisites (the `task prerequisites` equivalent, since `task` isn't installed yet):
+2. Install the Command Line Tools (git and make), clone over HTTPS (the GitHub SSH key is a sops secret) into `~/.config/nix-darwin`, the path `modules/home-manager/shared/age.nix` expects, and bootstrap:
 
    ```shell
    xcode-select --install
-   # NixOS community installer: nix-darwin manages upstream Nix, Determinate Nix would need nix.enable = false
-   curl --proto '=https' --tlsv1.2 -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install --enable-flakes
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   git clone https://github.com/blacksd/nix ~/.config/nix-darwin && cd ~/.config/nix-darwin
+   make bootstrap HOST=Cydonia
    ```
 
-   Skip the Homebrew installer's "add Homebrew to your PATH" step: after the first switch, `homebrew.enableZshIntegration` does it in `/etc/zshrc`.
+   `make bootstrap` installs Nix (NixOS community installer) and Homebrew, sets the hostname, moves the installer's `/etc/nix/nix.conf` aside, and runs the first activation with the nix-darwin release pinned in `flake.lock`. Each step is also a target of its own (`make help`). If nix-darwin lists other `/etc` files it refuses to overwrite, rename them to `<file>.before-nix-darwin` and run `make switch`.
 
-3. Clone over HTTPS (the GitHub SSH key is a sops secret) into `~/.config/nix-darwin`, the path `modules/home-manager/shared/age.nix` expects:
+3. Secrets: in Terminal on the Mac itself (Secure Enclave keys can't be created over SSH), run `make age-key` to create the host key and print its public key, then create a paper backup key (see [Host key in the Secure Enclave](#host-key-in-the-secure-enclave)). On a host that can already decrypt the secrets, add both public keys and re-encrypt (see [Adding or removing a host](#adding-or-removing-a-host)), then `git pull && task switch` here.
+4. Finish the machine:
+   - Give Full Disk Access (System Settings → Privacy & Security) to the terminal you run switches from: nix-plist-manager writes the Wi-Fi settings under `/Library/Preferences/SystemConfiguration`, which recent macOS releases protect
+   - Switch the remote to SSH: `git remote set-url origin git@github.com:blacksd/nix.git`
+   - Link the GPG keys on the YubiKey (commits are signed by default):
 
-   ```shell
-   git clone https://github.com/blacksd/nix ~/.config/nix-darwin
-   ```
+     ```shell
+     curl -s https://github.com/blacksd.gpg | gpg --import
+     gpg --card-status   # links the subkeys to the card: gpg -K should show sec# and ssb>
+     echo '3CF3DF3A9BC24FE443B43A19DE488690EDAE6AE6:6:' | gpg --import-ownertrust
+     ```
 
-4. Create the host's age key in the Secure Enclave and a paper backup key: see [Host key in the Secure Enclave](#host-key-in-the-secure-enclave)
-5. On a host that can already decrypt the secrets, add both public keys and re-encrypt (see [Adding or removing a host](#adding-or-removing-a-host)), then `git pull` on the new host
-6. Bring over the state Nix doesn't manage: GPG secret keys and ownertrust (commits are signed by default), SSH keys that aren't sops secrets, `~/.netrc`, the aws-vault keychain, `~/.aws/config`, Claude Code memory, and `~/Repositories` as a whole (local branches, stashes and ignored files don't survive a re-clone). Encrypt the secret part for the new host's Secure Enclave key, so only it can decrypt the bundle:
+   - Log in to the CLIs and apps: `gh`, 1Password, Tailscale, the cloud CLIs, Claude Code
 
-   ```shell
-   # old host, from $HOME, with age-plugin-se available
-   tar czf - <paths> | age -r age1se1... -o state.tar.gz.age
-   # new host, from $HOME
-   age -d -i ~/.config/nix-darwin/hosts/Cydonia/.keys/keys.txt state.tar.gz.age | tar xzf -
-   ```
+#### Moving from another Mac
 
-   For bulk data, temporarily enable Remote Login on the new host and `rsync -aH` over the network.
-7. Move aside the `/etc` files nix-darwin refuses to overwrite (it lists any others), then run the first activation:
+Skip Migration Assistant: it copies home-directory links that point into `/nix/store`, but not the store itself. Bring over only what Nix doesn't manage:
 
-   ```shell
-   sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
-   sudo nix run nix-darwin/nix-darwin-26.05 -- switch --flake ~/.config/nix-darwin#Cydonia --option accept-flake-config true
-   git -C ~/.config/nix-darwin remote set-url origin git@github.com:blacksd/nix.git
-   ```
+- Secrets: SSH keys that aren't sops secrets, `~/.netrc`, the aws-vault keychain, `~/.aws/config`, and GPG keys that aren't on a YubiKey. Encrypt them for the new host's Secure Enclave key, so only it can decrypt the bundle:
+
+  ```shell
+  # old host, from $HOME, with age-plugin-se available
+  tar czf - <paths> | age -r age1se1... -o state.tar.gz.age
+  # new host, from $HOME
+  age -d -i ~/.config/nix-darwin/hosts/Cydonia/.keys/keys.txt state.tar.gz.age | tar xzf -
+  ```
+
+- Data: `~/Repositories` as a whole (local branches, stashes and ignored files don't survive a re-clone), documents, Claude Code memory. Temporarily enable Remote Login on the new host and `rsync -aH` over the network.
+
+Once nothing is left on the old Mac, retire it (see [Retiring Truman](#retiring-truman)).
 
 #### Day to day
 
@@ -157,7 +161,8 @@ The configuration is organized into a modular structure separating darwin-specif
 ├── README.md
 ├── flake.nix
 ├── flake.lock
-├── Taskfile.yml
+├── Makefile                       # fresh-Mac bootstrap, before `task` exists
+├── Taskfile.yml                   # day-to-day tasks
 ├── hosts                          # per-host configurations
 │   ├── Cydonia                    # macOS host (also used by Truman until it is decommissioned)
 │   │   ├── default.nix            # main entrypoint for system-level customizations
