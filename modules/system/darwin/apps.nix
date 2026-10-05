@@ -38,6 +38,8 @@
   # But on macOS, homebrew has a much larger selection of apps than nixpkgs, especially for GUI apps!
   homebrew = {
     enable = true;
+    # `brew shellenv` in /etc/zshrc: puts brew and the binaries it links (e.g. `code`) on PATH
+    enableZshIntegration = true;
 
     onActivation = {
       autoUpdate = true; # Fetch the newest stable branch of Homebrew's git repo

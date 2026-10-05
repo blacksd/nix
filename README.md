@@ -24,33 +24,16 @@ This is my `nix` setup, currently in use for these systems:
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
+   Skip the Homebrew installer's "add Homebrew to your PATH" step: after the first switch, `homebrew.enableZshIntegration` does it in `/etc/zshrc`.
+
 3. Clone over HTTPS (the GitHub SSH key is a sops secret) into `~/.config/nix-darwin`, the path `modules/home-manager/shared/age.nix` expects:
 
    ```shell
    git clone https://github.com/blacksd/nix ~/.config/nix-darwin
    ```
 
-4. Create the host's age identity in the Secure Enclave, plus a paper-only backup key:
-
-   ```shell
-   cd ~/.config/nix-darwin
-   nix shell --inputs-from . nixpkgs-darwin#age nixpkgs-darwin#age-plugin-se
-   # access-control none: sops-nix decrypts from a launchd agent at login and on every switch, with no UI to prompt
-   age-plugin-se keygen --access-control none -o hosts/Cydonia/.keys/keys.txt   # prints the public key
-
-   age-keygen      # copy the AGE-SECRET-KEY-1... line to paper and note the public key; never save it to disk
-   age-keygen -y   # type the paper copy back in, then Ctrl-D: it must print the same public key
-   ```
-
-   Close the terminal window afterwards so the backup key doesn't survive in the scrollback.
-
-5. On a host that can already decrypt the secrets: add both public keys to `.sops.yaml` (in the `hosts/Cydonia` and `modules/home-manager/shared` rules), re-encrypt, commit and push. Encrypting for an `age1se1...` recipient needs the plugin:
-
-   ```shell
-   nix shell --inputs-from . nixpkgs-darwin#age-plugin-se --command task sops_updatekeys
-   ```
-
-   Then `git pull` on the new host.
+4. Create the host's age key in the Secure Enclave and a paper backup key: see [Host key in the Secure Enclave](#host-key-in-the-secure-enclave)
+5. On a host that can already decrypt the secrets, add both public keys and re-encrypt (see [Adding or removing a host](#adding-or-removing-a-host)), then `git pull` on the new host
 6. Bring over the state Nix doesn't manage: GPG secret keys and ownertrust (commits are signed by default), SSH keys that aren't sops secrets, `~/.netrc`, the aws-vault keychain, `~/.aws/config`, Claude Code memory, and `~/Repositories` as a whole (local branches, stashes and ignored files don't survive a re-clone). Encrypt the secret part for the new host's Secure Enclave key, so only it can decrypt the bundle:
 
    ```shell
@@ -115,6 +98,55 @@ Or SSH into the Pi and rebuild locally:
 ```shell
 sudo nixos-rebuild switch --flake .#rpi4
 ```
+
+## Secrets (sops + age)
+
+Secrets are sops files encrypted with [age](https://age-encryption.org) and decrypted by sops-nix at every login and switch. `.sops.yaml` maps each secrets path to its recipients: every host has its own key plus a paper backup key.
+
+| Path | Contents |
+|---|---|
+| `hosts/<host>/secrets/` | the host's secrets |
+| `modules/home-manager/shared/secrets/` | secrets every host can read |
+| `hosts/<host>/.keys/keys.txt` | the host's age identity (gitignored) |
+
+### Host key in the Secure Enclave
+
+On macOS hosts, generate the key with [age-plugin-se](https://github.com/remko/age-plugin-se). The key is bound to that Mac's Secure Enclave and can't be copied off it; `keys.txt` only holds a handle that is useless on any other machine.
+
+```shell
+cd ~/.config/nix-darwin
+nix shell --inputs-from . nixpkgs-darwin#age nixpkgs-darwin#age-plugin-se
+age-plugin-se keygen --access-control none -o hosts/Cydonia/.keys/keys.txt   # prints the public key (age1se1...)
+age-plugin-se recipients -i hosts/Cydonia/.keys/keys.txt                     # prints it again, any time
+```
+
+`--access-control none` is required: sops-nix decrypts from a launchd agent with no UI to answer a Touch ID or password prompt.
+
+Since that key can't be exported, also create a backup key that only ever exists on paper:
+
+```shell
+age-keygen      # write down the AGE-SECRET-KEY-1... line and note the public key; never save it to disk
+age-keygen -y   # type the paper copy back in, then Ctrl-D: it must print the same public key
+```
+
+Close the terminal window afterwards so the backup key doesn't survive in the scrollback. To recover the secrets without the Mac, put the paper key in a file and point `SOPS_AGE_KEY_FILE` at it.
+
+### Adding or removing a host
+
+Declare the public keys in `.sops.yaml`, list them in the host's rule and in the `modules/home-manager/shared` rule, then re-encrypt every file on a host that can already decrypt them:
+
+```yaml
+keys:
+  - &Cydonia age1se1...
+  - &Cydonia_backup age1...
+```
+
+```shell
+# Encrypting for an age1se1... recipient needs the plugin on PATH
+nix shell --inputs-from . nixpkgs-darwin#age-plugin-se --command task sops_updatekeys
+```
+
+To remove a host, drop its keys from `.sops.yaml` and run the same command. That doesn't revoke what its key could already decrypt from git history: if the key is compromised, rotate the secrets themselves.
 
 ## Configuration Structure
 
