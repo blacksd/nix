@@ -1,5 +1,5 @@
 {...}: {
-  # Host-specific Colima profile configurations for Truman
+  # Host-specific Colima profile configurations for Cydonia
   # These settings will be merged with the base defaults
   # from modules/home-manager/darwin/colima.nix
 

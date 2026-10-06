@@ -39,67 +39,68 @@
 
   codexSettingsFile = tomlFormat.generate "codex-config.toml" codexSettings;
 
-  codexMergeConfig = pkgs.writers.writePython3 "codex-merge-config" {
-    libraries = [pkgs.python3Packages.tomli-w];
-  } ''
-    """Overlay the declared Codex settings onto the live config.toml.
+  codexMergeConfig =
+    pkgs.writers.writePython3 "codex-merge-config" {
+      libraries = [pkgs.python3Packages.tomli-w];
+    } ''
+      """Overlay the declared Codex settings onto the live config.toml.
 
-    Usage: codex-merge-config DECLARED_TOML TARGET_TOML
-    """
+      Usage: codex-merge-config DECLARED_TOML TARGET_TOML
+      """
 
-    import os
-    import shutil
-    import sys
-    import tomllib
+      import os
+      import shutil
+      import sys
+      import tomllib
 
-    import tomli_w
-
-
-    def overlay(base, declared):
-        """Recursively overlay declared onto base. Declared wins on conflict."""
-        merged = dict(base)
-        for key, value in declared.items():
-            current = merged.get(key)
-            if isinstance(value, dict) and isinstance(current, dict):
-                merged[key] = overlay(current, value)
-            else:
-                merged[key] = value
-        return merged
+      import tomli_w
 
 
-    def read_live(path):
-        """Return the current on-disk config, or {} if there is none to keep."""
-        if os.path.islink(path):
-            # Leftover read-only store symlink from programs.codex.settings.
-            os.unlink(path)
-            return {}
-        if not os.path.exists(path):
-            return {}
-        try:
-            with open(path, "rb") as handle:
-                return tomllib.load(handle)
-        except tomllib.TOMLDecodeError as error:
-            shutil.copyfile(path, path + ".unparsable")
-            print("codex config.toml unparsable, kept a copy:", error)
-            return {}
+      def overlay(base, declared):
+          """Recursively overlay declared onto base. Declared wins on conflict."""
+          merged = dict(base)
+          for key, value in declared.items():
+              current = merged.get(key)
+              if isinstance(value, dict) and isinstance(current, dict):
+                  merged[key] = overlay(current, value)
+              else:
+                  merged[key] = value
+          return merged
 
 
-    def main():
-        declared_path, target = sys.argv[1], sys.argv[2]
-        with open(declared_path, "rb") as handle:
-            declared = tomllib.load(handle)
+      def read_live(path):
+          """Return the current on-disk config, or {} if there is none to keep."""
+          if os.path.islink(path):
+              # Leftover read-only store symlink from programs.codex.settings.
+              os.unlink(path)
+              return {}
+          if not os.path.exists(path):
+              return {}
+          try:
+              with open(path, "rb") as handle:
+                  return tomllib.load(handle)
+          except tomllib.TOMLDecodeError as error:
+              shutil.copyfile(path, path + ".unparsable")
+              print("codex config.toml unparsable, kept a copy:", error)
+              return {}
 
-        merged = overlay(read_live(target), declared)
 
-        scratch = target + ".hm-new"
-        with open(scratch, "wb") as handle:
-            tomli_w.dump(merged, handle)
-        os.chmod(scratch, 0o644)
-        os.replace(scratch, target)
+      def main():
+          declared_path, target = sys.argv[1], sys.argv[2]
+          with open(declared_path, "rb") as handle:
+              declared = tomllib.load(handle)
+
+          merged = overlay(read_live(target), declared)
+
+          scratch = target + ".hm-new"
+          with open(scratch, "wb") as handle:
+              tomli_w.dump(merged, handle)
+          os.chmod(scratch, 0o644)
+          os.replace(scratch, target)
 
 
-    main()
-  '';
+      main()
+    '';
 
   # Pi's default model. DeepSeek's latest flash model is provided by Pi's
   # built-in models-store, so it needs no custom entry in models.json.
@@ -120,7 +121,6 @@
 in {
   home.packages = [
     llmPkgs.nono
-    llmPkgs.omnigent
     llmPkgs.openspec
     llmPkgs.pi
   ];

@@ -38,6 +38,8 @@
   # But on macOS, homebrew has a much larger selection of apps than nixpkgs, especially for GUI apps!
   homebrew = {
     enable = true;
+    # `brew shellenv` in /etc/zshrc: puts brew and the binaries it links (e.g. `code`) on PATH
+    enableZshIntegration = true;
 
     onActivation = {
       autoUpdate = true; # Fetch the newest stable branch of Homebrew's git repo
@@ -55,14 +57,15 @@
     # For details, see https://github.com/mas-cli/mas
     masApps = {
       Irvue = 1039633667;
-      HiddenBar = 1452453066;
       HomeAssistant = 1099568401;
     };
 
-    taps = ["homebrew/services"];
+    # taps = ["homebrew/services"];
 
     # `brew install`
-    brews = ["colima"];
+    brews = [
+      "colima"
+    ];
 
     # `brew install --cask`
     casks = [
@@ -72,7 +75,7 @@
       "shottr"
       "tmpdisk"
       "daisydisk"
-      "yubico-yubikey-manager"
+      "hiddenbar"
 
       # Let's work
       "visual-studio-code"

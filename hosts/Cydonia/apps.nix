@@ -10,7 +10,6 @@
     # Set `trusted = true` on any non-official tap whose formulae/casks are listed
     # in `brews`/`casks` below; official taps (homebrew/*) are always trusted.
     taps = [
-      "homebrew/services"
       {
         name = "hivemq/mqtt-cli";
         trusted = true;
@@ -20,11 +19,11 @@
         trusted = true;
       }
       {
-        name = "manaflow-ai/cmux";
+        name = "skyhook-io/tap";
         trusted = true;
       }
       {
-        name = "skyhook-io/tap";
+        name = "omnigent-ai/tap";
         trusted = true;
       }
     ];
@@ -37,12 +36,12 @@
       "tfenv" # TODO: This should be a nixpkg
       "radar"
       "sem-cli"
+      "omnigent"
     ];
 
     # `brew install --cask`
     casks = [
       # Let's make macOS better
-      "elgato-stream-deck"
       "logitech-camera-settings"
 
       # Need a break
@@ -54,8 +53,6 @@
       "freelens"
       "rectangle-pro"
       "dbeaver-community"
-      "tuple"
-      "cmux"
       "bruno"
 
       # Cert stuff

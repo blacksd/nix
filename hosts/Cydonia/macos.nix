@@ -1,7 +1,9 @@
 {
   config,
+  lib,
   nix-plist-manager,
   username,
+  macosVersion,
   ...
 }: let
   home = config.users.users.${username}.home;
@@ -65,20 +67,31 @@ in {
   # Dock contents: rebuilt from these lists on every switch; manual pins are dropped.
   system.defaults.dock = {
     persistent-apps = [
-      "/System/Applications/Launchpad.app"
+      # macOS 26 replaced Launchpad with Apps
+      (
+        if lib.versionAtLeast macosVersion "26"
+        then "/System/Applications/Apps.app"
+        else "/System/Applications/Launchpad.app"
+      )
       "/System/Applications/App Store.app"
       "/System/Applications/Calendar.app"
       "/System/Applications/System Settings.app"
       "/Applications/Logseq.app"
       "/Applications/Slack.app"
+      "/Applications/Discord.app"
       "/Applications/Google Chrome.app"
       "/System/Applications/Notes.app"
       "/Applications/Spotify.app"
       "/Applications/1Password.app"
       "/Applications/zoom.us.app"
+      "/Applications/Claude.app"
+      "/Applications/ChatGPT.app"
       "/Applications/iTerm.app"
       "${home}/Applications/Home Manager Apps/WezTerm.app"
-      "/Applications/Discord.app"
+      "/Applications/Visual Studio Code.app"
+      "/Applications/xca.app"
+      "/Applications/KeyStore Explorer.app"
+      "${home}/Applications/Home Manager Apps/LocalSend.app"
     ];
     persistent-others = [
       {
