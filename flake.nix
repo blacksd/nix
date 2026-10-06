@@ -118,6 +118,7 @@
           username = "marco.bulgarini";
           useremail = "marco.bulgarini@hivemq.com";
           hostname = "Cydonia";
+          macosVersion = "27";
         };
 
       Truman =
@@ -126,6 +127,7 @@
           username = "marco.bulgarini";
           useremail = "marco.bulgarini@hivemq.com";
           hostname = "Truman";
+          macosVersion = "15";
         };
 
       rpi4 =
