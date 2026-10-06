@@ -1,168 +1,70 @@
-# Claude Code Customization Module
+# Claude Code module
 
-Home-manager module for Claude Code CLAUDE.md assembly and customizations.
+Home-manager module that configures Claude Code on every host: package, `settings.json`, global `CLAUDE.md`, MCP servers, skills and the ccstatusline config. It wraps the upstream `programs.claude-code` options and adds one of its own.
 
-## Structure
+## Layout
 
 ```
 claude-code/
-├── prompts/                      # XML prompt sources for CLAUDE.md
-│   ├── project_principles.xml
-│   ├── style.xml
-│   ├── tooling.xml
-│   └── assemble-claude-md.nix    # Assembly logic
-├── settings/                     # Configuration files (referenced by ai.nix)
+├── default.nix                  # the module
+├── context/                     # markdown sections assembled into ~/.claude/CLAUDE.md
+│   ├── principles.md
+│   ├── style.md
+│   └── tooling.md
+├── settings/
 │   └── ccstatusline.settings.json
-├── default.nix                   # Home-manager module
 └── README.md
 ```
 
-## What This Module Does
+Imported from `modules/home-manager/shared/default.nix`. Everything is guarded by `llm-agents` supporting the host system.
 
-This is a **home-manager module** that:
-- Defines `programs.claude-code.hivemqCloudXmlPath` option
-- Assembles `~/.claude/CLAUDE.md` from XML prompt files
-- Optionally includes HiveMQ Cloud context (via sops secret)
+## Boundaries
 
-## Module Architecture
+Everything in this directory is consumed by this module only. Host modules (`hosts/<host>/home-manager/claude-code.nix`) never import files from here; they talk to it through `programs.claude-code.*` options, upstream or the ones defined below. If a host needs something new from the shared side, add an option.
+
+## What goes where
+
+| Concern | Mechanism | Writable at runtime |
+|---|---|---|
+| `~/.claude/settings.json` | `programs.claude-code.settings` (store symlink) | No: `/config`, `/plugin` and "always allow" rules do not persist. Change the Nix config instead. |
+| `~/.claude/CLAUDE.md` | `programs.claude-code.context`, built from `context/*.md` plus `extraContext` | No |
+| Plugins and upstream skills | `settings.enabledPlugins`; third-party marketplaces via `settings.extraKnownMarketplaces` (shared: context7, typesafe; Cydonia adds slack, code-review, ponytail) | Plugin code is fetched and updated by Claude Code itself |
+| Private skills | a sops template rendered into `~/.claude/skills/<name>/SKILL.md` | No |
+| MCP servers | `programs.claude-code.mcpServers`, shared here and per host | No |
+| ccstatusline | activation script, writable copy | Yes: ccstatusline migrates the schema in place |
+
+## Options added by this module
 
 ```nix
-# Imported automatically in modules/home-manager/shared/default.nix
-imports = [
-  ./claude-code  # This module
-  ...
-];
-```
-
-### Option Definition
-
-```nix
-options.programs.claude-code.hivemqCloudXmlPath = lib.mkOption {
-  type = lib.types.nullOr lib.types.path;
-  default = null;
-  description = "Path to HiveMQ Cloud XML context file";
+programs.claude-code.extraContext = lib.mkOption {
+  type = lib.types.lines;
+  default = "";
+  description = "Host-specific sections appended to the global CLAUDE.md.";
 };
 ```
 
-### Configuration
+## Host example: Cydonia
 
-```nix
-config = {
-  # Assembles and writes CLAUDE.md
-  home.file.".claude/CLAUDE.md".text = assembleClaudeMd {
-    hivemqCloudXmlPath = cfg.hivemqCloudXmlPath;
-  };
-};
+`hosts/Cydonia/home-manager/claude-code.nix` adds:
+
+- `extraContext` with a short work-context section
+- The `hivemq-cloud` skill: a sops template whose frontmatter is in Nix and whose body is the encrypted `secrets/hivemq_cloud.md.sops`, rendered by sops-nix straight into `~/.claude/skills/hivemq-cloud/SKILL.md`. The domain knowledge is loaded only when a task needs it.
+- Ponytail via `enabledPlugins` and its marketplace
+- Work MCP servers (Grafana, PagerDuty, Linear, Miro, Kubernetes) and OTEL telemetry
+
+## Editing CLAUDE.md
+
+Edit the files in `context/`, or add a new one and list it in `contextSections` in `default.nix`. Keep sections short: the whole file is loaded into every session.
+
+## Editing the HiveMQ skill body
+
+```shell
+sops hosts/Cydonia/secrets/hivemq_cloud.md.sops   # opens the markdown in $EDITOR, re-encrypts on save
 ```
 
-## Usage
+## Updating pins
 
-### Default (No HiveMQ Cloud Context)
+- `ast-grep` MCP: bump the commit in the `git+https://...@<rev>` URL.
+- Kubernetes MCP (Cydonia): bump the `kubernetes-mcp-server@<version>` npm spec.
 
-The module is automatically imported and works with default settings on all hosts.
-
-### Host-Specific Override (Cydonia)
-
-```nix
-# hosts/Cydonia/home-manager/claude-code.nix
-programs.claude-code.hivemqCloudXmlPath = config.sops.secrets.hivemq_cloud_xml.path;
-```
-
-This enables the HiveMQ Cloud context section in CLAUDE.md for the Cydonia (work) host.
-
-## CLAUDE.md Content
-
-The assembled CLAUDE.md includes:
-
-1. **Project Principles** (`prompts/project_principles.xml`)
-2. **Communication and Contribution Style** (`prompts/style.xml`)
-3. **Tooling Directives** (`prompts/tooling.xml`)
-4. **HiveMQ Cloud Context** (optional, if `hivemqCloudXmlPath` is set)
-
-Example output:
-```markdown
-# CLAUDE.md - Assistant Configuration
-
-This document contains structured directives and context for Claude AI assistant.
-
----
-
-# Project Principles
-
-<project_principles>...</project_principles>
-
----
-
-# Communication and Contribution Style
-
-<style>...</style>
-
----
-
-# Tooling Directives
-
-<tooling>...</tooling>
-
----
-
-# HiveMQ Cloud Context
-
-@/run/user/501/secrets/hivemq_cloud_xml
-```
-
-## Adding Prompt Sections
-
-1. Create new XML file in `prompts/`
-2. Update `prompts/assemble-claude-md.nix` to include it
-3. Rebuild: `task switch`
-
-Example:
-```xml
-<!-- prompts/my_context.xml -->
-<context>
-  <description>Custom context for Claude</description>
-  <directives>
-    <directive>Follow specific guidelines...</directive>
-  </directives>
-</context>
-```
-
-Then add to `assembleClaudeMd` function in `default.nix`.
-
-## Related Configuration
-
-### Claude Code Settings & MCP (ai.nix)
-
-Claude Code runtime configuration is in `modules/home-manager/shared/ai.nix`:
-- `programs.claude-code.settings` - Privacy settings, statusLine
-- `programs.claude-code.mcpServers` - MCP server definitions
-- ccstatusline settings link
-
-### Host-Specific MCP (hosts/Cydonia/home-manager/claude-code.nix)
-
-Work-specific MCP servers:
-- `businessmap` - Kanbanize integration
-- `linear` - Linear integration
-
-## Future Extensibility
-
-The module can be extended with:
-
-```nix
-# In claude-code/default.nix (future)
-options.programs.claude-code = {
-  hivemqCloudXmlPath = ...;  # Current
-
-  # Future additions:
-  commands = mkOption { ... };
-  skills = mkOption { ... };
-  hooks = mkOption { ... };
-};
-```
-
-## Notes
-
-- **Scope**: This module only handles CLAUDE.md assembly
-- **Settings**: Claude Code settings.json and MCP configuration are in `ai.nix`
-- **ccstatusline**: Config file stored here but linked from `ai.nix`
-- **HiveMQ Context**: Automatically included when secret exists (Cydonia only)
+Rebuild with `task switch` (or `make switch` on a fresh machine).

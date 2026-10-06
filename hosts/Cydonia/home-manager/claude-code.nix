@@ -11,19 +11,14 @@
     config.allowUnfree = true;
   };
 in {
-  # Cydonia (work) host-specific secrets and MCP servers
+  # Cydonia (work) host-specific secrets, context, plugins and MCP servers
 
   sops = {
     secrets = {
-      # HiveMQ Cloud context for CLAUDE.md
-      hivemq_cloud_xml = {
-        sopsFile = ../secrets/hivemq_cloud.xml.sops;
+      # HiveMQ Cloud domain knowledge (markdown), the body of the skill below
+      hivemq_cloud_md = {
+        sopsFile = ../secrets/hivemq_cloud.md.sops;
         format = "binary";
-      };
-
-      context7_api_key = {
-        sopsFile = ../secrets/mcp.sops.yaml;
-        key = "context7/api_key";
       };
 
       grafana_url = {
@@ -47,9 +42,20 @@ in {
       };
     };
 
-    templates."context7-env" = {
+    # The HiveMQ Cloud context is a skill rather than a CLAUDE.md section so it
+    # only enters the context window when a task is actually about HiveMQ
+    # Cloud. The frontmatter description is what triggers it; the body is the
+    # encrypted markdown. sops-nix renders the file straight into the skills
+    # directory, next to the store-managed skills.
+    templates."hivemq-cloud-skill" = {
+      path = "${config.home.homeDirectory}/.claude/skills/hivemq-cloud/SKILL.md";
       content = ''
-        export CONTEXT7_API_KEY="${config.sops.placeholder.context7_api_key}"
+        ---
+        name: hivemq-cloud
+        description: HiveMQ Cloud domain knowledge - hive and apiary terminology, deployment tiers (starter, professional, enterprise, serverless), Control Center and MQTT URL patterns, the apiaries monorepo and legacy deployment repositories, documentation links. Use when a task mentions hives, apiaries, hiveids, cc- URLs, hivemq.cloud hostnames, ArgoCD apiary deployments, or the hivemq-cloud GitHub organization.
+        ---
+
+        ${config.sops.placeholder.hivemq_cloud_md}
       '';
     };
 
@@ -79,6 +85,14 @@ in {
 
   # Work-specific Claude Code configuration
   programs.claude-code = {
+    extraContext = ''
+      ## Work context
+
+      - The user is an SRE on the HiveMQ Cloud team. Assume fluency in Kubernetes, Terraform, ArgoCD and Nix; skip the basics.
+      - Source lives on GitHub under the private `hivemq-cloud` and `hivemq` organizations. Always use `gh`.
+      - For HiveMQ Cloud terminology, deployment tiers, URL patterns and repository layout, load the `hivemq-cloud` skill before acting.
+    '';
+
     settings = {
       autoMode = {
         environment = [
@@ -134,6 +148,17 @@ in {
       enabledPlugins = {
         "slack@claude-plugins-official" = true;
         "code-review@claude-plugins-official" = true;
+        # Lazy-senior-dev mode: smallest working change, stdlib first.
+        # Its hooks need `node` on PATH (shared module provides it).
+        "ponytail@ponytail" = true;
+      };
+      extraKnownMarketplaces = {
+        ponytail = {
+          source = {
+            source = "github";
+            repo = "DietrichGebert/ponytail";
+          };
+        };
       };
       # Override shared telemetry settings for work - enable OTEL telemetry
       env = {
@@ -149,10 +174,8 @@ in {
       # Helper script for OTEL auth header (secret injected via sops)
       otelHeadersHelper = config.sops.templates."otlp-headers-helper".path;
     };
-    # Enable HiveMQ Cloud context in CLAUDE.md
-    hivemqCloudXmlPath = config.sops.secrets.hivemq_cloud_xml.path;
 
-    # Work-specific MCP servers (extends shared/ai.nix configuration)
+    # Work-specific MCP servers (extends the shared set in modules/home-manager/shared/claude-code)
     mcpServers = {
       # Linear integration
       linear = {
@@ -165,15 +188,6 @@ in {
         type = "http";
         url = "https://mcp.miro.com";
       };
-
-      # Context7 documentation MCP server (disabled)
-      # context7 = {
-      #   command = "${pkgs.bash}/bin/bash";
-      #   args = [
-      #     "-c"
-      #     "source ${config.sops.templates.context7-env.path} && ${pkgs.nodejs_24}/bin/npx -y @upstash/context7-mcp --api-key \"$CONTEXT7_API_KEY\""
-      #   ];
-      # };
 
       # Grafana Cloud MCP server
       grafana = {
@@ -190,6 +204,18 @@ in {
         args = [
           "-c"
           "source ${config.sops.templates.pagerduty-env.path} && ${pkgs.uv}/bin/uvx pagerduty-mcp"
+        ];
+      };
+
+      # Kubernetes MCP server, read-only, against the current kube context.
+      # Pinned: `@latest` was resolved on every start.
+      kubernetes = {
+        command = "${pkgs.nodejs_24}/bin/npx";
+        args = [
+          "-y"
+          "kubernetes-mcp-server@0.0.67"
+          "--disable-multi-cluster"
+          "--read-only"
         ];
       };
     };

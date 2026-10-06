@@ -184,11 +184,9 @@ The configuration is organized into a modular structure separating darwin-specif
     ├── home-manager               # user-level configurations
     │   ├── darwin/                # darwin-specific user configs
     │   │   ├── default.nix
+    │   │   ├── colima.nix
     │   │   ├── core.nix
-    │   │   ├── ai.nix
-    │   │   ├── gpg.nix
-    │   │   ├── k8s.nix
-    │   │   └── claude/            # Claude AI configuration
+    │   │   └── gpg.nix
     │   ├── nixos/                 # nixos-specific user configs
     │   │   └── default.nix
     │   └── shared/                # cross-platform user configs
@@ -204,6 +202,7 @@ The configuration is organized into a modular structure separating darwin-specif
     │       ├── tmux.nix
     │       ├── kitty.nix
     │       ├── wezterm.nix
+    │       ├── claude-code/       # Claude Code module (see its README)
     │       └── configs/           # config files
     └── system                     # system-level configurations
         ├── darwin/                # darwin-specific system configs
@@ -222,6 +221,9 @@ The configuration is organized into a modular structure separating darwin-specif
             └── users.nix
 ```
 
+### Shared vs host boundary
+
+Anything under `modules/*/shared` is consumed only by modules that every host imports. A host module (`hosts/<host>/...`) never imports a file from `shared`; when a host needs to vary something shared, the shared module exposes an option (`programs.claude-code.extraContext`, `hivemqCloudXmlPath` before it) and the host sets that option. Host-only material (secrets, pins, plugins used by one machine) lives under the host.
 
 ## Credits
 
