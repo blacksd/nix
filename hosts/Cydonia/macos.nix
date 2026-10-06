@@ -91,7 +91,7 @@ in {
       "/Applications/Visual Studio Code.app"
       "/Applications/xca.app"
       "/Applications/KeyStore Explorer.app"
-      "${home}/Applications/Home Manager Apps/LocalSend.app"
+      "/Applications/LocalSend.app"
     ];
     persistent-others = [
       {
