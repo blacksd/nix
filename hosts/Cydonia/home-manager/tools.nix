@@ -1,8 +1,19 @@
 {
+  config,
+  lib,
   pkgs,
   herdr,
   ...
 }: {
+  # aws-vault creates its keychain locking after 5 minutes idle; keep it open for
+  # 8 hours (still locks on sleep). No-op until the keychain exists.
+  home.activation.awsVaultKeychainTimeout = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    keychain="${config.home.homeDirectory}/Library/Keychains/aws-vault.keychain-db"
+    if [ -e "$keychain" ]; then
+      run /usr/bin/security set-keychain-settings -l -u -t 28800 "$keychain"
+    fi
+  '';
+
   home.packages = with pkgs; [
     # TODO: it may make sense to migrate a subset of this to a devbox (global or local) config
 
