@@ -14,6 +14,12 @@
     fi
   '';
 
+  home.file.".terraformrc".text = ''
+    plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
+  '';
+  # Terraform does not create the cache dir itself.
+  home.file.".terraform.d/plugin-cache/.keep".text = "";
+
   home.packages = with pkgs; [
     # TODO: it may make sense to migrate a subset of this to a devbox (global or local) config
 
