@@ -10,7 +10,17 @@
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
+
+  # zvec-grep is not in nixpkgs; npx caches it under ~/.npm/_npx. A real
+  # binary rather than an alias so the MCP server can launch it too.
+  # `zg install --target claude` would write ~/.claude/{settings.json,CLAUDE.md}
+  # (store symlinks); its three changes are declared below instead.
+  zg = pkgs.writeShellScriptBin "zg" ''
+    exec ${pkgs.nodejs_24}/bin/npx -y @zvec/zvec-grep@0.2.2 "$@"
+  '';
 in {
+  home.packages = [zg];
+
   # Cydonia (work) host-specific secrets, context, plugins and MCP servers
 
   sops = {
@@ -91,9 +101,12 @@ in {
       - The user is an SRE on the HiveMQ Cloud team. Assume fluency in Kubernetes, Terraform, ArgoCD and Nix; skip the basics.
       - Source lives on GitHub under the private `hivemq-cloud` and `hivemq` organizations. Always use `gh`.
       - For HiveMQ Cloud terminology, deployment tiers, URL patterns and repository layout, load the `hivemq-cloud` skill before acting.
+
+      ${lib.readFile ./zvec-grep.md}
     '';
 
     settings = {
+      permissions.allow = ["mcp__plugin_claude-code-home-manager_zvec_grep__*"];
       autoMode = {
         environment = [
           "$defaults"
@@ -217,6 +230,12 @@ in {
           "--disable-multi-cluster"
           "--read-only"
         ];
+      };
+
+      # Semantic code search; stdio proxy that spawns the local zg daemon.
+      zvec_grep = {
+        command = "${zg}/bin/zg";
+        args = ["server" "--stdio"];
       };
     };
   };
