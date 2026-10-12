@@ -164,12 +164,20 @@ in {
         # Lazy-senior-dev mode: smallest working change, stdlib first.
         # Its hooks need `node` on PATH (shared module provides it).
         "ponytail@ponytail" = true;
+        # Action-first, ADHD-friendly output shaping.
+        "i-have-adhd@i-have-adhd" = true;
       };
       extraKnownMarketplaces = {
         ponytail = {
           source = {
             source = "github";
             repo = "DietrichGebert/ponytail";
+          };
+        };
+        i-have-adhd = {
+          source = {
+            source = "github";
+            repo = "ayghri/i-have-adhd";
           };
         };
       };
