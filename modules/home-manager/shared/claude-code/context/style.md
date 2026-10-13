@@ -10,4 +10,3 @@
 ## Formatting
 
 - No emoji in commits, PR descriptions, code, comments, documentation, or bullet lists. Avoid them in chat as well.
-- After a major task, close with a short summary: what changed, its impact, and how it satisfies the request. Skip this for small tasks.
