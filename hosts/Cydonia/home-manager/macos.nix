@@ -69,8 +69,8 @@
               };
             };
             missionControl.shortcuts = {
-              applicationWindows = "-";
-              missionControl = "-";
+              applicationWindows = "⌃↓";
+              missionControl = "⌃↑";
               showDesktop = "-";
             };
             widgets.showWidgets = {

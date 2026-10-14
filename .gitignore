@@ -2,3 +2,4 @@
 **/result
 hosts/*/.keys/*
 !hosts/*/.keys/.gitkeep
+.zvec-grep/
