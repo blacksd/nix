@@ -58,6 +58,7 @@
     masApps = {
       Irvue = 1039633667;
       HomeAssistant = 1099568401;
+      Silicio = 933627574;
     };
 
     # taps = ["homebrew/services"];
