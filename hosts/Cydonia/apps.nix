@@ -49,6 +49,7 @@
 
       # Let's work
       "kitlangton-hex"
+      "firefox"
       "discord"
       "freelens"
       "rectangle-pro"
