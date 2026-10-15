@@ -1,18 +1,22 @@
 # Bootstrap a fresh macOS host, before `task` exists (the config installs it; day-to-day
 # tasks live in Taskfile.yml). Needs only the Command Line Tools (`xcode-select --install`),
 # which provide git and this make (GNU Make 3.81: keep the syntax old-fashioned).
+# `make rosetta` (part of bootstrap) adds Rosetta 2 for x86_64-only binaries.
 
 HOST ?= $(shell scutil --get LocalHostName 2>/dev/null)
 # Absolute fallback: right after `make nix`, the current shell does not have nix on PATH yet
 NIX := $(shell command -v nix 2>/dev/null || echo /nix/var/nix/profiles/default/bin/nix)
 AGE_KEY := hosts/$(HOST)/.keys/keys.txt
 
-.PHONY: help bootstrap nix brew hostname etc build switch age-key check-host
+.PHONY: help bootstrap rosetta nix brew hostname etc build switch age-key check-host
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F ':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
 
-bootstrap: nix brew hostname etc switch ## Fresh Mac: Nix, Homebrew, hostname, first activation (HOST=<name>)
+bootstrap: rosetta nix brew hostname etc switch ## Fresh Mac: Rosetta, Nix, Homebrew, hostname, first activation (HOST=<name>)
+
+rosetta: ## Install Rosetta 2 (x86_64 translation)
+	@/usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null || softwareupdate --install-rosetta --agree-to-license
 
 nix: ## Install upstream Nix (nix-darwin manages it; Determinate Nix would need nix.enable = false)
 	@test -x $(NIX) || curl --proto '=https' --tlsv1.2 -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install --enable-flakes
