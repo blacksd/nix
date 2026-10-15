@@ -3,12 +3,21 @@
   lib,
   username,
   config,
+  llm-agents,
   ...
-}: {
+}: let
+  system = pkgs.stdenv.hostPlatform.system;
+  supported = builtins.hasAttr system llm-agents.packages;
+  llmPkgs =
+    if supported
+    then llm-agents.packages.${system}
+    else null;
+in
+  lib.mkIf supported {
   # Using built-in home-manager programs.claude-code
   programs.claude-code = {
     enable = true;
-    package = pkgs.llm-agents.claude-code;
+    package = llmPkgs.claude-code;
 
     # Settings configuration with privacy defaults and statusLine
     settings = {
@@ -25,7 +34,7 @@
       # Enable ccstatusline for custom status display
       statusLine = {
         type = "command";
-        command = "${pkgs.llm-agents.ccstatusline}/bin/ccstatusline";
+        command = "${llmPkgs.ccstatusline}/bin/ccstatusline";
       };
 
       # Disable always-on thinking mode by default

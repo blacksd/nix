@@ -2,7 +2,6 @@
   username,
   pkgs,
   lib,
-  llm-agents,
   ...
 }: {
   # enable flakes globally
@@ -13,11 +12,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # Overlays
-  nixpkgs.overlays = [
-    llm-agents.overlays.default
-  ];
 
   # Auto upgrade nix package and the daemon service.
   # services.nix-daemon.enable = true;

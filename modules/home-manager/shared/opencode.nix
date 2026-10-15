@@ -1,11 +1,20 @@
 {
   pkgs,
   lib,
+  llm-agents,
   ...
-}: {
+}: let
+  system = pkgs.stdenv.hostPlatform.system;
+  supported = builtins.hasAttr system llm-agents.packages;
+  llmPkgs =
+    if supported
+    then llm-agents.packages.${system}
+    else null;
+in
+  lib.mkIf supported {
   programs.opencode = {
     enable = !pkgs.stdenv.hostPlatform.isx86_64;
-    package = pkgs.llm-agents.opencode;
+    package = llmPkgs.opencode;
 
     # Enable MCP integration (merges programs.mcp.servers into opencode config)
     enableMcpIntegration = true;

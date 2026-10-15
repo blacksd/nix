@@ -28,7 +28,9 @@
   # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
   # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   inputs = {
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # Pinned to the last nixpkgs-unstable rev before 26.11 dropped x86_64-darwin.
+    # Do not bump without migrating simpleton off x86_64-darwin.
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/a90d993610ce555baedf4ef9b135a2eff941d868";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 

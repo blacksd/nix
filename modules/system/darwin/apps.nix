@@ -42,11 +42,10 @@
     onActivation = {
       autoUpdate = true; # Fetch the newest stable branch of Homebrew's git repo
       upgrade = true; # Upgrade outdated casks, formulae, and App Store apps
-      # 'zap': uninstalls all formulae(and related files) not listed in the generated Brewfile
-      cleanup = "zap";
-      extraFlags = [
-        "--force-cleanup"
-      ];
+      # Homebrew 7 removed the `--cleanup` switch on `brew bundle`; the nix-darwin
+      # 25.11 module still passes it when cleanup != "none". Set "none" and run
+      # `brew bundle cleanup --force` manually when pruning drift from the Brewfile.
+      cleanup = "none";
     };
 
     # Applications to install from Mac App Store using mas.
