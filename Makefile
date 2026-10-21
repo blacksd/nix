@@ -1,6 +1,6 @@
 # Bootstrap a fresh macOS host, before `task` exists (the config installs it; day-to-day
-# tasks live in Taskfile.yml). Needs only the Command Line Tools (`xcode-select --install`),
-# which provide git and this make (GNU Make 3.81: keep the syntax old-fashioned).
+# tasks live in Taskfile.yml). Needs only the Command Line Tools, which
+# bootstrap.sh installs and which provide git and this make (GNU Make 3.81: keep the syntax old-fashioned).
 # `make rosetta` (part of bootstrap) adds Rosetta 2 for x86_64-only binaries.
 
 HOST ?= $(shell scutil --get LocalHostName 2>/dev/null)

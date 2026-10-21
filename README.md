@@ -4,6 +4,7 @@ This is my `nix` setup, currently in use for these systems:
 
 - `Cydonia` (from `The Expanse`'s [MCRD *Cydonia*](https://expanse.fandom.com/wiki/Cydonia)) *(darwin, arm64)*
 - `Truman` (from `The Expanse`'s [*Truman*-class dreadnought](https://expanse.fandom.com/wiki/Truman-class_dreadnought_(TV))) *(darwin, arm64)*: being replaced by `Cydonia`, shares its host config until decommissioned
+- `maccone` (Italian for "Mac" + "mattone", a 16" brick) *(darwin, arm64)*: personal Mac, ex-`Truman` hardware, replaces the x86_64 `simpleton`
 - `rpi4` *(linux, arm64)*
 - `minipc` *(linux, x86_64)*
 - `rpi1` *(linux, armv6l)*
@@ -15,15 +16,13 @@ This is my `nix` setup, currently in use for these systems:
 #### Fresh install
 
 1. In Setup Assistant, set the account short name to the `username` in `flake.nix` (`marco.bulgarini`, not the suggested `marcobulgarini`), skip Migration Assistant, and sign in to the App Store (`mas` apps need it)
-2. Install the Command Line Tools (git and make), clone over HTTPS (the GitHub SSH key is a sops secret) into `~/.config/nix-darwin`, the path `modules/home-manager/shared/age.nix` expects, and bootstrap:
+2. Bootstrap with only curl:
 
    ```shell
-   xcode-select --install
-   git clone https://github.com/blacksd/nix ~/.config/nix-darwin && cd ~/.config/nix-darwin
-   make bootstrap HOST=Cydonia
+   bash -c "$(curl -fsSL https://raw.githubusercontent.com/blacksd/nix/main/bootstrap.sh)" -- Cydonia
    ```
 
-   `make bootstrap` installs Nix (NixOS community installer) and Homebrew, sets the hostname, moves the installer's `/etc/nix/nix.conf` aside, and runs the first activation with the nix-darwin release pinned in `flake.lock`. Each step is also a target of its own (`make help`). If nix-darwin lists other `/etc` files it refuses to overwrite, rename them to `<file>.before-nix-darwin` and run `make switch`.
+   `bootstrap.sh` installs the Command Line Tools (git and make; confirm the installer dialog), clones over HTTPS (the GitHub SSH key is a sops secret) into `~/.config/nix-darwin`, the path `modules/home-manager/shared/age.nix` expects, and runs `make bootstrap HOST=<name>`. `make bootstrap` installs Nix (NixOS community installer) and Homebrew, sets the hostname, moves the installer's `/etc/nix/nix.conf` aside, and runs the first activation with the nix-darwin release pinned in `flake.lock`. Each step is also a target of its own (`make help`). If nix-darwin lists other `/etc` files it refuses to overwrite, rename them to `<file>.before-nix-darwin` and run `make switch`.
 
 3. Secrets: in Terminal on the Mac itself (Secure Enclave keys can't be created over SSH), run `make age-key` to create the host key and print its public key, then create a paper backup key (see [Host key in the Secure Enclave](#host-key-in-the-secure-enclave)). On a host that can already decrypt the secrets, add both public keys and re-encrypt (see [Adding or removing a host](#adding-or-removing-a-host)), then `git pull && task switch` here.
 4. Finish the machine:
@@ -115,7 +114,7 @@ Secrets are sops files encrypted with [age](https://age-encryption.org) and decr
 
 ### Host key in the Secure Enclave
 
-On macOS hosts, generate the key with [age-plugin-se](https://github.com/remko/age-plugin-se). The key is bound to that Mac's Secure Enclave and can't be copied off it; `keys.txt` only holds a handle that is useless on any other machine.
+On macOS hosts, generate the key with [age-plugin-se](https://github.com/remko/age-plugin-se) (`make age-key` runs the commands below). The key is bound to that Mac's Secure Enclave and can't be copied off it. The Enclave doesn't store the key either: `keys.txt` holds the private key wrapped by a secret that never leaves the chip, so it is useless on any other machine, and it is the only copy. Losing `keys.txt`, or erasing the Mac (which destroys the Enclave's secret), loses the key for good: see [Losing the host key](#losing-the-host-key).
 
 ```shell
 cd ~/.config/nix-darwin
@@ -134,6 +133,16 @@ age-keygen -y   # type the paper copy back in, then Ctrl-D: it must print the sa
 ```
 
 Close the terminal window afterwards so the backup key doesn't survive in the scrollback. To recover the secrets without the Mac, put the paper key in a file and point `SOPS_AGE_KEY_FILE` at it.
+
+### Losing the host key
+
+A lost `keys.txt` can't be rebuilt from the Secure Enclave. Replace the key instead:
+
+1. On the Mac, run `make age-key`: with no `keys.txt` it creates a new Enclave key and prints its public key
+2. On a host that can still decrypt the secrets, or anywhere with `SOPS_AGE_KEY_FILE` pointing at the paper backup key, replace the host's `age1se1...` entry in `.sops.yaml` with the new public key and run `task sops_updatekeys`
+3. Commit and push, then `git pull && task switch` on the Mac
+
+To skip the paper key next time, keep a copy of `keys.txt` off the Mac (a password manager, never this repo). It is safe anywhere else, since only that Mac's Enclave can unwrap it; on that Mac, with `--access-control none`, the file alone decrypts the host's secrets.
 
 ### Adding or removing a host
 
@@ -172,6 +181,7 @@ The configuration is organized into a modular structure separating darwin-specif
 │   │   ├── home-manager/          # host-specific home-manager configs
 │   │   ├── secrets/               # SOPS encrypted secrets
 │   │   └── .keys/                 # age identity (gitignored; bound to the Secure Enclave on Cydonia)
+│   ├── maccone                    # personal macOS host
 │   └── rpi4                       # NixOS host (Raspberry Pi 4)
 │       ├── default.nix
 │       ├── home.nix
