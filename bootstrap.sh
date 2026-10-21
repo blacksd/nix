@@ -16,6 +16,6 @@ if ! xcode-select -p >/dev/null 2>&1; then
 fi
 
 # HTTPS: the GitHub SSH key is a sops secret, not available yet
-[ -d "$DIR/.git" ] || git clone ${BRANCH:+-b "$BRANCH"} https://github.com/blacksd/nix "$DIR"
+if [ -d "$DIR/.git" ]; then git -C "$DIR" pull --ff-only; else git clone ${BRANCH:+-b "$BRANCH"} https://github.com/blacksd/nix "$DIR"; fi
 cd "$DIR"
 make bootstrap HOST="$HOST"
