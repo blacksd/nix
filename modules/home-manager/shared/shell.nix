@@ -23,11 +23,15 @@
     atuin = {
       enable = true;
       enableZshIntegration = true;
-      # Up keeps oh-my-zsh's up-line-or-beginning-search
-      flags = ["--disable-up-arrow"];
       settings = {
         auto_sync = false;
         update_check = false;
+        # Enter only fills the prompt, never runs the selection
+        enter_accept = false;
+        # Up: prefix match within this terminal session, in a small inline list
+        search_mode_shell_up_key_binding = "prefix";
+        filter_mode_shell_up_key_binding = "session";
+        inline_height_shell_up_key_binding = 15;
       };
     };
 
