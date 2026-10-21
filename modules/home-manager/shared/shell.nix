@@ -19,6 +19,18 @@
       enableBashIntegration = true;
     };
 
+    # Local-only history; init runs after fzf (order 910) so Atuin owns Ctrl+R
+    atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      # Up keeps oh-my-zsh's up-line-or-beginning-search
+      flags = ["--disable-up-arrow"];
+      settings = {
+        auto_sync = false;
+        update_check = false;
+      };
+    };
+
     zoxide = {
       enable = true;
       enableZshIntegration = true;
