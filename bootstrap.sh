@@ -2,6 +2,7 @@
 # Fresh-Mac entrypoint, needs only curl: installs the Command Line Tools (git, make),
 # clones this flake and hands over to `make bootstrap`.
 #   bash -c "$(curl -fsSL https://raw.githubusercontent.com/blacksd/nix/main/bootstrap.sh)" -- <HOST>
+# BRANCH=<branch> clones a branch other than the default, to try changes before merging.
 # (not `curl | bash`: the installers and sudo need stdin on the terminal)
 set -euo pipefail
 
@@ -15,6 +16,6 @@ if ! xcode-select -p >/dev/null 2>&1; then
 fi
 
 # HTTPS: the GitHub SSH key is a sops secret, not available yet
-[ -d "$DIR/.git" ] || git clone https://github.com/blacksd/nix "$DIR"
+[ -d "$DIR/.git" ] || git clone ${BRANCH:+-b "$BRANCH"} https://github.com/blacksd/nix "$DIR"
 cd "$DIR"
 make bootstrap HOST="$HOST"
