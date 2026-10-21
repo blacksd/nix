@@ -28,6 +28,8 @@
         update_check = false;
         # Enter only fills the prompt, never runs the selection
         enter_accept = false;
+        # Ctrl+R: fzf-like fuzzy matching ranked by score, not recency
+        search_mode = "skim";
         # Up: prefix match within this terminal session, in a small inline list
         search_mode_shell_up_key_binding = "prefix";
         filter_mode_shell_up_key_binding = "session";
