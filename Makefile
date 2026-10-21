@@ -6,6 +6,8 @@
 HOST ?= $(shell scutil --get LocalHostName 2>/dev/null)
 # Absolute fallback: right after `make nix`, the current shell does not have nix on PATH yet
 NIX := $(shell command -v nix 2>/dev/null || echo /nix/var/nix/profiles/default/bin/nix)
+# Flakes are on in the installer's nix.conf, which `etc` moves aside before nix-darwin writes its own
+NIX_FLAKES := $(NIX) --extra-experimental-features 'nix-command flakes'
 AGE_KEY := hosts/$(HOST)/.keys/keys.txt
 
 .PHONY: help bootstrap rosetta nix brew hostname etc build switch age-key check-host
@@ -34,16 +36,16 @@ etc: ## Move the installer's /etc/nix/nix.conf aside so nix-darwin can manage it
 
 # nix-darwin comes from flake.lock (`--inputs-from .`), so it always matches the flake's release
 build: check-host ## Build the HOST system without activating it
-	sudo $(NIX) run --inputs-from . darwin#darwin-rebuild -- build --flake .#$(HOST) --option accept-flake-config true
+	sudo $(NIX_FLAKES) run --inputs-from . darwin#darwin-rebuild -- build --flake .#$(HOST) --option accept-flake-config true
 
 switch: check-host ## Build and activate the HOST system
-	sudo $(NIX) run --inputs-from . darwin#darwin-rebuild -- switch --flake .#$(HOST) --option accept-flake-config true
+	sudo $(NIX_FLAKES) run --inputs-from . darwin#darwin-rebuild -- switch --flake .#$(HOST) --option accept-flake-config true
 
 age-key: check-host ## Create HOST's Secure Enclave age key if missing and print its public key (GUI terminal, not SSH)
 	@if [ -f $(AGE_KEY) ]; then \
-	  $(NIX) shell --inputs-from . nixpkgs-darwin#age-plugin-se --command age-plugin-se recipients -i $(AGE_KEY); \
+	  $(NIX_FLAKES) shell --inputs-from . nixpkgs-darwin#age-plugin-se --command age-plugin-se recipients -i $(AGE_KEY); \
 	else \
-	  $(NIX) shell --inputs-from . nixpkgs-darwin#age-plugin-se --command age-plugin-se keygen --access-control none -o $(AGE_KEY); \
+	  $(NIX_FLAKES) shell --inputs-from . nixpkgs-darwin#age-plugin-se --command age-plugin-se keygen --access-control none -o $(AGE_KEY); \
 	fi
 
 check-host:
