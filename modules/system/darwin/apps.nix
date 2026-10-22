@@ -61,11 +61,18 @@
       Silicio = 933627574;
     };
 
-    # taps = ["homebrew/services"];
+    # Third-party taps must be trusted (HOMEBREW_REQUIRE_TAP_TRUST), see hosts/Cydonia/apps.nix
+    taps = [
+      {
+        name = "k8sgpt-ai/k8sgpt";
+        trusted = true;
+      }
+    ];
 
     # `brew install`
     brews = [
       "colima"
+      "k8sgpt"
     ];
 
     # `brew install --cask`
