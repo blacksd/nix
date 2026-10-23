@@ -199,6 +199,10 @@
           "Default Bookmark Guid" = "aabbccdd-d3ad-b33f-1337-001122334455";
           FocusFollowsMouse = false;
           OptionClickMovesCursor = false;
+          # General > Selection > "Clicking on a command selects it to restrict Find and Filter"
+          ClickToSelectCommand = false;
+          # Appearance > General > Theme: Dark, regardless of the system appearance
+          TabStyleWithAutomaticOption = 1;
         };
         "eu.exelban.Stats" = builtins.fromJSON (builtins.readFile ./configs/eu.exelban.Stats.plist.json);
         # "com.apple.sound" = {
