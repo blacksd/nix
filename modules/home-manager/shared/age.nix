@@ -9,6 +9,8 @@
 in {
   home.packages = with pkgs; [
     age
+    age-plugin-yubikey
+    age-plugin-sss
   ];
 
   programs.zsh = {
@@ -16,4 +18,9 @@ in {
       SOPS_AGE_KEY_FILE = ageKeyPath;
     };
   };
+
+  sops.age.plugins = with pkgs; [
+    age-plugin-yubikey
+    age-plugin-sss
+  ];
 }
