@@ -8,6 +8,7 @@
     ./apps.nix
     ./aerospace.nix
     ./jankyborders.nix
+    ./macos.nix
     home-manager.darwinModules.home-manager
   ];
 
