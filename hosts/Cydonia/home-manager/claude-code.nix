@@ -76,9 +76,11 @@ in {
       '';
     };
 
-    templates."pagerduty-env" = {
+    templates."pagerduty-headers-helper" = {
+      mode = "0755";
       content = ''
-        export PAGERDUTY_USER_API_KEY="${config.sops.placeholder.pagerduty_api_key}"
+        #!/bin/sh
+        echo '{"Authorization": "Token token=${config.sops.placeholder.pagerduty_api_key}"}'
       '';
     };
 
@@ -219,13 +221,12 @@ in {
         ];
       };
 
-      # PagerDuty MCP server (self-hosted via uvx)
+      # PagerDuty-hosted MCP server, EU region (the account lives on
+      # hivemq.eu.pagerduty.com). The helper keeps the key out of Claude's env.
       pagerduty = {
-        command = "${pkgs.bash}/bin/bash";
-        args = [
-          "-c"
-          "source ${config.sops.templates.pagerduty-env.path} && ${pkgs.uv}/bin/uvx pagerduty-mcp"
-        ];
+        type = "http";
+        url = "https://mcp.eu.pagerduty.com/mcp";
+        headersHelper = config.sops.templates."pagerduty-headers-helper".path;
       };
 
       # Kubernetes MCP server, read-only, against the current kube context.
