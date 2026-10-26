@@ -17,18 +17,43 @@
         };
 
         systemSettings = {
-          accessibility.pointerControl.trackpadOptions = {
-            # dragging = "Off" is omitted: upstream emits `tap=$(defaults -currentHost read ... tapBehavior)`,
-            # which aborts the set -e activation when that key is absent (live value is already Off).
-            useTrackpadForScrolling = true;
+          accessibility = {
+            audio.backgroundSounds = false;
+            pointerControl = {
+              ignoreBuiltInTrackpadWhenMouseOrWirelessTrackpadIsPresent = false;
+              springLoading = true;
+              springLoadingSpeed = 0.5;
+              trackpadOptions = {
+                # dragging = "Off" is omitted: upstream emits `tap=$(defaults -currentHost read ... tapBehavior)`,
+                # which aborts the set -e activation when that key is absent (live value is already Off).
+                useInertiaWhenScrolling = true;
+                useTrackpadForScrolling = true;
+              };
+            };
+            # zoom.useKeyboardShortcutsToZoom lives in com.apple.universalaccess, which is TCC-protected:
+            # writing it fails unless the terminal running the switch has Full Disk Access.
           };
-          # zoom.useKeyboardShortcutsToZoom lives in com.apple.universalaccess, which is TCC-protected:
-          # writing it fails unless the terminal running the switch has Full Disk Access.
 
           appleIntelligenceAndSiri.siri.enable = false;
 
-          # Dock layout and behaviour are not managed yet.
           desktopAndDock = {
+            desktopAndStageManager = {
+              clickWallpaperToRevealDesktop = "Always";
+              showItems.inStageManager = false;
+              showRecentAppsInStageManager = false;
+              showWindowsFromAnApplication = "All at Once";
+              stageManager = false;
+            };
+            dock = {
+              automaticallyHideAndShowTheDock.enabled = true;
+              magnification = {
+                enabled = true;
+                size = 71;
+              };
+              minimizeWindowsIntoApplicationIcon = false;
+              showSuggestedAndRecentAppsInDock = false;
+              size = 44;
+            };
             hotCorners = {
               topLeft.action = "-";
               topRight.action = "-";
@@ -48,9 +73,24 @@
               missionControl = "-";
               showDesktop = "-";
             };
+            widgets.showWidgets = {
+              inStageManager = true;
+              onDesktop = true;
+            };
+            windows = {
+              dragWindowsToLeftOrRightEdgeOfScreenToTile = false;
+              dragWindowsToMenuBarToFillScreen = false;
+              holdOptionKeyWhileDraggingWindowsToTile = false;
+            };
+          };
+
+          displays = {
+            universalControl.allowPointerAndKeyboardToMoveBetweenNearbyDevices = false;
+            whenConnectedToTv = "Ask What to Show";
           };
 
           general = {
+            airDropAndContinuity.airDrop = "No One";
             languageAndRegion = {
               preferredLanguages = ["en-US"];
               region = "en_US@rg=itzzzz";
@@ -59,10 +99,20 @@
           };
 
           keyboard = {
-            keyboardShortcuts.missionControl = {
-              moveLeftASpace = true;
-              moveRightASpace = true;
+            keyboardShortcuts = {
+              missionControl = {
+                moveLeftASpace = true;
+                moveRightASpace = true;
+              };
+              screenshots = {
+                copyPictureOfScreenToTheClipboard = false;
+                copyPictureOfSelectedAreaToTheClipboard = false;
+                savePictureOfScreenAsAFile = false;
+                savePictureOfSelectedAreaAsAFile = false;
+                screenshotAndRecordingOptions = false;
+              };
             };
+            pressGlobeKeyTo = "Show Emoji & Symbols";
             textInput = {
               addPeriodWithDoubleSpace = true;
               capitalizeWordsAutomatically = true;
@@ -71,20 +121,33 @@
           };
 
           # Show24Hour stays in system.defaults.menuExtraClock: nix-plist-manager does not expose it.
-          menuBar.clock = {
-            showAmPm = true;
-            showTheDayOfTheWeek = true;
+          menuBar = {
+            clock = {
+              showAmPm = true;
+              showTheDayOfTheWeek = true;
+            };
+            textInput = false;
+            timeMachine = false;
           };
 
           privacyAndSecurity.appleAdvertising.personalizedAds = false;
 
+          sound.soundEffects.playFeedbackWhenVolumeIsChanged = true;
+
           # searchResults intentionally omitted: Spotlight categories are still managed via
           # system.defaults.CustomUserPreferences."com.apple.Spotlight".orderedItems.
+          spotlight.showRelatedContent = true;
 
           trackpad = {
-            pointAndClick.click = "Medium";
+            moreGestures.notificationCenter = true;
+            pointAndClick = {
+              click = "Medium";
+              forceClickAndHapticFeedback = true;
+              lookUpAndDataDetectors = "Force Click with One Finger";
+            };
             scrollAndZoom = {
               rotate = true;
+              smartZoom = true;
               zoomInOrOut = true;
             };
           };

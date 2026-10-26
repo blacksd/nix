@@ -8,13 +8,19 @@
     # NOTE: avoid this and prefer the native nix-darwin way
     #
     # taps = ["nikitabobko/tap"];
+
+    # `brew install`
+    brews = [
+      "ykman"
+    ];
+
     casks = [
       # "aerospace"
       "macfuse"
       "rectangle"
       "ferdium"
       "google-chrome"
-#      "transmission-remote-gui"
+      #      "transmission-remote-gui"
       "vlc"
       "tor-browser"
       "calibre"
@@ -24,6 +30,7 @@
       "steam"
       "freelens"
       "audacity"
+      "yubico-authenticator"
     ];
   };
 }

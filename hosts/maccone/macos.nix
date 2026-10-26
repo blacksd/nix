@@ -1,4 +1,11 @@
-{nix-plist-manager, ...}: {
+{
+  config,
+  nix-plist-manager,
+  username,
+  ...
+}: let
+  home = config.users.users.${username}.home;
+in {
   # macOS system-scope settings (applied as root) via nix-plist-manager.
   # Drift against the live Mac: `task plist-drift`
   imports = [nix-plist-manager.darwinModules.default];
@@ -37,7 +44,7 @@
         };
 
         network.firewall = {
-          firewall = false;
+          firewall = true;
           options = {
             automaticallyAllowBuiltInSoftwareToReceiveIncomingConnections = true;
             automaticallyAllowDownloadedSignedSoftwareToReceiveIncomingConnections = true;
@@ -50,7 +57,46 @@
           shareMacAnalytics = true;
           shareWithAppDevelopers = true;
         };
+
+        wiFi = {
+          askToJoinNetworks = "Off";
+          requireAdministratorAuthorizationTo = {
+            changeNetworks = false;
+            turnWiFiOnOrOff = false;
+          };
+        };
       };
     };
+  };
+
+  # Dock contents: rebuilt from these lists on every switch; manual pins are dropped.
+  system.defaults.dock = {
+    persistent-apps = [
+      "/System/Applications/Apps.app"
+      "/System/Applications/App Store.app"
+      "/System/Applications/Calendar.app"
+      "/System/Applications/System Settings.app"
+      "/Applications/Logseq.app"
+      "/Applications/Ferdium.app"
+      "/Applications/Google Chrome.app"
+      "/System/Applications/Notes.app"
+      "/Applications/Spotify.app"
+      "/Applications/Enpass.app"
+      "/Applications/iTerm.app"
+      "${home}/Applications/Home Manager Apps/WezTerm.app"
+      "/Applications/Visual Studio Code.app"
+      "/Applications/xca.app"
+      "/Applications/LocalSend.app"
+      "/Applications/Yubico Authenticator.app"
+    ];
+    persistent-others = [
+      {
+        folder = {
+          path = "${home}/Downloads";
+          arrangement = "date-added";
+          showas = "fan";
+        };
+      }
+    ];
   };
 }
