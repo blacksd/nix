@@ -11,6 +11,10 @@
     # in `brews`/`casks` below; official taps (homebrew/*) are always trusted.
     taps = [
       {
+        name = "stablyai/orca";
+        trusted = true;
+      }
+      {
         name = "hivemq/mqtt-cli";
         trusted = true;
       }
@@ -37,6 +41,7 @@
       "radar"
       "sem-cli"
       "omnigent"
+      "ykman"
     ];
 
     # `brew install --cask`
@@ -48,6 +53,7 @@
       "vlc"
 
       # Let's work
+      "stablyai/orca/orca"
       "kitlangton-hex"
       "firefox"
       "discord"
@@ -55,6 +61,7 @@
       "rectangle-pro"
       "dbeaver-community"
       "bruno"
+      "yubico-authenticator"
 
       # Cert stuff
       "xca"
