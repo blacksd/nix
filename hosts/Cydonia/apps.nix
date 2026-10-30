@@ -40,7 +40,7 @@
       "tfenv" # TODO: This should be a nixpkg
       "radar"
       "sem-cli"
-      "omnigent"
+      "omnigent-ai/tap/omnigent"
       "ykman"
     ];
 

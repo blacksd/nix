@@ -51,6 +51,9 @@ tasks:
 
   live_on_the_edge:
     desc: Update nixpkgs-unstable channel
+    env:
+      NIX_CONFIG:
+        sh: echo "access-tokens = github.com=$(gh auth token)"
     cmds:
       - nix flake update nixpkgs-unstable llm-agents
       # - nix flake lock --update-input nixpkgs-unstable
