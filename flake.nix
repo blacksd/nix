@@ -130,6 +130,14 @@
           macosVersion = "15";
         };
 
+      maccone =
+        inputs
+        // {
+          username = "marco";
+          useremail = "marco.bulgarini@gmail.com";
+          hostname = "maccone";
+        };
+
       rpi4 =
         inputs
         // {
@@ -170,6 +178,14 @@
         {nixpkgs.hostPlatform = "aarch64-darwin";}
         ./hosts/${specialArgs.Cydonia.hostname}
         {system.stateVersion = nixpkgs-darwin.lib.mkForce 5;}
+      ];
+    };
+
+    darwinConfigurations."maccone" = darwin.lib.darwinSystem {
+      specialArgs = specialArgs.maccone;
+      modules = [
+        {nixpkgs.hostPlatform = "aarch64-darwin";}
+        ./hosts/${specialArgs.maccone.hostname}
       ];
     };
 
