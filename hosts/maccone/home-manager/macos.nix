@@ -1,10 +1,7 @@
-{nix-plist-manager, ...}: {
-  # macOS user-scope settings via nix-plist-manager.
+{...}: {
+  # Host-specific macOS user-scope settings via nix-plist-manager (common ones: modules/home-manager/darwin/macos.nix).
   # Drift against the live Mac: `task plist-drift`
-  imports = [nix-plist-manager.homeManagerModules.default];
-
   programs.nix-plist-manager = {
-    enable = true;
     options = {
       applications = {
         finder = {
@@ -67,11 +64,6 @@
                   shift = false;
                 };
               };
-            };
-            missionControl.shortcuts = {
-              applicationWindows = "-";
-              missionControl = "-";
-              showDesktop = "-";
             };
             widgets.showWidgets = {
               inStageManager = true;

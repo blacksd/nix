@@ -196,7 +196,8 @@ The configuration is organized into a modular structure separating darwin-specif
     │   │   ├── default.nix
     │   │   ├── colima.nix
     │   │   ├── core.nix
-    │   │   └── gpg.nix
+    │   │   ├── gpg.nix
+    │   │   └── macos.nix
     │   ├── nixos/                 # nixos-specific user configs
     │   │   └── default.nix
     │   └── shared/                # cross-platform user configs

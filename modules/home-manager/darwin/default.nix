@@ -8,5 +8,6 @@
     ./colima.nix
     ./core.nix
     ./gpg.nix
+    ./macos.nix
   ];
 }

@@ -12,6 +12,8 @@
     # `brew install`
     brews = [
       "ykman"
+      # CLI only: the tailscale-app cask doesn't put one on PATH. Never `brew services start` it, the app runs its own tailscaled
+      "tailscale"
     ];
 
     casks = [

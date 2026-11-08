@@ -29,7 +29,7 @@ tasks:
       - sudo {{.REBUILD_CMD}} switch --flake .#{{- .HOSTNAME -}} {{- .CLI_ARGS }}
 
   plist-drift:
-    desc: Show macOS settings that differ from the nix-plist-manager config (hosts/<host>/macos.nix, hosts/<host>/home-manager/macos.nix)
+    desc: Show macOS settings that differ from the nix-plist-manager config (hosts/<host>/macos.nix, hosts/<host>/home-manager/macos.nix, modules/home-manager/darwin/macos.nix)
     vars:
       TMP:
         sh: mktemp -d
@@ -40,7 +40,13 @@ tasks:
       - defer: rm -rf {{.TMP}}
       # Evaluate the modules' own definitions: the merged option tree also contains upstream removed options that throw.
       - nix eval -f hosts/{{.HOST}}/macos.nix --arg nix-plist-manager '{}' --arg config '{}' --arg username '""' --arg hostname '""' programs.nix-plist-manager.options > {{.TMP}}/system.nix
-      - nix eval -f hosts/{{.HOST}}/home-manager/macos.nix --arg nix-plist-manager '{}' programs.nix-plist-manager.options > {{.TMP}}/user.nix
+      - |
+        nix eval --impure --expr '
+          let
+            options = f: (import f {nix-plist-manager = {};}).programs.nix-plist-manager.options;
+            merge = a: b: a // builtins.mapAttrs (n: v: if builtins.isAttrs v && a ? ${n} then merge a.${n} v else v) b;
+          in merge (options ./modules/home-manager/darwin/macos.nix) (options ./hosts/{{.HOST}}/home-manager/macos.nix)
+        ' > {{.TMP}}/user.nix
       - nix run github:sushydev/nix-plist-manager#current -- --scope system --against {{.TMP}}/system.nix
       - nix run github:sushydev/nix-plist-manager#current -- --scope user --against {{.TMP}}/user.nix
 
