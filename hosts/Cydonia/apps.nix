@@ -42,6 +42,7 @@
       "sem-cli"
       "omnigent-ai/tap/omnigent"
       "ykman"
+      "llama.cpp"
     ];
 
     # `brew install --cask`
@@ -52,9 +53,12 @@
       # Need a break
       "vlc"
 
-      # Let's work
+      # AI
+      "llama-app"
       "stablyai/orca/orca"
-      "kitlangton-hex"
+
+      # Let's work
+      "anomaly-hex"
       "firefox"
       "discord"
       "freelens"
