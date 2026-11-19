@@ -18,8 +18,23 @@
   zg = pkgs.writeShellScriptBin "zg" ''
     exec ${pkgs.nodejs_24}/bin/npx -y @zvec/zvec-grep@0.2.2 "$@"
   '';
+
+  # Google Workspace (Gmail, Calendar, Drive, Docs, Sheets, Chat, ...) through
+  # the `gws` CLI. Upstream ships agent skills but no Claude Code plugin
+  # manifest, so wrap its gws-* skills (taken from the same source as the
+  # binary, so they never drift) into a local plugin. The persona-* and
+  # recipe-* skills are left out to keep the skill listing short.
+  gwsPlugin = pkgs.runCommand "google-workspace-claude-plugin" {} ''
+    install -Dm644 ${pkgs.writeText "plugin.json" (builtins.toJSON {
+      name = "google-workspace";
+      version = pkgs.gws.version;
+      description = "Google Workspace through the gws CLI";
+    })} $out/.claude-plugin/plugin.json
+    mkdir -p $out/skills
+    cp -r ${pkgs.gws.src}/skills/gws-* $out/skills/
+  '';
 in {
-  home.packages = [zg];
+  home.packages = [zg pkgs.gws];
 
   # Cydonia (work) host-specific secrets, context, plugins and MCP servers
 
@@ -97,6 +112,8 @@ in {
 
   # Work-specific Claude Code configuration
   programs.claude-code = {
+    plugins = [gwsPlugin];
+
     extraContext = ''
       ## Work context
 
@@ -144,6 +161,7 @@ in {
           "Do not modify ArgoCD application sync policies (enable/disable auto-sync) without explicit user instruction"
           "Do not send Slack messages or create PagerDuty incidents without explicit user instruction"
           "Do not create or close Linear issues without explicit user instruction"
+          "Do not send, reply to or forward email, create or modify calendar events, or share, upload or delete Drive files (gws CLI) without explicit user instruction"
           "Do not run helm install/upgrade/delete against any cluster without explicit user instruction"
           "Do not modify sops-encrypted secret files without explicit user instruction"
           "Do not run aws/gcloud/az commands that create, modify, or delete cloud resources without explicit user instruction"
