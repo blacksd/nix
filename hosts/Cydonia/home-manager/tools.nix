@@ -25,7 +25,6 @@
 
     # Security
     _1password-cli
-    sops
     yubikey-manager
     gitleaks
 

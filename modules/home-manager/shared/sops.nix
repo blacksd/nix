@@ -9,6 +9,8 @@
     sops-nix.homeManagerModules.sops
   ];
 
+  home.packages = [pkgs.sops];
+
   # sops-nix home-manager configuration
   sops = {
     # Reuse the same SOPS_AGE_KEY_FILE path from age.nix configuration
